@@ -18,7 +18,11 @@
     --foreground: #ededed;
   }
 }
-
+@layer components{ 
+ .theme {
+  @apply bg-[#ff4000] 
+ }
+}
 body {
   background: var(--background);
   color: var(--foreground);
