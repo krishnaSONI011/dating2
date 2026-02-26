@@ -23,8 +23,8 @@ export default function Promote({ prevStep ,form , images }) {
   const { user } = useContext(AuthContext)
   const router = useRouter()
   //  pricing
-  const slotPrice = 100
-  const boostPrice = 20
+  const slotPrice = 2
+  const boostPrice = 1
 
   let total = 0
 
@@ -34,11 +34,11 @@ export default function Promote({ prevStep ,form , images }) {
 
   //  price logic
   if (allInOne) {
-    total += 360
+    total += 9
   } else {
-    if (superTop) total += 200
-    if (highlight) total += 80
-    if (tagNew) total += 80
+    if (superTop) total += 5
+    if (highlight) total += 2
+    if (tagNew) total += 2
   }
 
   //  ALL IN ONE CLICK
@@ -371,9 +371,9 @@ export default function Promote({ prevStep ,form , images }) {
               <div className="h-px bg-gray-200 my-5" />
 
               <div className="flex justify-between items-center mb-6">
-                <span className="text-lg font-semibold">Total Price</span>
+                <span className="text-lg font-semibold">Total Coin</span>
                 <span className="text-3xl font-bold text-red-600">
-                  ₹ {total}
+                   {total}
                 </span>
               </div>
 
