@@ -7,11 +7,11 @@ console.log(areas)
  
 
   return(
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 w-full ">
+    <div className=" rounded-2xl shadow-sm border border-orange-400  w-full ">
 
       {/* Title */}
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-xl font-bold text-gray-800 tracking-wide">
+      <div className="  flex items-center bg-orange-500 justify-between p-2 py-4 rounded-t-2xl mb-5">
+        <h2 className="text-xl text-center font-bold text-white tracking-wide">
           Popular Areas
         </h2>
 
@@ -19,18 +19,18 @@ console.log(areas)
       </div>
 
       {/* orange line */}
-      <div className="h-[3px] bg-orange-500 w-12 rounded mb-4"></div>
+      {/* <div className="h-[3px] bg-orange-500 w-12 rounded mb-4"></div> */}
 
       {/* List */}
-      <div className="space-y-1 overflow-auto h-[500px]">
+      <div className="space-y-1 p-2 text-white overflow-auto h-[500px]">
 
         {areas.map((area, index)=>(
           <Link key={index} href={`/escorts/${slug}/${area.slug}`}>
           <div
             
-            className="flex justify-between items-center px-3 py-3 rounded-lg hover:bg-orange-50 cursor-pointer transition group"
+            className="flex justify-between items-center px-3 py-3 rounded-lg hover:bg-orange-50 text-white cursor-pointer transition group"
           >
-            <span className="text-gray-700 font-medium group-hover:text-orange-600 transition">
+            <span className="text-white font-medium group-hover:text-orange-600 transition">
               {area.name}
             </span>
 

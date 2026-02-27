@@ -18,15 +18,18 @@ export default function Search(){
   const [htmlContent , setHtmlContent] = useState('')
   const [city , setCity] = useState([])
   const params = useParams();
-  const slug = params?.slug ?? ""
+  const slug = params?.location ?? ""
+  const slug2 = params?.category ?? ''
   useEffect(() => {
 
     async function getListingData() {
       try{
         setLoading(true)
-
-        const res = await api.get(
-          `/Wb/get_ads?city_slug=${slug}&page=${currentPage}`
+        const formData = new FormData()
+        formData.append('cate_slug' , slug2)
+        formData.append('city_slug' , slug)
+        const res = await api.post(
+          `/Wb/pages` , formData
         )
        
         
@@ -50,25 +53,25 @@ export default function Search(){
 
     window.scrollTo({ top: 0, behavior: "smooth" })
 
-  }, [currentPage ,slug])
+  }, [currentPage, slug, slug2])
 
   return (
     <div>
  <Breadcrumb />
-      
-     
-      <div className=" mx-2 md:mx-20">
-        <div className="mt-10">
-        <Alert />
-        </div>
-        
-        {loading && (
+      {loading && (
         <div className="text-center py-10 text-gray-500">
           Loading ads...
         </div>
       )}
+     
+      <div className="mx-2 md:mx-20">
+        <div className="mt-10">
+        <Alert />
+        </div>
+        
+
     
-      <div className=" grid grid-cols-1 md:grid-cols-4  ">
+      <div className="grid grid-cols-1 md:grid-cols-4  ">
       <div className="col-span-3">
       <CardShower
         slug={slug}

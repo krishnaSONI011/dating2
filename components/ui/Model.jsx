@@ -10,7 +10,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 720,
   maxWidth: "95%",
-  background: "#f5f5f5",
+  background: "#111827",
   borderRadius: "22px",
   boxShadow: 24,
   padding: "60px 40px",

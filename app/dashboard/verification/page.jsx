@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import { AuthContext } from "@/context/AuthContext";
 
 const inputClass =
-  "w-full rounded-md px-4 py-3 text-sm placeholder-gray-500 outline-none border border-[#ff4000] focus:border-[#ff4000]";
+  "w-full rounded-md px-4 py-3 text-sm placeholder-gray-500 outline-none border border-orange-600 focus:border-orange-600";
 const labelClass = "mb-2 block text-sm text-gray-600";
 
 
@@ -120,7 +120,7 @@ function CameraCapture({
           <button
             type="button"
             onClick={onRetake}
-            className="absolute bottom-2 right-2 bg-[#ff4000] text-white px-4 py-2 rounded-md"
+            className="absolute bottom-2 right-2 bg-orange-600 text-white px-4 py-2 rounded-md"
           >
             Retake
           </button>

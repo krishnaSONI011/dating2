@@ -156,14 +156,16 @@ export default function Promote({ prevStep ,form , images }) {
       const res = await api.post('/Wb/ads', formData)
   
       if(res.data.status == 0){
-  
+        const sup = superTop ? "1" : "0"
+        const high = highlight ? "1" : "0"
+        const n = tagNew ? "1" : "0"
         const boostData = new FormData()
         boostData.append("ads_id", res.data.data.ads.id)
         boostData.append("from_time", fromTime)
         boostData.append("to_time", toTime)
-        boostData.append("super_top", superTop )
-        boostData.append("highlight", highlight )
-        boostData.append("new", tagNew )
+        boostData.append("super_top", sup  )
+        boostData.append("hight_light", high )
+        boostData.append("new", n )
         boostData.append("all_upgrade", allInOne )
         boostData.append("days", days)
         boostData.append("boost_times", boost)

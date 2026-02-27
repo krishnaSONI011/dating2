@@ -1,6 +1,6 @@
 'use client'
 
-import { FaPhoneAlt, FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
+import { FaPhoneAlt, FaWhatsapp, FaTelegramPlane, FaMapMarkerAlt, FaHeart } from "react-icons/fa"
 
 export default function EscortCard({
   id,
@@ -11,11 +11,46 @@ export default function EscortCard({
   location,
   phone,
   telegram,
+  is_whatsapp,
+  is_telegram,
+  country,
   is_superTop,
   highlight,
   is_new,
 }) {
 
+  function showCards(){
+    if(is_new || highlight || is_superTop){
+      return  <div className="flex justify-end gap-3 mt-6">
+
+      <button
+        onClick={handleCall}
+        className="w-12 h-12 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-700 text-white shadow-lg"
+      >
+        <FaPhoneAlt/>
+      </button>
+      {
+        is_whatsapp &&  <button
+        onClick={handleWhatsapp}
+        className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg"
+      >
+        <FaWhatsapp/>
+      </button>
+      }
+     {
+      is_telegram && <button
+      onClick={handleTelegram}
+      className="w-12 h-12 flex items-center justify-center rounded-full bg-sky-500 hover:bg-sky-600 text-white shadow-lg"
+    >
+      <FaTelegramPlane/>
+    </button>
+     }
+
+      
+
+    </div>
+    }
+  }
   function handleCall(){
     if(!phone) return alert("Number not available")
     window.location.href = `tel:${phone}`
@@ -34,91 +69,79 @@ export default function EscortCard({
   return (
     <div
       className={`
-      relative rounded-2xl border 
+      relative rounded-3xl  border transition-all duration-300
+      
       ${highlight 
-        ? "border-yellow-400 bg-yellow-50 shadow-xl" 
-        : "border-gray-200 bg-white"}
+        ? "border-orange-300 bg-orange-100/30 shadow-[0_0_25px_rgba(253,186,116,0.3)]" 
+        : "border-gray-700 bg-gradient-to-r from-[#0f172a] to-[#1e293b]"}
       `}
     >
 
-      {/* SUPER TOP badge */}
+      {/* SUPER TOP */}
       {is_superTop && (
-        <div className="absolute right-0 -top-2 bg-red-600 text-white px-4 py-1 text-xs font-bold rounded-full z-20">
+        <div className="absolute right-4 z- -top-3 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-semibold z-50">
           SUPER TOP
         </div>
       )}
 
-      {/* ALWAYS CARD VIEW */}
-      <div className="flex items-stretch">
+      <div className="flex overflow-hidden h-[320]">
 
-        {/* IMAGE LEFT (FIXED) */}
-        <div className="relative w-[140px] sm:w-[170px] md:w-[200px] flex-shrink-0 overflow-hidden rounded-l-2xl">
+        {/* IMAGE */}
+        <div className="relative h-[420] rounded-tl    w-[180px] md:w-[220px]  flex-shrink-0 ">
 
-          {/* NEW badge */}
           {is_new && (
-            <div className="absolute top-2 left-2 bg-green-500 text-white text-xs px-3 py-1 rounded-full z-20">
+            <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full z-20">
               NEW
             </div>
           )}
 
-          {/* image */}
-          <div
-            className="w-full h-full min-h-[180px] bg-cover bg-center"
-            style={{
-              backgroundImage: `url(${image || "/noimage.jpg"})`,
-            }}
-          />
+          {/* views badge */}
+         
 
-          {/* watermark */}
-          <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-            <span className="text-white/40 text-xl font-bold rotate-[-20deg]">
-              AFFAIR ESCORTS
-            </span>
-          </div>
+          <img
+            src={image || "/noimage.jpg"}
+            className="w-full h-full object-cover rounded-bl-3xl rounded-tl-3xl"
+          />
         </div>
 
-        {/* RIGHT CONTENT */}
-        <div className="flex-1 p-4 md:p-5 flex flex-col justify-between">
+        {/* RIGHT */}
+        <div className="flex-1 p-5 flex flex-col justify-between">
 
+          {/* title */}
           <div>
-            <h2 className="text-sm md:text-xl font-bold text-gray-800 uppercase">
+            <h2 className="text-lg md:text-2xl font-bold text-orange-300 leading-snug">
               {title}
             </h2>
 
-            <p className="text-gray-600 text-sm mt-2 line-clamp-2 md:line-clamp-3">
+            <p className="text-gray-300 text-sm mt-2 line-clamp-2">
               {desc}
             </p>
 
-            <div className="flex gap-6 mt-3 text-sm font-semibold text-gray-700">
-              <div>{age} Years</div>
-              <div>{location}</div>
+            {/* location */}
+            <div className="flex items-center gap-2 text-gray-400 mt-4">
+              <FaMapMarkerAlt className="text-orange-400"/>
+              {location}
+            </div>
+
+            {/* tags */}
+            <div className="flex gap-3 mt-4 flex-wrap">
+              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+                Female
+              </span>
+              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+                {age}y
+              </span>
+              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+                {country}
+              </span>
             </div>
           </div>
 
-          {/* buttons */}
-          {is_superTop && (
-            <div className="flex gap-3 mt-4 justify-end">
-              
-              <button 
-                onClick={handleCall}
-                className="bg-red-500 hover:bg-red-600 text-white p-3 md:p-4 rounded-xl">
-                <FaPhoneAlt />
-              </button>
-
-              <button 
-                onClick={handleWhatsapp}
-                className="bg-green-500 hover:bg-green-600 text-white p-3 md:p-4 rounded-xl">
-                <FaWhatsapp />
-              </button>
-
-              <button 
-                onClick={handleTelegram}
-                className="bg-blue-500 hover:bg-blue-600 text-white p-3 md:p-4 rounded-xl">
-                <FaTelegramPlane />
-              </button>
-
-            </div>
-          )}
+          {/* bottom buttons */}
+          {
+           showCards()
+          }
+         
         </div>
       </div>
     </div>

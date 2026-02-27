@@ -74,17 +74,17 @@ export default function Home() {
     {/* icon circle */}
     <h1 className="text-5xl mb-5 font-semibold tracking-wide cursor-pointer">
             Affair{" "}
-            <span className={`${playwrite.className} text-[#ff4000]`}>
+            <span className={`${playwrite.className} text-orange-600`}>
               Escorts
             </span>
           </h1>
     {/* title */}
-    <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-4">
+    <h2 className="text-3xl md:text-4xl font-extrabold text-(--webiste-text) mb-4">
       Please read the following notice<br/>before you continue
     </h2>
 
     {/* desc */}
-    <p className="text-gray-600 max-w-xl mb-4">
+    <p className="text-(--webiste-text) max-w-xl mb-4">
       I confirm that I am 18 or above and acknowledge my consent to access
       mature content, including explicit texts and image.
     </p>
@@ -92,7 +92,7 @@ export default function Home() {
     <p className="text-gray-600 mb-6">
       I have reviewed and agree to abide by the
       <Link href={'#'}>
-      <span className="text-red-600 font-semibold ml-1">
+      <span className="text-(--second-color) font-semibold ml-1">
         TERMS AND CONDITIONS
       </span>
       </Link>

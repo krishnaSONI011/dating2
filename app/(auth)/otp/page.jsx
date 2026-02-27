@@ -114,7 +114,7 @@ export default function OTPPage() {
         {/* Heading */}
         <h1 className="text-3xl font-bold mb-2">
           Verify to Join Affair{" "}
-          <span className={`${playwrite.className} text-[#ff4000]`}>
+          <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
         </h1>
@@ -130,7 +130,7 @@ export default function OTPPage() {
           onChange={handleChange}
           placeholder="Enter OTP"
           className="w-full text-center text-2xl tracking-[10px] font-bold border rounded-xl py-4 mb-6
-          focus:border-[#ff4000] focus:ring-2 focus:ring-[#ff4000]/30 outline-none"
+          focus:border-orange-600 focus:ring-2 focus:ring-orange-600/30 outline-none"
         />
 
         {/* Verify */}
@@ -143,7 +143,7 @@ export default function OTPPage() {
         <p className="text-gray-500 text-sm mt-6">
           Didn’t receive code?{" "}
 
-          <button onClick={resendEmail} className="text-[#ff4000] font-semibold cursor-pointer hover:underline">
+          <button onClick={resendEmail} className="text-orange-600 font-semibold cursor-pointer hover:underline">
             Resend OTP
           </button>
         </p>

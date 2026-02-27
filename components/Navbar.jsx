@@ -34,14 +34,14 @@ export default function Navbar(){
   },[])
 
   return(
-    <header className="w-full border-b border-gray-200 bg-white sticky top-0 z-50">
+    <header className="w-full bg-[#111827]  border-bs-blue-950  ">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/">
-          <h1 className="text-xl md:text-2xl font-semibold tracking-wide">
+          <h1 className="text-[#e5e7eb] text-xl md:text-2xl font-semibold tracking-wide">
             Affair{" "}
-            <span className={`${playwrite.className} text-[#ff4000]`}>
+            <span className={`${playwrite.className} text-orange-300`}>
               Escorts
             </span>
           </h1>
@@ -64,7 +64,7 @@ export default function Navbar(){
           <div className="relative" ref={dropdownRef}>
             {!isAuthenticated ? (
               <Link href="/login">
-                <button className="p-2 border border-[#ff4000] rounded-full text-[#ff4000] hover:bg-[#ff4000] hover:text-white">
+                <button className="p-2 border border-orange-600 rounded-full text-orange-600 hover:bg-orange-600 hover:text-white">
                   <FaUser />
                 </button>
               </Link>
@@ -72,7 +72,7 @@ export default function Navbar(){
               <>
                 <button
                   onClick={()=> setOpen(!open)}
-                  className="p-2 border border-[#ff4000] rounded-full text-[#ff4000] hover:bg-[#ff4000] hover:text-white"
+                  className="p-2 border border-orange-600 rounded-full text-orange-600 hover:bg-orange-600 hover:text-white"
                 >
                   <FaUser />
                 </button>
@@ -103,7 +103,7 @@ export default function Navbar(){
 
           {/* CTA */}
           <Link href={isAuthenticated ? "/dashboard/post-ad" : "/login"}>
-            <Button className="px-6 py-2 bg-[#ff4000] text-white rounded-full">
+            <Button className="px-6 py-2 bg-orange-600 text-white rounded-full">
               Post Your Ads
             </Button>
           </Link>
@@ -160,7 +160,7 @@ export default function Navbar(){
           )}
 
           <Link href={isAuthenticated ? "/dashboard/post-ad" : "/login"}>
-            <Button className="w-full bg-[#ff4000] text-white rounded-full">
+            <Button className="w-full bg-orange-600 text-white rounded-full">
               Post Your Ads
             </Button>
           </Link>
@@ -168,5 +168,6 @@ export default function Navbar(){
         </div>
       )}
     </header>
+   
   )
 }

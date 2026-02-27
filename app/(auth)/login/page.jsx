@@ -40,15 +40,15 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
+    <div className="min-h-screen  flex items-center justify-center px-4">
 
       {/* Card */}
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
+      <div className="w-full max-w-md border border-(--content-border-color) rounded-3xl shadow-2xl p-8">
 
         {/* Heading */}
         <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
           Join Affair{" "}
-          <span className={`${playwrite.className} text-[#ff4000]`}>
+          <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
         </h1>
@@ -62,7 +62,7 @@ export default function Login() {
           {/* Email */}
           <div>
             <label className="text-sm font-medium">Email</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-[#ff4000]">
+            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-orange-600">
               <FaEnvelope className="text-gray-400 mr-2" />
               <input
                 type="email"
@@ -78,7 +78,7 @@ export default function Login() {
           <div>
             <label className="text-sm font-medium">Password</label>
 
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-[#ff4000]">
+            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-orange-600">
               <FaLock className="text-gray-400 mr-2" />
 
               <input
@@ -100,7 +100,7 @@ export default function Login() {
           </div>
 
           {/* Forgot */}
-          <div className="text-right text-sm text-[#ff4000] cursor-pointer hover:underline">
+          <div className="text-right text-sm text-(--second-color) cursor-pointer hover:underline">
            <Link href={'/forgetEmail'}> Forgot password?</Link>
           </div>
 
@@ -115,10 +115,10 @@ export default function Login() {
           </div>
 
           {/* Signup */}
-          <p className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm text-(--website-text)">
             New here?{" "}
             <Link href={'/signup'}>
-            <span className="text-[#ff4000] font-semibold cursor-pointer hover:underline">
+            <span className="text-(--second-color) font-semibold cursor-pointer hover:underline">
               Create account
             </span></Link>
           </p>

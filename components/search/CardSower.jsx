@@ -15,7 +15,7 @@ console.log(totalPages)
     <div className="max-1xl md:max-w-7xl mx-auto px-6 py-10">
 
       {/* Grid */}
-      <div className="grid grid-cols-1 gap-4">
+      <div className="grid grid-cols-1 gap-10">
 
 {items?.length > 0 ? (
   items.map(item => (
@@ -25,6 +25,9 @@ console.log(totalPages)
       age={item.age}
       image={item.images?.[0]}
       title={item.title}
+      is_telegram={item.is_telegram == 1 ? true : false}
+      is_whatsapp={item.is_whatsapp == 1 ? true : false}
+      country={item.nationality}
       desc={item.description}
       location={item.local_area_name+' , '+item.city_name}
       is_superTop={item.super_top == 1 ? true : false}
@@ -65,8 +68,8 @@ console.log(totalPages)
               onClick={() => setCurrentPage(index + 1)}
               className={`px-4 py-2 rounded-lg border ${
                 currentPage === index + 1
-                  ? "bg-[#ff4000] text-white"
-                  : "bg-white"
+                  ? "bg-orange-300 text-white"
+                  : "bg-blue-950"
               }`}
             >
               {index + 1}

@@ -12,7 +12,7 @@ export default function Alert(){
   const [isExpanded, setIsExpanded] = useState(false);
 
   return(
-    <div className="rounded-xl border border-red-200 bg-red-50 p-4 sm:p-5 mb-6 shadow-sm">
+    <div className="rounded-xl border border-red-500 bg-[#ef4444]/30 p-4 sm:p-5 mb-6 shadow-sm">
 
       {/* top row */}
       <div className="flex flex-col sm:flex-row sm:items-start gap-4">
@@ -26,11 +26,11 @@ export default function Alert(){
 
           {/* text */}
           <div>
-            <h3 className="text-red-600 font-bold text-lg uppercase">
+            <h3 className="text-white font-bold text-lg uppercase">
               Scam Alert: Never Pay Advance
             </h3>
 
-            <p className="text-gray-600 text-sm mt-1">
+            <p className="text-white text-sm mt-1">
               Always meet first. Pay only after face-to-face meeting.
             </p>
           </div>
@@ -88,7 +88,7 @@ export default function Alert(){
 
           {/* footer */}
           <div className="mt-6 pt-4 border-t border-dashed border-gray-200 text-center">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white">
               Got scammed? Report at{" "}
               <a href="mailto:help@affairescorts.com" className="text-red-500 font-semibold">
                 help@affairescorts.com

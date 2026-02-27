@@ -19,8 +19,8 @@ export default function Button({
         flex items-center justify-center gap-2 text-white
         ${
           loading || disabled
-            ? "bg-[#ff4500]/70 cursor-not-allowed"
-            : "bg-[#ff4500] hover:bg-[#c84312]"
+            ? "bg-orange-600/70 cursor-not-allowed"
+            : "bg-orange-600 hover:bg-[#c84312]"
         }
         ${className}
       `}

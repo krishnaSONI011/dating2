@@ -81,7 +81,7 @@ Total Pay: ₹${total}
           {/* Button */}
           <button
             onClick={handleCopy}
-            className="w-full bg-[#ff4000] hover:bg-[#e63900] text-white font-semibold py-3 rounded-xl transition"
+            className="w-full bg-orange-600 hover:bg-[#e63900] text-white font-semibold py-3 rounded-xl transition"
           >
             Copy Payment Details
           </button>

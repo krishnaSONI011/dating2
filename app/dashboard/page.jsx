@@ -15,8 +15,8 @@ export default function Dashboard() {
   const router = useRouter()
 
   useEffect(()=>{
-    if(user.is_verified == 0) setOpen(true)
-  },[user.is_verified])
+    if(user.is_verified == 0 && user.is_approved == 0) setOpen(true)
+  },[user.is_verified ,user.is_approved])
   
 
   // card logic

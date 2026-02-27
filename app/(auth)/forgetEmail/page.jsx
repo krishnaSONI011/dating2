@@ -49,7 +49,7 @@ export default function Login() {
         {/* Heading */}
         <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
           Join Affair{" "}
-          <span className={`${playwrite.className} text-[#ff4000]`}>
+          <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
         </h1>
@@ -63,7 +63,7 @@ export default function Login() {
           {/* Email */}
           <div>
             <label className="text-sm font-medium">Email</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-[#ff4000]">
+            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-orange-600">
               <FaEnvelope className="text-gray-400 mr-2" />
               <input
                 type="email"
@@ -93,7 +93,7 @@ export default function Login() {
           <p className="text-center text-sm text-gray-600">
             lets login again ?{" "}
             <Link href={'/signup'}>
-            <span className="text-[#ff4000] font-semibold cursor-pointer hover:underline">
+            <span className="text-orange-600 font-semibold cursor-pointer hover:underline">
               login
             </span></Link>
           </p>

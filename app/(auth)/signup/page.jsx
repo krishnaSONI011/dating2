@@ -43,13 +43,13 @@ export default function Signup() {
     }
   }
   return (
-    <div className="min-h-screen bg-white flex justify-center py-14 px-4">
-      <div className="w-full max-w-lg">
+    <div className="min-h-screen bg-(--website-background) flex justify-center py-14 px-4">
+      <div className="w-full max-w-lg border border-(--content-border-color) p-5 rounded" >
 
         {/* Heading */}
         <h1 className="text-4xl font-bold mb-2">
           Join Affair{" "}
-          <span className={`${playwrite.className} text-[#ff4000]`}>
+          <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
         </h1>
@@ -63,7 +63,7 @@ export default function Signup() {
           placeholder="Email"
           value={email}
           onChange={(e)=> setEmail(e.target.value)}
-          className="w-full mt-2 mb-6 p-3 rounded-xl border focus:border-[#ff4000] outline-none"
+          className="w-full mt-2 mb-6 p-3 rounded-xl border focus:border-orange-600 outline-none"
         />
 
         {/* Password */}
@@ -74,7 +74,7 @@ export default function Signup() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 rounded-xl border focus:border-[#ff4000] outline-none"
+            className="w-full p-3 rounded-xl border focus:border-orange-600 outline-none"
           />
           <span
             onClick={() => setShow(!show)}
@@ -108,7 +108,7 @@ export default function Signup() {
           <div
             onClick={() => setAgree(!agree)}
             className={`w-12 h-6 rounded-full cursor-pointer transition ${
-              agree ? "bg-[#ff4000]" : "bg-gray-300"
+              agree ? "bg-orange-600" : "bg-gray-300"
             }`}
           >
             <div
@@ -129,7 +129,7 @@ export default function Signup() {
           <div
             onClick={() => setMarketing(!marketing)}
             className={`w-12 h-6 rounded-full cursor-pointer transition ${
-              marketing ? "bg-[#ff4000]" : "bg-gray-300"
+              marketing ? "bg-orange-600" : "bg-gray-300"
             }`}
           >
             <div
@@ -150,7 +150,7 @@ export default function Signup() {
           disabled={!isValid}
           className={`w-full py-4 rounded-xl font-bold text-lg mt-8 transition ${
             isValid
-              ? "bg-[#ff4000] hover:bg-[#e63a00] text-white"
+              ? "bg-orange-600 hover:bg-[#e63a00] text-white"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
@@ -158,14 +158,14 @@ export default function Signup() {
         </button> */}
         <Button onClick={handelSignup} disabled={!isValid} className={`w-full py-4 rounded-xl font-bold text-lg mt-8 transition ${
             isValid
-              ? "bg-[#ff4000] hover:bg-[#e63a00] text-white"
+              ? "bg-orange-600 hover:bg-[#e63a00] text-white"
               : "bg-gray-300  text-gray-500 cursor-not-allowed"
           }`}>
  SIGN UP
         </Button>
         <p className="text-gray-500 mb-8 mt-5 text-center">
           Already have account?{" "}
-          <Link href="/login" className="text-[#ff4000] font-semibold hover:underline">
+          <Link href="/login" className="text-orange-600 font-semibold hover:underline">
             Login here
           </Link>
         </p>

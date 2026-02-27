@@ -1,24 +1,26 @@
 'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { FaHome, FaChevronRight } from "react-icons/fa"
 
-export default function Breadcrumb(){
+export default function Breadcrumb() {
 
   const pathname = usePathname()
-
-  // split path
   const pathSegments = pathname.split("/").filter(x => x)
 
   return (
-    <div className="w-full bg-gray-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 py-3">
+    <div className="w-full bg-gradient-to-r from-[#0b1220] to-[#0e1a2f]">
+      <div className="max-w-7xl mx-auto px-6 py-5">
 
-        <div className="flex items-center flex-wrap text-sm">
+        <div className="flex items-center gap-3 text-lg">
 
-          {/* Home */}
-          <Link href="/" className="text-gray-500 hover:text-orange-500 font-medium">
-            Home
+          {/* Home Icon */}
+          <Link
+            href="/"
+            className="text-gray-400 hover:text-orange-300 transition"
+          >
+            <FaHome className="text-xl" />
           </Link>
 
           {pathSegments.map((segment, index) => {
@@ -27,24 +29,25 @@ export default function Breadcrumb(){
             const isLast = index === pathSegments.length - 1
 
             return (
-              <span key={index} className="flex items-center">
+              <div key={index} className="flex items-center gap-3">
 
-                <span className="mx-2 text-gray-400">/</span>
+                {/* Arrow */}
+                <FaChevronRight className="text-gray-500 text-sm" />
 
                 {isLast ? (
-                  <span className="text-gray-800 font-semibold capitalize">
-                    {segment.replace("-", " ")}
+                  <span className="text-white font-medium capitalize">
+                    {segment.replace(/-/g, " ")}
                   </span>
                 ) : (
                   <Link
                     href={href}
-                    className="text-gray-500 hover:text-orange-500 capitalize"
+                    className="text-gray-400 hover:text-orange-300 transition capitalize"
                   >
-                    {segment.replace("-", " ")}
+                    {segment.replace(/-/g, " ")}
                   </Link>
                 )}
 
-              </span>
+              </div>
             )
           })}
 
