@@ -78,7 +78,7 @@ export default function Search(){
         totalPages={totalPages}
       />
       </div>
-      <div className="mx-5 mt-10">
+      <div className="hidden md:block mx-5 mt-10">
       <PopularArea areas={city} slug={slug}/>
       </div>
       
