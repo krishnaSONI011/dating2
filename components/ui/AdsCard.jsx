@@ -96,7 +96,7 @@ export default function EscortCard({
       className={`
       relative rounded-2xl border transition-all duration-300 
       ${highlight 
-        ? "border-orange-400 bg-orange-200/10 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
+        ? "border-orange-400 bg-orange-500/30 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
         : "border-gray-700 bg-gradient-to-r from-[#0f172a] to-[#1e293b]"}
       `}
     >
