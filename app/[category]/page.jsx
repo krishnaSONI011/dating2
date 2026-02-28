@@ -22,9 +22,9 @@ export default function Pages() {
         setError(false)
 
         const formData = new FormData()
-        formData.append("page_slug", slug)
+        formData.append("legal_slug", slug)
 
-        const res = await api.post("/Wb/pages_detail", formData)
+        const res = await api.post("/Wb/legal_page_detail", formData)
 
         if (res.data.status === 0) {
           setData(res.data.data)

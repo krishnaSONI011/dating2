@@ -7,6 +7,7 @@ import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { WalletContext } from "@/context/WalletContext";
 import Link from "next/link";
+import WebsiteLogo from "./WebsiteLogo";
 
 const playwrite = Playwrite_AT({
   subsets: ["latin"],
@@ -39,12 +40,13 @@ export default function Navbar(){
 
         {/* Logo */}
         <Link href="/">
-          <h1 className="text-[#e5e7eb] text-xl md:text-2xl font-semibold tracking-wide">
+          {/* <h1 className="text-[#e5e7eb] text-xl md:text-2xl font-semibold tracking-wide">
             Affair{" "}
             <span className={`${playwrite.className} text-orange-300`}>
               Escorts
             </span>
-          </h1>
+          </h1> */}
+          <WebsiteLogo />
         </Link>
 
         {/* Desktop Right */}

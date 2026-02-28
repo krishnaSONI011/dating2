@@ -6,28 +6,55 @@ import Button from "./ui/Button"
 import { useEffect, useState } from "react"
 import api from "@/lib/api"
 import { useRouter } from "next/navigation"
+import WebsiteLogo from "./WebsiteLogo"
 
 const playwrite = Playwrite_AT({
   subsets: ["latin"],
 })
 
 export default function Footer() {
-  const router = useRouter()
-  const [city , setCity] = useState([])
 
-  useEffect(()=> {
-     async function getCity(){
-      try{
+  const router = useRouter()
+
+  const [city, setCity] = useState([])
+  const [footerData, setFooterData] = useState(null)
+
+  /* ================= CITIES ================= */
+  useEffect(() => {
+    async function getCity() {
+      try {
         const res = await api.post(`/Wb/all_cities`)
-        if(res.data.status == 0){
+        if (res.data.status == 0) {
           setCity(res.data.data)
         }
-      }catch(e){
+      } catch (e) {
         console.log(e)
       }
-     }
-     getCity()
-  },[])
+    }
+    getCity()
+  }, [])
+
+  /* ================= FOOTER DETAILS ================= */
+  useEffect(() => {
+    async function getFooterDetails() {
+      try {
+        const formData = new FormData()
+        formData.append("footer_id", 1)
+
+        const res = await api.post("/Wb/footer_detail", formData)
+
+        if (res.data.status === 0) {
+          setFooterData(res.data.data)
+        }
+
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
+    getFooterDetails()
+  }, [])
+
   return (
     <footer className="w-full bg-[#05060a] text-gray-300 pt-16 pb-10 border-t border-gray-800">
 
@@ -38,12 +65,8 @@ export default function Footer() {
 
           {/* Logo + badges */}
           <div>
-            <h1 className="text-3xl font-semibold mb-4 text-white">
-              Affair{" "}
-              <span className={`${playwrite.className} text-orange-300`}>
-                Escorts
-              </span>
-            </h1>
+
+            <WebsiteLogo />
 
             {/* adult badge */}
             <div className="mb-4">
@@ -62,20 +85,26 @@ export default function Footer() {
               </span>
             </div>
 
-            {/* dmca */}
-            <div className="mt-5 w-fit">
-              <Link className={'w-fit'} href={"#"}>
-             
-              <img src="/dmca.png" className="h-8"/>
-              </Link>
-            </div>
+            {/* DMCA Image (Dynamic) */}
+            {footerData?.img && (
+              <div className="mt-5 w-fit">
+                <Link href={"#"}>
+                  <img
+                    src={footerData.img}
+                    alt="DMCA"
+                    className="h-8 max-w-[140px] object-contain"
+                  />
+                </Link>
+              </div>
+            )}
+
           </div>
 
-          {/* about */}
+          {/* About (Dynamic Description) */}
           <p className="text-gray-400 leading-relaxed max-w-xl">
-            Premium advertising platform for verified independent listings.
-            We connect service providers with clients in a secure and professional
-            environment.
+            {footerData?.description ||
+              "Premium advertising platform for verified independent listings. We connect service providers with clients in a secure and professional environment."
+            }
           </p>
 
         </div>
@@ -89,9 +118,9 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">LEGAL</h3>
             <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer">2257 Exemption</li>
-              <li className="hover:text-orange-300 cursor-pointer">Terms of Service</li>
-              <li className="hover:text-orange-300 cursor-pointer">Disclaimer</li>
+              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/2257-exemption'}>2257 Exemption</Link></li>
+              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/term-and-condition'}>Terms of Service</Link></li>
+              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/disclaimer'}>Disclaimer</Link></li>
             </ul>
           </div>
 
@@ -107,8 +136,8 @@ export default function Footer() {
           <div>
             <h3 className="text-white font-semibold mb-4">SECURITY</h3>
             <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer">Privacy Policy</li>
-              <li className="hover:text-orange-300 cursor-pointer">Cookie Policy</li>
+              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/privacy-policy'}>Privacy Policy</Link></li>
+              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/cookie-policy'}>Cookie Policy</Link></li>
             </ul>
           </div>
 
@@ -132,36 +161,34 @@ export default function Footer() {
 
           <div>
             <h3 className="text-white font-semibold mb-3">QUICK LOCATION ACCESS</h3>
-            <select onChange={(e)=>{router.push(`/escorts/${e.target.value}`)}} className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-orange-300">
-              <option>Select city</option>
-              {
-                city.map((c)=>(
-                  <option key={c.id} value={c.slug}>{c.name}</option>
-                ))
-              }
-            </select>
-            {/* <input
-              placeholder="Select City..."
+            <select
+              onChange={(e)=>{router.push(`/escorts/${e.target.value}`)}}
               className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-orange-300"
-            /> */}
+            >
+              <option>Select city</option>
+              {city.map((c)=>(
+                <option key={c.id} value={c.slug}>{c.name}</option>
+              ))}
+            </select>
           </div>
 
         </div>
 
-        {/* bottom */}
+        {/* ===== COPYRIGHT (Dynamic) ===== */}
         <div className="text-center text-gray-500 text-sm mt-10">
-          © {new Date().getFullYear()} Affair Escorts. All rights reserved.
+           {footerData?.copy_right || "Affair Escorts"}.
+         
         </div>
 
       </div>
 
-      {/* back to top */}
+      {/* Back To Top */}
       <button
-  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-  className="fixed bottom-6 right-6 bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 rounded-full shadow-lg"
->
-  ↑
-</button>
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-6 right-6 bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 rounded-full shadow-lg"
+      >
+        ↑
+      </button>
 
     </footer>
   )

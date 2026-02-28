@@ -118,8 +118,8 @@ export default function Signup() {
             ></div>
           </div>
 
-          <p className="text-sm text-gray-600">
-            <span className="font-semibold">Terms & Privacy Policy</span><br />
+          <p className="text-sm ">
+            <span className="font-semibold text-(--second-color)"><Link href={'/term-and-condition'}>Terms & Privacy Policy</Link></span><br />
             I agree to Terms & Privacy Policy
           </p>
         </div>
@@ -139,9 +139,9 @@ export default function Signup() {
             ></div>
           </div>
 
-          <p className="text-sm text-gray-600">
-            <span className="font-semibold">Marketing Communications</span><br />
-            Receive offers & updates
+          <p className="text-sm ">
+            <span className="font-semibold text-(--second-color)"><Link href={'/cookie-policy'}>Cookie Policy</Link></span><br />
+            I agree to Cookie Policy
           </p>
         </div>
 
@@ -159,7 +159,7 @@ export default function Signup() {
         <Button onClick={handelSignup} disabled={!isValid} className={`w-full py-4 rounded-xl font-bold text-lg mt-8 transition ${
             isValid
               ? "bg-orange-600 hover:bg-[#e63a00] text-white"
-              : "bg-gray-300  text-gray-500 cursor-not-allowed"
+              : "bg-gray-300   text-gray-500 cursor-not-allowed"
           }`}>
  SIGN UP
         </Button>
