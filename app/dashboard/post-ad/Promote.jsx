@@ -214,19 +214,19 @@ export default function Promote({ prevStep ,form , images }) {
         <h2 className="text-3xl font-bold mb-6">Promote Your Ad</h2>
 
         {/* PREVIEW */}
-        {/* <div className="mb-10">
+        <div className="mb-10">
           <h3 className="font-semibold mb-3">Ad Preview</h3>
           <EscortCard
             age={form.age}
             title={form.title}
-            image={images?.[0]?.preview}
+            image={images?.preview}
             desc={form.description}
             is_superTop={superTop}
             is_new={tagNew}
             highlight={highlight}
             location={form.local_area + ','+ form.city}
           />
-        </div> */}
+        </div>
 
         {/* TIME SLOT */}
         <h3 className="text-xl font-semibold mb-4">Choose promotion time</h3>
