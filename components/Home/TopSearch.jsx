@@ -60,7 +60,7 @@ export default function TopSearches() {
                 const category = item.cat_slug
                 const city = item.city_slug
 
-                router.push(`/${category}/escorts/${city}`)
+                router.push(`/${category}/${city}`)
               }}
               className="rounded-xl hover:bg-orange-600 hover:scale-105 bg-orange-600/70 px-5 py-2 text-sm text-white transition cursor-pointer"
             >

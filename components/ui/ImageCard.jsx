@@ -15,7 +15,7 @@ export default function ImageCard({
       <img
         src={image}
         alt={city}
-        className="absolute inset-0 w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
 
       {/* Overlay */}
