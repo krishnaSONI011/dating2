@@ -83,26 +83,46 @@ export default function SearchSection({ title, banner, subtitle }) {
   }, [search.city]);
 
   return (
-    <section className="relative w-full h-[520px] flex items-center justify-center text-white overflow-hidden">
-
-      <img src={banner || "/default-banner.jpg"} alt="bg" className="absolute inset-0 w-full h-full object-cover" />
+    <section className="relative w-full min-h-[480px] md:h-[520px] flex items-center justify-center text-white overflow-hidden">
+  
+      {/* Background */}
+      <img
+        src={banner || "/default-banner.jpg"}
+        alt="bg"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
       <div className="absolute inset-0 bg-black/70"></div>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
-
-        <h1 className="text-4xl uppercase md:text-6xl font-bold tracking-wide mb-4">
+  
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center w-full">
+  
+        {/* Title */}
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide mb-4 uppercase">
           {title}
         </h1>
-
-        <p className="text-gray-300 text-lg md:text-xl mb-10">
+  
+        <p className="text-gray-300 text-sm sm:text-base md:text-xl mb-8 md:mb-10">
           {subtitle}
         </p>
-
-        <div className="bg-[#0f1117]/90 backdrop-blur-xl border border-gray-800 rounded-full p-2 flex flex-col md:flex-row items-center gap-3 md:gap-0 shadow-2xl">
-
-          {/* keyword */}
-          <div className="flex items-center gap-3 px-5 py-3 w-full md:w-1/3 border-r border-gray-800">
-            <FaSearch className="text-orange-500" />
+  
+        {/* SEARCH BOX */}
+        <div className="
+          bg-[#0f1117]/95 backdrop-blur-xl border border-gray-800
+          rounded-2xl md:rounded-full
+          p-4 md:p-2
+          flex flex-col md:flex-row
+          items-stretch md:items-center
+          gap-4 md:gap-0
+          shadow-2xl
+        ">
+  
+          {/* KEYWORD */}
+          <div className="
+            flex items-center gap-3
+            px-4 py-3
+            w-full md:w-1/3
+            md:border-r md:border-gray-800
+          ">
+            <FaSearch className="text-orange-500 text-sm" />
             <input
               type="text"
               placeholder="Search keywords..."
@@ -110,57 +130,74 @@ export default function SearchSection({ title, banner, subtitle }) {
               onChange={(e) =>
                 setSearch((prev) => ({ ...prev, keyword: e.target.value }))
               }
-              className="bg-transparent outline-none w-full text-sm"
+              className="bg-transparent outline-none w-full text-sm placeholder-gray-400"
             />
           </div>
-
-          {/* city */}
-          <div className="flex items-center gap-3 px-5 py-3 w-full md:w-1/4 border-r border-gray-800">
-            <FaMapMarkerAlt className="text-orange-500" />
+  
+          {/* CITY */}
+          <div className="
+            flex items-center gap-3
+            px-4 py-3
+            w-full md:w-1/4
+            md:border-r md:border-gray-800
+          ">
+            <FaMapMarkerAlt className="text-orange-500 text-sm" />
             <select
               value={search.city}
               onChange={(e) =>
                 setSearch((prev) => ({
                   ...prev,
                   city: e.target.value,
-                  area: '' // reset area when city changes
+                  area: ''
                 }))
               }
-              className="bg-transparent outline-none w-full text-sm"
+              className="bg-transparent outline-none w-full text-sm text-gray-300"
             >
               <option value="">Select City</option>
               {cities.map((c) => (
-                <option key={c.id} value={c.slug}>{c.name}</option>
+                <option key={c.id} value={c.slug}>
+                  {c.name}
+                </option>
               ))}
             </select>
           </div>
-
-          {/* area */}
-          <div className="flex items-center gap-3 px-5 py-3 w-full md:w-1/4">
-            <FaMapMarkerAlt className="text-orange-500" />
+  
+          {/* AREA */}
+          <div className="
+            flex items-center gap-3
+            px-4 py-3
+            w-full md:w-1/4
+          ">
+            <FaMapMarkerAlt className="text-orange-500 text-sm" />
             <select
               value={search.area}
               onChange={(e) =>
                 setSearch((prev) => ({ ...prev, area: e.target.value }))
               }
-              className="bg-transparent outline-none w-full text-sm"
+              className="bg-transparent outline-none w-full text-sm text-gray-300"
             >
               <option value="">All Areas</option>
               {local.map((l) => (
-                <option key={l.id} value={l.slug}>{l.name}</option>
+                <option key={l.id} value={l.slug}>
+                  {l.name}
+                </option>
               ))}
             </select>
           </div>
-
-          {/* button */}
-          <div className="w-full md:w-[20%] px-3">
-            <Button onClick={handleSearch}>
+  
+          {/* BUTTON */}
+          <div className="w-full md:w-auto md:px-3">
+            <Button
+              onClick={handleSearch}
+              className="w-full md:w-auto px-8 py-3 rounded-xl md:rounded-full"
+            >
               Search
             </Button>
           </div>
-
+  
         </div>
+  
       </div>
     </section>
-  );
+  )
 }
