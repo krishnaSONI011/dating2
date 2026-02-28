@@ -156,6 +156,7 @@ export default function MyAds(){
               {/* CARD */}
               <div className="p-5">
                 <EscortCard
+                  images={ad.images}
                   title={ad.title}
                   desc={ad.description}
                   age={ad.age}
