@@ -7,7 +7,8 @@ import {
   FaMapMarkerAlt, 
   FaCheckCircle 
 } from "react-icons/fa"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { ThemeContext } from "@/context/ThemeContext"
 
 export default function EscortCard({
   images = [],
@@ -25,9 +26,10 @@ export default function EscortCard({
   is_new,
 }) {
 
+  const { themeData } = useContext(ThemeContext)
   const [activeIndex, setActiveIndex] = useState(0)
 
-  // 🔥 Auto Slide Every 2 Seconds
+  /* ================= AUTO SLIDE ================= */
   useEffect(() => {
     if (!images || images.length <= 1) return
 
@@ -38,6 +40,7 @@ export default function EscortCard({
     return () => clearInterval(interval)
   }, [images])
 
+  /* ================= ACTIONS ================= */
   function handleCall(){
     if(!phone) return
     window.location.href = `tel:${phone}`
@@ -100,7 +103,7 @@ export default function EscortCard({
 
       {/* SUPER TOP */}
       {is_superTop && (
-        <div className="absolute right-3 -top-2 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold z-20">
+        <div className="absolute right-3 -top-2 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold z-30">
           SUPER TOP
         </div>
       )}
@@ -108,42 +111,60 @@ export default function EscortCard({
       <div className="flex overflow-hidden">
 
         {/* IMAGE SLIDER */}
-        {/* IMAGE SLIDER */}
-<div className="relative w-[130px] sm:w-[150px] md:w-[180px] h-[200px] sm:h-[220px] md:h-[240px] flex-shrink-0 overflow-hidden rounded-l-2xl">
+        <div className="relative w-[130px] sm:w-[150px] md:w-[180px] h-[200px] sm:h-[220px] md:h-[240px] flex-shrink-0 overflow-hidden rounded-l-2xl">
 
-{is_new && (
-  <div className="absolute top-2 left-2 bg-green-500 text-white text-[10px] px-2 py-1 rounded-full z-20">
-    NEW
-  </div>
-)}
+          {/* NEW Badge */}
+          {is_new && (
+            <div className="absolute top-2 left-2 bg-green-600 text-white text-[10px] px-2 py-1 rounded-full z-30">
+              NEW
+            </div>
+          )}
 
-<div className="absolute bottom-2 left-2 bg-blue-600 text-white text-[10px] px-2 py-1 rounded-full flex items-center gap-1 z-20">
-  <FaCheckCircle size={10}/> Verified
-</div>
+          {/* VERIFIED GREEN */}
+          <div className="absolute bottom-2 left-2 bg-green-600 text-white text-[10px] px-2 py-1 rounded-full flex items-center gap-1 z-30 shadow-md">
+            <FaCheckCircle size={10}/> Verified
+          </div>
 
-{/* Smooth Fade Images */}
-{images && images.length > 0 ? (
-  images.map((img, index) => (
-    <img
-      key={index}
-      src={img}
-      alt="card"
-      className={`
-        absolute inset-0 w-full h-full object-cover
-        transition-opacity duration-1000 ease-in-out
-        ${index === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"}
-      `}
-    />
-  ))
-) : (
-  <img
-    src="/noimage.jpg"
-    className="w-full h-full object-cover"
-    alt="card"
-  />
-)}
+          {/* WATERMARK LOGO */}
+          {themeData?.logo && (
+            <img
+              src={themeData.logo}
+              alt="Watermark"
+              className="
+                absolute inset-0 m-auto 
+                max-w-[70%] max-h-[70%]
+                object-contain
+                z-50
+                opacity-30
+                pointer-events-none
+                select-none
+              "
+            />
+          )}
 
-</div>
+          {/* Smooth Fade Images */}
+          {images && images.length > 0 ? (
+            images.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt="card"
+                className={`
+                  absolute inset-0 w-full h-full object-cover
+                  transition-opacity duration-1000 ease-in-out
+                  ${index === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"}
+                `}
+              />
+            ))
+          ) : (
+            <img
+              src="/noimage.jpg"
+              className="w-full h-full object-cover"
+              alt="card"
+            />
+          )}
+
+        </div>
 
         {/* RIGHT CONTENT */}
         <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between">
@@ -168,7 +189,7 @@ export default function EscortCard({
                 Female
               </span>
               <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
-                {age}y
+                {age} years
               </span>
               <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 {country}

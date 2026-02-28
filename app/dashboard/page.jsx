@@ -56,7 +56,7 @@ export default function Dashboard() {
         <ReusableModal open={open}>
         <h1 className="text-3xl font-bold">Please Verify First !</h1>
         <p className="mt-5"> we must ensure that everyone who posts is legal person.</p>
-        <Button className="mt-5">Start Verification</Button>
+        <Button onClick={()=> router.push('/dashboard/verification')} className="mt-5">Start Verification</Button>
         <Button onClick={(e)=> setOpen(false)} className="bg-red-500 mt-5 hover:bg-red-700">I do later</Button>
       </ReusableModal>
         {/* main cards */}
