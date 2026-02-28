@@ -24,6 +24,8 @@ export default function PostAds(){
     mobile: "",
     state: "",
     city: "",
+    is_whatsapp: false,
+    is_telegram: false,
     local_area: "",
     postal_code: "",
     address: "",

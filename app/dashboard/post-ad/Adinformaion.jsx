@@ -145,7 +145,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
             <div className="mx-30">
                 <h1 className="text-3xl font-bold my-10">Informaition</h1>
                 {/* Ads Informaition */}
-                <div className="bg-gray-100 rounded border border-gray-200 p-3">
+                <div className="bg-slate-800 rounded border border-(--content-border-color) p-3">
                     <div className="grid grid-cols-2 gap-3">
                         {/* category */}
                         <div>
@@ -154,7 +154,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="cat_id"
                                 value={form.cat_id}
                                 onChange={handleChange}
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             >
                                 <option value="">Choose Category</option>
                                 {category.map((c) => (
@@ -171,7 +171,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="city"
                                 value={form.city}
                                 onChange={handleChange}
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border  w-full bg-slate-900 rounded p-2 mt-2"
                             >
                                 <option value="">Choose City</option>
                                 {city.map((c) => (
@@ -186,7 +186,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="local_area"
                                 value={form.local_area}
                                 onChange={handleChange}
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             >
                                 <option value="">Choose Area</option>
                                 {local.map((c) => (
@@ -195,21 +195,16 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             </select>
                         </div>
                         {/* postal code */}
-                        <div>
+                        {/* <div>
                             <label htmlFor="" className="font-bold text-xl">Postal Code</label><br />
                             <input
                                 name="postal_code"
                                 value={form.postal_code}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             />
-                        </div>
-
-
-                    </div>
-                    <div className="grid grid-cols-1 mt-5">
-                        {/* address */}
+                        </div> */}
                         <div>
                             <label htmlFor="" className="font-bold text-xl">Address</label><br />
                             <input
@@ -217,14 +212,20 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.address}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             />
                         </div>
+
+
+                    </div>
+                    <div className="grid grid-cols-1 mt-5">
+                        {/* address */}
+                        
                     </div>
 
 
                 </div>
-                <div className="bg-gray-100 mt-8 rounded border border-gray-200 p-3">
+                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
                     <div className="grid grid-cols-2 gap-3">
                         {/* category */}
                         <div>
@@ -234,7 +235,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.age}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             />
                         </div>
                         {/* city */}
@@ -245,7 +246,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.nick_name}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border w-full bg-slate-900 rounded p-2 mt-2"
                             />
                         </div>
 
@@ -264,7 +265,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="title"
                                 value={form.title}
                                 onChange={handleChange}
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border  w-full bg-slate-900 rounded p-2 mt-2"
                             />
                         </div>
                         <div>
@@ -273,14 +274,14 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="description"
                                 value={form.description}
                                 onChange={handleChange}
-                                className="border w-full bg-white rounded p-2 mt-2"
+                                className="border  w-full bg-slate-900 rounded p-2 mt-2"
                             />
                         </div>
                     </div>
 
 
                 </div>
-                <div className="bg-gray-100 mt-8 rounded border border-gray-200 p-6">
+                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
 
                     <h2 className="text-2xl font-bold mb-6">
                         Profile Attributes
@@ -294,10 +295,10 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                     />
 
                     <div className="mb-6">
-                        <label className="font-semibold text-lg text-gray-700 block mb-2">
+                        <label className="font-semibold text-lg text-(--content-border-color) block mb-2">
                             Nationality
                         </label>
-                        <select className="w-full p-2 bg-gray-100 border rounded" name="nationality"
+                        <select className="w-full p-2 bg-slate-900 border rounded" name="nationality"
                         value={form.nationality}
                             onChange={handleChange}
                         >
@@ -307,377 +308,377 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
 
  
 
-    <option value="🇦🇱 Albanian">
+    <option value="Albanian">
     🇦🇱 Albanian</option>
 
  
 
-    <option value="🇺🇸 American">
+    <option value="American">
     🇺🇸 American</option>
 
  
 
-    <option value="🇸🇦 Arabic">
+    <option value="Arabic">
     🇸🇦 Arabic</option>
 
  
 
-    <option value="🇦🇷 Argentinian">
+    <option value="Argentinian">
     🇦🇷 Argentinian</option>
 
  
 
-    <option value="🇦🇺 Australian">
+    <option value="Australian">
     🇦🇺 Australian</option>
 
  
 
-    <option value="🇦🇹 Austrian">
+    <option value="Austrian">
     🇦🇹 Austrian</option>
 
  
 
-    <option value="🇧🇩 Bangladeshi">
+    <option value="Bangladeshi">
     🇧🇩 Bangladeshi</option>
 
  
 
-    <option value="🇧🇪 Belgian">
+    <option value="Belgian">
     🇧🇪 Belgian</option>
 
  
 
-    <option value="🇧🇴 Bolivian">
+    <option value="Bolivian">
     🇧🇴 Bolivian</option>
 
  
 
-    <option value="🇧🇦 Bosnian">
+    <option value="Bosnian">
     🇧🇦 Bosnian</option>
 
  
 
-    <option value="🇧🇷 Brazilian">
+    <option value="Brazilian">
     🇧🇷 Brazilian</option>
 
  
 
-    <option value="🇧🇬 Bulgarian">
+    <option value="Bulgarian">
     🇧🇬 Bulgarian</option>
 
  
 
-    <option value="🇨🇦 Canadian">
+    <option value="Canadian">
     🇨🇦 Canadian</option>
 
  
 
-    <option value="🇨🇱 Chilean">
+    <option value="Chilean">
     🇨🇱 Chilean</option>
 
  
 
-    <option value="🇨🇳 Chinese">
+    <option value="Chinese">
     🇨🇳 Chinese</option>
 
  
 
-    <option value="🇨🇴 Colombian">
+    <option value="Colombian">
     🇨🇴 Colombian</option>
 
  
 
-    <option value="🇨🇷 Costa Rican">
+    <option value="Costa Rican">
     🇨🇷 Costa Rican</option>
 
  
 
-    <option value="🇭🇷 Croatian">
+    <option value="Croatian">
     🇭🇷 Croatian</option>
 
  
 
-    <option value="🇨🇺 Cuban">
+    <option value="Cuban">
     🇨🇺 Cuban</option>
 
  
 
-    <option value="🇨🇿 Czech">
+    <option value="Czech">
     🇨🇿 Czech</option>
 
  
 
-    <option value="🇩🇰 Danish">
+    <option value="Danish">
     🇩🇰 Danish</option>
 
  
 
-    <option value="🇩🇴 Dominican">
+    <option value="Dominican">
     🇩🇴 Dominican</option>
 
  
 
-    <option value="🇳🇱 Dutch">
+    <option value=" Dutch">
     🇳🇱 Dutch</option>
 
  
 
-    <option value="🇪🇨 Ecuadorian">
+    <option value="Ecuadorian">
     🇪🇨 Ecuadorian</option>
 
  
 
-    <option value="🇬🇧 English">
+    <option value="English">
     🇬🇧 English</option>
 
  
 
-    <option value="🇪🇪 Estonian">
+    <option value="Estonian">
     🇪🇪 Estonian</option>
 
  
 
-    <option value="🇵🇭 Filipino">
+    <option value="Filipino">
     🇵🇭 Filipino</option>
 
  
 
-    <option value="🇫🇮 Finnish">
+    <option value="Finnish">
     🇫🇮 Finnish</option>
 
  
 
-    <option value="🇫🇷 French">
+    <option value="French">
     🇫🇷 French</option>
 
  
 
-    <option value="🇩🇪 German">
+    <option value="German">
     🇩🇪 German</option>
 
  
 
-    <option value="🇬🇷 Greek">
+    <option value=" Greek">
     🇬🇷 Greek</option>
 
  
 
-    <option value="🇬🇹 Guatemalan">
+    <option value="Guatemalan">
     🇬🇹 Guatemalan</option>
 
  
 
-    <option value="🇭🇹 Haitian">
+    <option value="Haitian">
     🇭🇹 Haitian</option>
 
  
 
-    <option value="🇭🇳 Honduran">
+    <option value="Honduran">
     🇭🇳 Honduran</option>
 
  
 
-    <option value="🇭🇺 Hungarian">
+    <option value="Hungarian">
     🇭🇺 Hungarian</option>
 
  
 
-    <option value="🇮🇳 Indian">
+    <option value="Indian">
     🇮🇳 Indian</option>
 
  
 
-    <option value="🇮🇩 Indonesian">
+    <option value="Indonesian">
     🇮🇩 Indonesian</option>
 
  
 
-    <option value="🇮🇪 Irish">
+    <option value="Irish">
     🇮🇪 Irish</option>
 
  
 
-    <option value="🇮🇹 Italian">
+    <option value="Italian">
     🇮🇹 Italian</option>
 
  
 
-    <option value="🇯🇲 Jamaican">
+    <option value="Jamaican">
     🇯🇲 Jamaican</option>
 
  
 
-    <option value="🇯🇵 Japanese">
+    <option value="Japanese">
     🇯🇵 Japanese</option>
 
  
 
-    <option value="🇰🇪 Kenyan">
+    <option value="Kenyan">
     🇰🇪 Kenyan</option>
 
  
 
-    <option value="🇱🇻 Latvian">
+    <option value="Latvian">
     🇱🇻 Latvian</option>
 
  
 
-    <option value="🇱🇹 Lithuanian">
+    <option value="Lithuanian">
     🇱🇹 Lithuanian</option>
 
  
 
-    <option value="🇲🇾 Malaysian">
+    <option value="Malaysian">
     🇲🇾 Malaysian</option>
 
  
 
-    <option value="🇲🇻 Maldivian">
+    <option value="Maldivian">
     🇲🇻 Maldivian</option>
 
  
 
-    <option value="🇲🇽 Mexican">
+    <option value="Mexican">
     🇲🇽 Mexican</option>
 
  
 
-    <option value="🇲🇩 Moldovan">
+    <option value="Moldovan">
     🇲🇩 Moldovan</option>
 
  
 
-    <option value="🇲🇦 Moroccan">
+    <option value="Moroccan">
     🇲🇦 Moroccan</option>
 
  
 
-    <option value="🇳🇿 New Zealander">
+    <option value="New Zealander">
     🇳🇿 New Zealander</option>
 
  
 
-    <option value="🇳🇮 Nicaraguan">
+    <option value="Nicaraguan">
     🇳🇮 Nicaraguan</option>
 
  
 
-    <option value="🇳🇬 Nigerian">
+    <option value="Nigerian">
     🇳🇬 Nigerian</option>
 
  
 
-    <option value="🇳🇴 Norwegian">
+    <option value="Norwegian">
     🇳🇴 Norwegian</option>
 
  
 
-    <option value="🇵🇰 Pakistani">
+    <option value="Pakistani">
     🇵🇰 Pakistani</option>
 
  
 
-    <option value="🇵🇦 Panamanian">
+    <option value="Panamanian">
     🇵🇦 Panamanian</option>
 
  
 
-    <option value="🇵🇾 Paraguayan">
+    <option value="Paraguayan">
     🇵🇾 Paraguayan</option>
 
  
 
-    <option value="🇵🇪 Peruvian">
+    <option value="Peruvian">
     🇵🇪 Peruvian</option>
 
  
 
-    <option value="🇵🇱 Polish">
+    <option value="Polish">
     🇵🇱 Polish</option>
 
  
 
-    <option value="🇵🇹 Portuguese">
+    <option value="Portuguese">
     🇵🇹 Portuguese</option>
 
  
 
-    <option value="🇷🇴 Romanian">
+    <option value="Romanian">
     🇷🇴 Romanian</option>
 
  
 
-    <option value="🇷🇺 Russian">
+    <option value="Russian">
     🇷🇺 Russian</option>
 
  
 
-    <option value=" 🇸🇳 Senegalese">
+    <option value="Senegalese">
     🇸🇳 Senegalese</option>
 
  
 
-    <option value="🇷🇸 Serbian">
+    <option value="Serbian">
     🇷🇸 Serbian</option>
 
  
 
-    <option value="🇸🇬 Singaporean">
+    <option value="Singaporean">
     🇸🇬 Singaporean</option>
 
  
 
-    <option value=" 🇿🇦 South African">
+    <option value="South African">
     🇿🇦 South African</option>
 
  
 
-    <option value=" 🇪🇸 Spanish">
+    <option value="Spanish">
     🇪🇸 Spanish</option>
 
  
 
-    <option value="🇸🇪 Swedish">
+    <option value="Swedish">
     🇸🇪 Swedish</option>
 
  
 
-    <option value="🇨🇭 Swiss">
+    <option value="Swiss">
     🇨🇭 Swiss</option>
 
  
 
-    <option value=" 🇹🇭 Thai">
+    <option value=" Thai">
     🇹🇭 Thai</option>
 
  
 
-    <option value="  🇹🇳 Tunisian">
+    <option value="Tunisian">
     🇹🇳 Tunisian</option>
 
  
 
-    <option value="🇹🇷 Turkish">
+    <option value="Turkish">
     🇹🇷 Turkish</option>
 
  
 
-    <option value=" 🇺🇦 Ukrainian">
+    <option value="Ukrainian">
     🇺🇦 Ukrainian</option>
 
  
 
-    <option value=" 🇺🇾 Uruguayan">
+    <option value="Uruguayan">
     🇺🇾 Uruguayan</option>
 
  
 
-    <option value="🇻🇪 Venezuelan">
+    <option value="Venezuelan">
     🇻🇪 Venezuelan</option>
 
  
 
-    <option value="🇻🇳 Vietnamese">
+    <option value="Vietnamese">
     🇻🇳 Vietnamese</option>
 
                                             
@@ -705,18 +706,16 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                         setValue={(val) => setForm(prev => ({ ...prev, body_type: val }))}
                     />
                 </div>
-                <div className="bg-gray-100 mt-8 rounded border border-gray-200 p-6">
+                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-5">
 
                     <h2 className="text-2xl font-bold mb-1">Services</h2>
-                    <p className="text-sm text-gray-500 mb-6">
-                        Tags are only visible on promoted ads.
-                    </p>
+                   
 
                     {services.map(service => (
                         <div key={service.id} className="mb-6">
 
                             {/* main service title */}
-                            <h3 className="font-semibold text-lg mb-3 text-gray-700">
+                            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">
                                 {service.title}
                             </h3>
 
@@ -735,7 +734,7 @@ return (
     className={`px-5 py-2 rounded-full border text-sm font-medium transition
     ${active
       ? "border-red-500 text-red-600 bg-red-50"
-      : "border-gray-300 text-gray-600 bg-white hover:border-gray-400"
+      : "border-gray-300  bg-slate-900 hover:border-gray-400"
     }`}
   >
     {active && "✕ "}
@@ -749,7 +748,7 @@ return (
 
                 </div>
                 <ImageUploader images={images} setImages={setImages} />
-                <div className="bg-gray-100 mt-8 rounded border border-gray-200 p-6">
+                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-4">
 
                     {/* title */}
                     <div className="flex justify-between mb-4">
@@ -757,7 +756,7 @@ return (
                         <span className="text-sm text-gray-500">* Mandatory fields</span>
                     </div>
 
-                    <p className="font-semibold text-gray-700 mb-4">
+                    <p className="font-semibold text-(--second-color) mb-4">
                         How would you like to be contacted?
                     </p>
 
@@ -768,8 +767,8 @@ return (
                             onClick={() => setContactType("phone")}
                             className={`border rounded-lg py-3 font-semibold transition
           ${contactType === "phone"
-                                    ? "border-red-500 bg-red-50 text-red-600"
-                                    : "border-gray-300 bg-white"}
+                                    ? "border-red-500 bg-red-40 text-red-600"
+                                    : "border-gray-300 bg-slate-900"}
           `}
                         >
                             Only Phone
@@ -780,7 +779,7 @@ return (
                             className={`border rounded-lg py-3 font-semibold transition
           ${contactType === "both"
                                     ? "border-red-500 bg-red-50 text-red-600"
-                                    : "border-gray-300 bg-white"}
+                                    : "border-gray-300 bg-slate-900"}
           `}
                         >
                             Email and Phone
@@ -791,7 +790,7 @@ return (
                             className={`border rounded-lg py-3 font-semibold transition
           ${contactType === "email"
                                     ? "border-red-500 bg-red-50 text-red-600"
-                                    : "border-gray-300 bg-white"}
+                                    : "border-gray-300 bg-slate-900"}
           `}
                         >
                             Only Email
@@ -802,17 +801,17 @@ return (
                     {/* email */}
                     {(contactType === "email" || contactType === "both") && (
                         <div className="mb-6">
-                            <label className="font-semibold text-gray-700 block mb-2">
+                            <label className="font-semibold text-(--second-color) block mb-2">
                                 Email address
                             </label>
 
-                            <div className="flex items-center border rounded-lg bg-white px-3">
-                                <FaEnvelope className="text-gray-400 mr-2" />
+                            <div className="flex items-center border rounded-lg bg-slate-900 px-3">
+                                <FaEnvelope className="text-(--second-color) mr-2" />
                                 <input
                                     type="email"
                                     value={email}
                                     readOnly
-                                    className="w-full py-3 outline-none"
+                                    className="w-full bg-slate-900 py-3 outline-none"
                                     placeholder="Enter email"
                                 />
                             </div>
@@ -826,18 +825,18 @@ return (
                     {/* phone */}
                     {(contactType === "phone" || contactType === "both") && (
                         <div className="mb-6">
-                            <label className="font-semibold text-gray-700 block mb-2">
+                            <label className="font-semibold text-(--second-color) block mb-2">
                                 Telephone Contact
                             </label>
 
-                            <div className="flex items-center border rounded-lg bg-white px-3">
+                            <div className="flex items-center border rounded-lg bg-slate-900 px-3">
                                 <span className="mr-2">🇮🇳</span>
                                 <input
                                     name="phone"
                                     value={form.phone}
                                     onChange={handleChange}
                                     type="text"
-                                    className="w-full py-3 outline-none"
+                                    className="w-full bg-slate-900 py-3 outline-none"
                                 />
                             </div>
                         </div>
@@ -846,20 +845,33 @@ return (
                     {/* whatsapp & telegram */}
                     <div className="flex gap-6 mt-4">
 
-                        <button
-                            onClick={() => setWhatsapp(!whatsapp)}
-                            className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
-            ${whatsapp ? "border-green-500 bg-green-50 text-green-600" : "border-gray-300 bg-white"}
-          `}
-                        >
-                            <FaWhatsapp />
-                            WhatsApp
-                        </button>
+                    <button
+  type="button"
+  onClick={() =>
+    setForm((prev) => ({
+      ...prev,
+      is_whatsapp: !prev.is_whatsapp,
+    }))
+  }
+  className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
+    ${form.is_whatsapp
+      ? "border-green-500 bg-green-50 text-green-600"
+      : "border-gray-300 bg-slate-900"}
+  `}
+>
+  <FaWhatsapp />
+  WhatsApp
+</button>
 
                         <button
-                            onClick={() => setTelegram(!telegram)}
+                           onClick={() =>
+                            setForm((prev) => ({
+                              ...prev,
+                              is_telegram: !prev.is_telegram,
+                            }))
+                          }
                             className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
-            ${telegram ? "border-blue-500 bg-blue-50 text-blue-600" : "border-gray-300 bg-white"}
+            ${form.is_telegram ? "border-blue-500 bg-blue-50 text-blue-600" : "border-gray-300 bg-slate-900"}
           `}
                         >
                             <FaTelegram />
@@ -887,7 +899,7 @@ return (
 function TagGroup({ title, options, value, setValue }) {
     return (
         <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 text-gray-700">{title}</h3>
+            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">{title}</h3>
 
             <div className="flex flex-wrap gap-3">
                 {options.map((opt) => (
@@ -897,7 +909,7 @@ function TagGroup({ title, options, value, setValue }) {
                         className={`px-5 py-2 rounded border text-sm font-medium transition
                 ${value === opt
                                 ? "border-red-500 text-red-600 bg-red-50"
-                                : "border-gray-300 text-gray-600 hover:border-gray-400 bg-white"
+                                : "border-gray-300 text-(--website-text) hover:border-gray-400 bg-slate-900"
                             }
               `}
                     >

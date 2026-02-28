@@ -1,10 +1,16 @@
 'use client'
 
-import { FaPhoneAlt, FaWhatsapp, FaTelegramPlane, FaMapMarkerAlt, FaHeart } from "react-icons/fa"
+import { 
+  FaPhoneAlt, 
+  FaWhatsapp, 
+  FaTelegramPlane, 
+  FaMapMarkerAlt, 
+  FaCheckCircle 
+} from "react-icons/fa"
+import { useEffect, useState } from "react"
 
 export default function EscortCard({
-  id,
-  image,
+  images = [],
   title,
   desc,
   age,
@@ -19,40 +25,21 @@ export default function EscortCard({
   is_new,
 }) {
 
-  function showCards(){
-    if(is_new || highlight || is_superTop){
-      return  <div className="flex justify-end gap-3 mt-6">
+  const [activeIndex, setActiveIndex] = useState(0)
 
-      <button
-        onClick={handleCall}
-        className="w-12 h-12 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-700 text-white shadow-lg"
-      >
-        <FaPhoneAlt/>
-      </button>
-      {
-        is_whatsapp &&  <button
-        onClick={handleWhatsapp}
-        className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white shadow-lg"
-      >
-        <FaWhatsapp/>
-      </button>
-      }
-     {
-      is_telegram && <button
-      onClick={handleTelegram}
-      className="w-12 h-12 flex items-center justify-center rounded-full bg-sky-500 hover:bg-sky-600 text-white shadow-lg"
-    >
-      <FaTelegramPlane/>
-    </button>
-     }
+  // 🔥 Auto Slide Every 2 Seconds
+  useEffect(() => {
+    if (!images || images.length <= 1) return
 
-      
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % images.length)
+    }, 2000)
 
-    </div>
-    }
-  }
+    return () => clearInterval(interval)
+  }, [images])
+
   function handleCall(){
-    if(!phone) return alert("Number not available")
+    if(!phone) return
     window.location.href = `tel:${phone}`
   }
 
@@ -66,82 +53,132 @@ export default function EscortCard({
     window.open(`https://t.me/${telegram}`, "_blank")
   }
 
+  function showButtons(){
+    if(is_new || highlight || is_superTop){
+      return (
+        <div className="flex justify-end gap-2 mt-4">
+
+          <button
+            onClick={handleCall}
+            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-700 text-white"
+          >
+            <FaPhoneAlt size={12}/>
+          </button>
+
+          {is_whatsapp && (
+            <button
+              onClick={handleWhatsapp}
+              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white"
+            >
+              <FaWhatsapp size={12}/>
+            </button>
+          )}
+
+          {is_telegram && (
+            <button
+              onClick={handleTelegram}
+              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-sky-500 hover:bg-sky-600 text-white"
+            >
+              <FaTelegramPlane size={12}/>
+            </button>
+          )}
+
+        </div>
+      )
+    }
+  }
+
   return (
     <div
       className={`
-      relative rounded-3xl  border transition-all duration-300
-      
+      relative rounded-2xl border transition-all duration-300 
       ${highlight 
-        ? "border-orange-300 bg-orange-100/30 shadow-[0_0_25px_rgba(253,186,116,0.3)]" 
+        ? "border-orange-400 bg-orange-200/10 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
         : "border-gray-700 bg-gradient-to-r from-[#0f172a] to-[#1e293b]"}
       `}
     >
 
       {/* SUPER TOP */}
       {is_superTop && (
-        <div className="absolute right-4 z- -top-3 bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-semibold z-50">
+        <div className="absolute right-3 -top-2 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold z-20">
           SUPER TOP
         </div>
       )}
 
-      <div className="flex overflow-hidden h-[320]">
+      <div className="flex overflow-hidden">
 
-        {/* IMAGE */}
-        <div className="relative h-[420] rounded-tl    w-[180px] md:w-[220px]  flex-shrink-0 ">
+        {/* IMAGE SLIDER */}
+        {/* IMAGE SLIDER */}
+<div className="relative w-[130px] sm:w-[150px] md:w-[180px] h-[200px] sm:h-[220px] md:h-[240px] flex-shrink-0 overflow-hidden rounded-l-2xl">
 
-          {is_new && (
-            <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full z-20">
-              NEW
-            </div>
-          )}
+{is_new && (
+  <div className="absolute top-2 left-2 bg-green-500 text-white text-[10px] px-2 py-1 rounded-full z-20">
+    NEW
+  </div>
+)}
 
-          {/* views badge */}
-         
+<div className="absolute bottom-2 left-2 bg-blue-600 text-white text-[10px] px-2 py-1 rounded-full flex items-center gap-1 z-20">
+  <FaCheckCircle size={10}/> Verified
+</div>
 
-          <img
-            src={image || "/noimage.jpg"}
-            className="w-full h-full object-cover rounded-bl-3xl rounded-tl-3xl"
-          />
-        </div>
+{/* Smooth Fade Images */}
+{images && images.length > 0 ? (
+  images.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt="card"
+      className={`
+        absolute inset-0 w-full h-full object-cover
+        transition-opacity duration-1000 ease-in-out
+        ${index === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"}
+      `}
+    />
+  ))
+) : (
+  <img
+    src="/noimage.jpg"
+    className="w-full h-full object-cover"
+    alt="card"
+  />
+)}
 
-        {/* RIGHT */}
-        <div className="flex-1 p-5 flex flex-col justify-between">
+</div>
 
-          {/* title */}
+        {/* RIGHT CONTENT */}
+        <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between">
+
           <div>
-            <h2 className="text-lg md:text-2xl font-bold text-orange-300 leading-snug">
+
+            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-orange-300 leading-snug">
               {title}
             </h2>
 
-            <p className="text-gray-300 text-sm mt-2 line-clamp-2">
+            <p className="text-gray-400 text-xs sm:text-sm mt-2 line-clamp-2">
               {desc}
             </p>
 
-            {/* location */}
-            <div className="flex items-center gap-2 text-gray-400 mt-4">
-              <FaMapMarkerAlt className="text-orange-400"/>
+            <div className="hidden sm:flex items-center gap-2 text-gray-400 text-xs mt-3">
+              <FaMapMarkerAlt className="text-orange-400 text-xs"/>
               {location}
             </div>
 
-            {/* tags */}
-            <div className="flex gap-3 mt-4 flex-wrap">
-              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+            <div className="hidden sm:flex gap-2 mt-3 flex-wrap text-xs">
+              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 Female
               </span>
-              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 {age}y
               </span>
-              <span className="bg-white/5 border border-gray-600 px-3 py-1 rounded-lg text-xs">
+              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 {country}
               </span>
             </div>
+
           </div>
 
-          {/* bottom buttons */}
-          {
-           showCards()
-          }
-         
+          {showButtons()}
+
         </div>
       </div>
     </div>

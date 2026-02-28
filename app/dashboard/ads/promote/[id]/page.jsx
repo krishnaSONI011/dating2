@@ -6,7 +6,7 @@ import { WalletContext } from "@/context/WalletContext"
 import { toast } from "react-toastify"
 import api from "@/lib/api"
 import { AuthContext } from "@/context/AuthContext"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 
 export default function Promote({ prevStep ,form , images }) {
 
@@ -20,6 +20,9 @@ export default function Promote({ prevStep ,form , images }) {
   const [highlight, setHighlight] = useState(false)
   const [tagNew, setTagNew] = useState(false)
   const [allInOne, setAllInOne] = useState(false)
+  const params = useParams()
+  const slug = params?.id ?? ""
+  
   const { user } = useContext(AuthContext)
   const router = useRouter()
   //  pricing
@@ -56,65 +59,65 @@ export default function Promote({ prevStep ,form , images }) {
       setTagNew(false)
     }
   }
-  async function postWithout(){
-    if(balance < 1){
-        return toast.error("Insufficient balance")
-      }
-      try{
-        const formData = new FormData()
+  // async function postWithout(){
+  //   if(balance < 1){
+  //       return toast.error("Insufficient balance")
+  //     }
+  //     try{
+  //       const formData = new FormData()
     
-        formData.append("cat_id", form.cat_id)
-        formData.append("name", form.name)
-        formData.append("nick_name", form.nick_name)
-        formData.append("age", form.age)
-        formData.append("ethnicity", form.ethnicity)
-        formData.append("nationality", form.nationality)
-        formData.append("breast", form.breast)
-        formData.append("hair", form.hair)
-        formData.append("is_telegram", form.is_telegram)
-        formData.append("is_whatsapp", form.is_whatsapp)
-        formData.append("hair", form.hair)
-        formData.append("body_type", form.body_type)
-        formData.append("email", user?.email)
-        formData.append("gender", form.gender)
-        formData.append("mobile", form.phone)
-        formData.append("state", form.state)
-        formData.append("city", form.city)
-        formData.append("local_area", form.local_area)
-        formData.append("postal_code", form.postal_code)
-        formData.append("address", form.address)
-        formData.append("title", form.title)
-        formData.append("description", form.description)
-        formData.append("total", 1)
+  //       formData.append("cat_id", form.cat_id)
+  //       formData.append("name", form.name)
+  //       formData.append("nick_name", form.nick_name)
+  //       formData.append("age", form.age)
+  //       formData.append("ethnicity", form.ethnicity)
+  //       formData.append("nationality", form.nationality)
+  //       formData.append("breast", form.breast)
+  //       formData.append("hair", form.hair)
+  //       formData.append("is_telegram", form.is_telegram)
+  //       formData.append("is_whatsapp", form.is_whatsapp)
+  //       formData.append("hair", form.hair)
+  //       formData.append("body_type", form.body_type)
+  //       formData.append("email", user?.email)
+  //       formData.append("gender", form.gender)
+  //       formData.append("mobile", form.phone)
+  //       formData.append("state", form.state)
+  //       formData.append("city", form.city)
+  //       formData.append("local_area", form.local_area)
+  //       formData.append("postal_code", form.postal_code)
+  //       formData.append("address", form.address)
+  //       formData.append("title", form.title)
+  //       formData.append("description", form.description)
+  //       formData.append("total", 1)
     
-        // services
-        form.services?.forEach((s)=>{
-          formData.append("service[]", s)
-        })
+  //       // services
+  //       form.services?.forEach((s)=>{
+  //         formData.append("service[]", s)
+  //       })
     
-        // images if exist
-        images?.forEach((img)=>{
-          formData.append("img[]", img.file)
-        })
+  //       // images if exist
+  //       images?.forEach((img)=>{
+  //         formData.append("img[]", img.file)
+  //       })
         
     
-        const res = await api.post('/Wb/ads', formData)
+  //       const res = await api.post('/Wb/ads', formData)
     
-        if(res.data.status == 0){
+  //       if(res.data.status == 0){
     
-          toast.success(res.data.message)
-          router.push('/dashboard/')
+  //         toast.success(res.data.message)
+  //         router.push('/dashboard/')
     
-        }else{
-          toast.error(res.data.message)
-        }
+  //       }else{
+  //         toast.error(res.data.message)
+  //       }
     
-      }catch(e){
-        console.log(e)
-        toast.error("Something went wrong")
-      }
+  //     }catch(e){
+  //       console.log(e)
+  //       toast.error("Something went wrong")
+  //     }
 
-  }
+  // }
   async function publishWithMoney(){
 
     if(balance < total){
@@ -122,50 +125,14 @@ export default function Promote({ prevStep ,form , images }) {
     }
   
     try{
-      const formData = new FormData()
+     
   
-      formData.append("cat_id", form.cat_id)
-      formData.append("name", form.name)
-      formData.append("nick_name", form.nick_name)
-      formData.append("age", form.age)
-      formData.append("ethnicity", form.ethnicity)
-      formData.append("nationality", form.nationality)
-      formData.append("breast", form.breast)
-      formData.append("hair", form.hair)
-      formData.append("is_telegram", form.is_telegram)
-        formData.append("is_whatsapp", form.is_whatsapp)
-      formData.append("body_type", form.body_type)
-      formData.append("email", user?.email)
-      formData.append("gender", form.gender)
-      formData.append("mobile", form.mobile)
-      formData.append("state", form.state)
-      formData.append("city", form.city)
-      formData.append("local_area", form.local_area)
-      formData.append("postal_code", form.postal_code)
-      formData.append("address", form.address)
-      formData.append("title", form.title)
-      formData.append("description", form.description)
-      formData.append("total", total)
-  
-      // services
-      form.services?.forEach((s)=>{
-        formData.append("service[]", s)
-      })
-  
-      // images if exist
-      images?.forEach((img)=>{
-        formData.append("img[]", img.file)
-      })
       
-  
-      const res = await api.post('/Wb/ads', formData)
-  
-      if(res.data.status == 0){
         const sup = superTop ? "1" : "0"
         const high = highlight ? "1" : "0"
         const n = tagNew ? "1" : "0"
         const boostData = new FormData()
-        boostData.append("ads_id", res.data.data.ads.id)
+        boostData.append("ads_id", slug)
         boostData.append("from_time", fromTime)
         boostData.append("to_time", toTime)
         boostData.append("super_top", sup  )
@@ -186,9 +153,7 @@ export default function Promote({ prevStep ,form , images }) {
         }
        
   
-      }else{
-        toast.error(res.data.message)
-      }
+    
   
     }catch(e){
       console.log(e)
@@ -214,7 +179,7 @@ export default function Promote({ prevStep ,form , images }) {
         <h2 className="text-3xl font-bold mb-6">Promote Your Ad</h2>
 
         {/* PREVIEW */}
-        <div className="mb-10">
+        {/* <div className="mb-10 hidden">
           <h3 className="font-semibold mb-3">Ad Preview</h3>
           <EscortCard
             age={form.age}
@@ -226,7 +191,7 @@ export default function Promote({ prevStep ,form , images }) {
             highlight={highlight}
             location={form.local_area + ','+ form.city}
           />
-        </div>
+        </div> */}
 
         {/* TIME SLOT */}
         <h3 className="text-xl font-semibold mb-4">Choose promotion time</h3>
@@ -392,7 +357,7 @@ export default function Promote({ prevStep ,form , images }) {
             </>
           )}
            {/* WITHOUT PROMOTION */}
-           <div className="bg-salte-900 border border-(--content-border-color)rounded-xl p-4 text-center mt-4">
+           {/* <div className="bg-salte-900 border border-(--content-border-color)rounded-xl p-4 text-center mt-4">
                 <p className="text-sm text-(--second-color) mb-2">
                   Don’t want promotion?
                 </p>
@@ -405,7 +370,7 @@ export default function Promote({ prevStep ,form , images }) {
                 <Button onClick={postWithout} className="w-full bg-black hover:bg-gray-900 text-white">
                   Publish Without Promotion
                 </Button>
-              </div>
+              </div> */}
         </div>
       </div>
     </div>

@@ -89,7 +89,7 @@ export default function Home() {
       mature content, including explicit texts and image.
     </p>
 
-    <p className="text-gray-600 mb-6">
+    <p className="text-(--web) mb-6">
       I have reviewed and agree to abide by the
       <Link href={'#'}>
       <span className="text-(--second-color) font-semibold ml-1">

@@ -11,7 +11,7 @@ const playwrite = Playwrite_AT({
   subsets: ["latin"],
 });
 
-export default function Login() {
+export default function ResetPassword() {
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,25 +27,30 @@ export default function Login() {
     if (!otp || !email) {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   async function doLogin() {
+
+    const otp = localStorage.getItem("otp");
+    const email = localStorage.getItem("email");
+
+    if (!otp || !email) {
+      toast.error("Session expired, login again");
+      router.push("/login");
+      return;
+    }
+
+    if (!password || !confirmPassword) {
+      toast.error("Please fill all fields");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Password and Confirm Password not match");
+      return;
+    }
+
     try {
-      const otp = localStorage.getItem("otp");
-      const email = localStorage.getItem("email");
-
-      if (!otp || !email) {
-        toast.error("Session expired, login again");
-        router.push("/login");
-        return;
-      }
-
-      // 👉 password match check
-      if (password !== confirmPassword) {
-        toast.error("Password and Confirm Password not match");
-        return;
-      }
-
       setLoading(true);
 
       const formdata = new FormData();
@@ -58,7 +63,6 @@ export default function Login() {
       if (res.data.status == 0) {
         toast.success(res.data.message);
 
-        // 👉 remove from localStorage
         localStorage.removeItem("otp");
         localStorage.removeItem("email");
 
@@ -68,7 +72,6 @@ export default function Login() {
       }
 
     } catch (e) {
-      console.log(e);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -76,39 +79,44 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4">
 
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
+      <div className="w-full max-w-md bg-[#0b1220] border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8">
+
+        {/* Heading */}
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center text-white">
           Join Affair{" "}
-          <span className={`${playwrite.className} text-orange-600`}>
+          <span className={`${playwrite.className} text-orange-500`}>
             Escorts
           </span>
         </h1>
 
-        <p className="text-gray-500 text-center mb-8">
+        <p className="text-gray-400 text-center mb-8 text-sm sm:text-base">
           Reset your password
         </p>
 
         <div className="space-y-5">
 
-          {/* Password */}
+          {/* New Password */}
           <div>
-            <label className="text-sm font-medium">New Password</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2">
-              <FaLock className="text-gray-400 mr-2" />
+            <label className="text-sm font-medium text-gray-300">
+              New Password
+            </label>
+
+            <div className="flex items-center bg-[#111827] border border-slate-600 rounded-lg mt-1 px-3 py-3 focus-within:border-orange-500 transition">
+              <FaLock className="text-gray-400 mr-3 text-sm" />
 
               <input
                 type={show ? "text" : "password"}
                 placeholder="Enter password"
-                className="w-full outline-none"
+                className="w-full bg-transparent outline-none text-white placeholder-gray-500 text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
 
               <span
                 onClick={() => setShow(!show)}
-                className="cursor-pointer text-gray-500 ml-2"
+                className="cursor-pointer text-gray-400 ml-2"
               >
                 {show ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -117,28 +125,36 @@ export default function Login() {
 
           {/* Confirm Password */}
           <div>
-            <label className="text-sm font-medium">Confirm Password</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2">
-              <FaLock className="text-gray-400 mr-2" />
+            <label className="text-sm font-medium text-gray-300">
+              Confirm Password
+            </label>
+
+            <div className="flex items-center bg-[#111827] border border-slate-600 rounded-lg mt-1 px-3 py-3 focus-within:border-orange-500 transition">
+              <FaLock className="text-gray-400 mr-3 text-sm" />
 
               <input
                 type={show ? "text" : "password"}
                 placeholder="Confirm password"
-                className="w-full outline-none"
+                className="w-full bg-transparent outline-none text-white placeholder-gray-500 text-sm"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
 
               <span
                 onClick={() => setShow(!show)}
-                className="cursor-pointer text-gray-500 ml-2"
+                className="cursor-pointer text-gray-400 ml-2"
               >
                 {show ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
           </div>
 
-          <Button loading={loading} onClick={doLogin}>
+          {/* Button */}
+          <Button
+            loading={loading}
+            onClick={doLogin}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl"
+          >
             Reset Password
           </Button>
 

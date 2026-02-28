@@ -23,28 +23,35 @@ export default function Search(){
   useEffect(() => {
 
     async function getListingData() {
-      try{
+      try {
         setLoading(true)
+    
         const formData = new FormData()
-        formData.append('cate_slug' , slug2)
-        formData.append('city_slug' , slug)
-        const res = await api.post(
-          `/Wb/pages` , formData
+        formData.append("cat_slug", slug2)
+        formData.append("city_slug", slug)
+    
+        const res = await api.post("/Wb/pages", formData)
+    
+        const response = res?.data
+    
+        setListing(response?.data?.ads || [])
+        setTotalPage(response?.total_pages || 0)
+    
+        // get correct page content
+        const pageData = response?.data?.pages?.find(
+          (v) => v.city_slug === slug && v.cat_slug === slug2
         )
-       
-        
-          
-          setListing(res?.data?.data || [])
-          setTotalPage(res.data.total_pages)
-          
-          setHtmlContent(res.data.State_city_area.city.description)
-          setCity(res.data.State_city_area.local_area)
-          console.log(res.data.State_city_area)
-       
-
-      }catch(e){
+    
+        setHtmlContent(pageData?.description || "")
+    
+        // set local areas
+        setCity(response?.city_area?.local_area || [])
+    
+        console.log(response?.city_area)
+    
+      } catch (e) {
         console.log(e)
-      }finally{
+      } finally {
         setLoading(false)
       }
     }
@@ -54,43 +61,43 @@ export default function Search(){
     window.scrollTo({ top: 0, behavior: "smooth" })
 
   }, [currentPage, slug, slug2])
-
+ 
   return (
-    <div>
- <Breadcrumb />
-      {loading && (
-        <div className="text-center py-10 text-gray-500">
-          Loading ads...
+      <div>
+   <Breadcrumb />
+        
+       
+        <div className=" mx-2 md:mx-20">
+          <div className="mt-10">
+          <Alert />
+          </div>
+          
+          {loading && (
+          <div className="text-center py-10 text-gray-500">
+            Loading ads...
+          </div>
+        )}
+      
+        <div className=" grid grid-cols-1 md:grid-cols-4  ">
+        <div className="col-span-3">
+        <CardShower
+          slug={slug}
+          items={list}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+        />
         </div>
-      )}
-     
-      <div className="mx-2 md:mx-20">
-        <div className="mt-10">
-        <Alert />
+        <div className="mx-5 mt-10">
+        <PopularArea areas={city} slug={slug}/>
         </div>
         
-
-    
-      <div className="grid grid-cols-1 md:grid-cols-4  ">
-      <div className="col-span-3">
-      <CardShower
-        slug={slug}
-        items={list}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
+        </div>
+        <div>
+           <PageContent html={htmlContent}/>
+        </div>
+        </div>
+  
       </div>
-      <div className="mx-5 mt-10">
-      <PopularArea areas={city} slug={slug}/>
-      </div>
-      
-      </div>
-      <div>
-         <PageContent html={htmlContent}/>
-      </div>
-      </div>
-
-    </div>
-  )
+    )
 }

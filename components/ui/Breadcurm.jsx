@@ -11,16 +11,22 @@ export default function Breadcrumb() {
 
   return (
     <div className="w-full bg-gradient-to-r from-[#0b1220] to-[#0e1a2f]">
-      <div className="max-w-7xl mx-auto px-6 py-5">
 
-        <div className="flex items-center gap-3 text-lg">
+      <div className="max-w-7xl mx-auto 
+                      px-4 sm:px-6 lg:px-8 
+                      py-3 sm:py-4 lg:py-6">
 
-          {/* Home Icon */}
+        <div className="flex items-center 
+                        gap-2 sm:gap-3 lg:gap-4 
+                        text-sm sm:text-base md:text-lg lg:text-xl 
+                        overflow-x-auto whitespace-nowrap">
+
+          {/* Home */}
           <Link
             href="/"
-            className="text-gray-400 hover:text-orange-300 transition"
+            className="text-gray-400 hover:text-orange-300 transition flex items-center"
           >
-            <FaHome className="text-xl" />
+            <FaHome className="text-base sm:text-lg md:text-xl lg:text-2xl" />
           </Link>
 
           {pathSegments.map((segment, index) => {
@@ -29,10 +35,11 @@ export default function Breadcrumb() {
             const isLast = index === pathSegments.length - 1
 
             return (
-              <div key={index} className="flex items-center gap-3">
+              <div key={index} className="flex items-center gap-2 sm:gap-3">
 
                 {/* Arrow */}
-                <FaChevronRight className="text-gray-500 text-sm" />
+                <FaChevronRight className="text-gray-500 
+                                           text-xs sm:text-sm md:text-base lg:text-lg" />
 
                 {isLast ? (
                   <span className="text-white font-medium capitalize">
@@ -52,6 +59,7 @@ export default function Breadcrumb() {
           })}
 
         </div>
+
       </div>
     </div>
   )

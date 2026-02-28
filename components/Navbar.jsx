@@ -78,20 +78,20 @@ export default function Navbar(){
                 </button>
 
                 {open && (
-                  <div className="absolute right-0 mt-3 w-44 bg-white border rounded-xl shadow-lg z-50">
+                  <div className="absolute overflow-hidden right-0 mt-3 w-44 bg-(--website-background) border rounded-xl shadow-lg z-50">
                     <Link href="/dashboard">
-                      <div className="px-4 py-3 hover:bg-gray-100 text-sm">Dashboard</div>
+                      <div className="px-4 py-3 hover:bg-slate-800 text-sm">Dashboard</div>
                     </Link>
 
                     <Link href="/dashboard/wallet">
-                      <div className="px-4 py-3 hover:bg-gray-100 text-sm">Wallet</div>
+                      <div className="px-4 py-3 hover:bg-slate-800 text-sm">Wallet</div>
                     </Link>
 
                     <div className="border-t"></div>
 
                     <button
                       onClick={logout}
-                      className="w-full text-left px-4 py-3 hover:bg-red-50 text-red-500 text-sm"
+                      className="w-full text-left px-4 py-3 hover:bg-slate-800 text-red-500 text-sm"
                     >
                       Logout
                     </button>

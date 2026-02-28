@@ -10,7 +10,7 @@ export default function CardShower({
   setCurrentPage,
   totalPages
 }) {
-console.log(totalPages)
+console.log(items)
   return (
     <div className="max-1xl md:max-w-7xl mx-auto px-6 py-10">
 
@@ -23,7 +23,7 @@ console.log(totalPages)
     <EscortCard
       
       age={item.age}
-      image={item.images?.[0]}
+      images={item.images}
       title={item.title}
       is_telegram={item.is_telegram == 1 ? true : false}
       is_whatsapp={item.is_whatsapp == 1 ? true : false}

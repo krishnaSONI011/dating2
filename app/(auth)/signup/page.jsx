@@ -85,7 +85,7 @@ export default function Signup() {
         </div>
 
         {/* Password rules */}
-        <div className="bg-gray-100 rounded-xl p-5 mt-6 text-sm">
+        <div className="bg-slate-900 rounded-xl p-5 mt-6 text-sm">
           <p className="font-semibold mb-2">Your password must include:</p>
           <ul className="space-y-1">
             <li className={hasLower ? "text-green-600" : "text-gray-400"}>

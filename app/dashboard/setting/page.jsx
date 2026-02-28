@@ -67,16 +67,16 @@ export default function Setting() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen  p-6">
 
       <div className="max-w-4xl mx-auto space-y-8">
 
         {/* 👤 Profile Section */}
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-slate-900 rounded-2xl shadow p-6">
           <h2 className="text-2xl font-bold mb-4">Profile Information</h2>
 
           {user ? (
-            <div className="space-y-3 text-gray-700">
+            <div className="space-y-3 text-white">
               <p><strong>Name:</strong> {user.name}</p>
               <p><strong>Email:</strong> {user.email}</p>
             </div>
@@ -86,14 +86,14 @@ export default function Setting() {
         </div>
 
         {/* 🔐 Change Password Section */}
-        <div className="bg-white rounded-2xl shadow p-6">
+        <div className="bg-salte-900 rounded-2xl shadow p-6">
           <h2 className="text-2xl font-bold mb-4">Change Password</h2>
 
           <div className="space-y-4">
 
             {/* Current Password */}
             <div>
-              <label className="text-sm font-medium">Current Password</label>
+              <label className="text-sm text-white font-medium">Current Password</label>
               <div className="flex items-center border rounded-lg px-3 py-2 mt-1">
                 <input
                   type={showCurrent ? "text" : "password"}
