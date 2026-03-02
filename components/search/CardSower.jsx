@@ -25,6 +25,7 @@ console.log(items)
       age={item.age}
       images={item.images}
       title={item.title}
+      phone={item.mobile}
       is_telegram={item.is_telegram == 1 ? true : false}
       is_whatsapp={item.is_whatsapp == 1 ? true : false}
       country={item.nationality}

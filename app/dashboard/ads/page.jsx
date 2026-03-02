@@ -160,7 +160,10 @@ export default function MyAds(){
                   title={ad.title}
                   desc={ad.description}
                   age={ad.age}
+                  is_telegram={ad.is_telegram}
+                  is_whatsapp={ad.is_whatsapp}
                   location={`${ad.city_name || ""} ${ad.state_name || ""}`}
+                  country={ad.nationality}
                   image={img}
                   is_superTop={ad.super_top=="1"}
                   is_new={ad.new=="1"}

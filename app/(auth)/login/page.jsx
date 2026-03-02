@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import WebsiteLogo from "@/components/WebsiteLogo";
 const playwrite = Playwrite_AT({
   subsets: ["latin"],
 });
@@ -46,12 +47,15 @@ export default function Login() {
       <div className="w-full max-w-md border border-(--content-border-color) rounded-3xl shadow-2xl p-8">
 
         {/* Heading */}
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
+        {/* <h1 className="text-3xl md:text-4xl font-bold mb-2 text-center">
           Join Affair{" "}
           <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
-        </h1>
+        </h1> */}
+        <div className="flex justify-center">
+          <WebsiteLogo />
+        </div>
 
         <p className="text-gray-500 text-center mb-8">
           Login to your premium account

@@ -6,8 +6,8 @@ import { AuthContext } from "@/context/AuthContext"
 import api from "@/lib/api"
 import { useContext, useEffect, useState } from "react"
 import { FaEnvelope, FaTelegram, FaWhatsapp } from "react-icons/fa"
-
-export default function Adinformation({ form, setForm, handleChange, nextStep, setImages, images ,services,setServices}) {
+import { countryCodes } from "@/data/country_code"
+export default function Adinformation({ form, setForm, handleChange, nextStep, setImages, images, services, setServices }) {
     const { user } = useContext(AuthContext)
     const [ethnicity, setEthnicity] = useState("")
     const [category, setCategory] = useState([])
@@ -16,7 +16,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
     const [breast, setBreast] = useState("")
     const [hair, setHair] = useState("")
     const [bodyType, setBodyType] = useState("")
-    
+
     const [selected, setSelected] = useState([]) // store selected sub_service ids
     const [contactType, setContactType] = useState("phone")
     const [email, setEmail] = useState(user?.email ?? "")
@@ -63,7 +63,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
     function generateTitle() {
 
         const cat = category.find(c => c.id == form.cat_id)
-        const cName = city.find((c)=> c.id === form.city)
+        const cName = city.find((c) => c.id === form.city)
         setForm(prev => ({
             ...prev,
             title: `${prev.age ? prev.age + " yrs" : ""} ${cat?.name || ""} ${prev.nick_name || ""} ${cName.name ? "in " + cName.name : ""}`
@@ -79,7 +79,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
             }
 
             try {
-                const sl = city.find((c)=> c.id === form.city)
+                const sl = city.find((c) => c.id === form.city)
                 const formData = new FormData();
                 formData.append('city_slug', sl.slug);
 
@@ -102,21 +102,21 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
     // toggle select
     const toggleService = (id) => {
         setForm(prev => {
-      
-          let arr = prev.services || []
-      
-          if(arr.includes(id)){
-            arr = arr.filter(x => x !== id)
-          }else{
-            arr = [...arr, id]
-          }
-      
-          return {
-            ...prev,
-            services: arr
-          }
+
+            let arr = prev.services || []
+
+            if (arr.includes(id)) {
+                arr = arr.filter(x => x !== id)
+            } else {
+                arr = [...arr, id]
+            }
+
+            return {
+                ...prev,
+                services: arr
+            }
         })
-      }
+    }
 
     const handleNext = () => {
         if (
@@ -139,7 +139,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
 
         nextStep()
     }
-    
+
     return (
         <>
             <div className="mx-30">
@@ -220,7 +220,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                     </div>
                     <div className="grid grid-cols-1 mt-5">
                         {/* address */}
-                        
+
                     </div>
 
 
@@ -299,390 +299,390 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             Nationality
                         </label>
                         <select className="w-full p-2 bg-slate-900 border rounded" name="nationality"
-                        value={form.nationality}
+                            value={form.nationality}
                             onChange={handleChange}
                         >
 
-<option value="">  Select nationality
-</option>
+                            <option value="">  Select nationality
+                            </option>
 
- 
 
-    <option value="Albanian">
-    🇦🇱 Albanian</option>
 
- 
+                            <option value="Albanian">
+                                🇦🇱 Albanian</option>
 
-    <option value="American">
-    🇺🇸 American</option>
 
- 
 
-    <option value="Arabic">
-    🇸🇦 Arabic</option>
+                            <option value="American">
+                                🇺🇸 American</option>
 
- 
 
-    <option value="Argentinian">
-    🇦🇷 Argentinian</option>
 
- 
+                            <option value="Arabic">
+                                🇸🇦 Arabic</option>
 
-    <option value="Australian">
-    🇦🇺 Australian</option>
 
- 
 
-    <option value="Austrian">
-    🇦🇹 Austrian</option>
+                            <option value="Argentinian">
+                                🇦🇷 Argentinian</option>
 
- 
 
-    <option value="Bangladeshi">
-    🇧🇩 Bangladeshi</option>
 
- 
+                            <option value="Australian">
+                                🇦🇺 Australian</option>
 
-    <option value="Belgian">
-    🇧🇪 Belgian</option>
 
- 
 
-    <option value="Bolivian">
-    🇧🇴 Bolivian</option>
+                            <option value="Austrian">
+                                🇦🇹 Austrian</option>
 
- 
 
-    <option value="Bosnian">
-    🇧🇦 Bosnian</option>
 
- 
+                            <option value="Bangladeshi">
+                                🇧🇩 Bangladeshi</option>
 
-    <option value="Brazilian">
-    🇧🇷 Brazilian</option>
 
- 
 
-    <option value="Bulgarian">
-    🇧🇬 Bulgarian</option>
+                            <option value="Belgian">
+                                🇧🇪 Belgian</option>
 
- 
 
-    <option value="Canadian">
-    🇨🇦 Canadian</option>
 
- 
+                            <option value="Bolivian">
+                                🇧🇴 Bolivian</option>
 
-    <option value="Chilean">
-    🇨🇱 Chilean</option>
 
- 
 
-    <option value="Chinese">
-    🇨🇳 Chinese</option>
+                            <option value="Bosnian">
+                                🇧🇦 Bosnian</option>
 
- 
 
-    <option value="Colombian">
-    🇨🇴 Colombian</option>
 
- 
+                            <option value="Brazilian">
+                                🇧🇷 Brazilian</option>
 
-    <option value="Costa Rican">
-    🇨🇷 Costa Rican</option>
 
- 
 
-    <option value="Croatian">
-    🇭🇷 Croatian</option>
+                            <option value="Bulgarian">
+                                🇧🇬 Bulgarian</option>
 
- 
 
-    <option value="Cuban">
-    🇨🇺 Cuban</option>
 
- 
+                            <option value="Canadian">
+                                🇨🇦 Canadian</option>
 
-    <option value="Czech">
-    🇨🇿 Czech</option>
 
- 
 
-    <option value="Danish">
-    🇩🇰 Danish</option>
+                            <option value="Chilean">
+                                🇨🇱 Chilean</option>
 
- 
 
-    <option value="Dominican">
-    🇩🇴 Dominican</option>
 
- 
+                            <option value="Chinese">
+                                🇨🇳 Chinese</option>
 
-    <option value=" Dutch">
-    🇳🇱 Dutch</option>
 
- 
 
-    <option value="Ecuadorian">
-    🇪🇨 Ecuadorian</option>
+                            <option value="Colombian">
+                                🇨🇴 Colombian</option>
 
- 
 
-    <option value="English">
-    🇬🇧 English</option>
 
- 
+                            <option value="Costa Rican">
+                                🇨🇷 Costa Rican</option>
 
-    <option value="Estonian">
-    🇪🇪 Estonian</option>
 
- 
 
-    <option value="Filipino">
-    🇵🇭 Filipino</option>
+                            <option value="Croatian">
+                                🇭🇷 Croatian</option>
 
- 
 
-    <option value="Finnish">
-    🇫🇮 Finnish</option>
 
- 
+                            <option value="Cuban">
+                                🇨🇺 Cuban</option>
 
-    <option value="French">
-    🇫🇷 French</option>
 
- 
 
-    <option value="German">
-    🇩🇪 German</option>
+                            <option value="Czech">
+                                🇨🇿 Czech</option>
 
- 
 
-    <option value=" Greek">
-    🇬🇷 Greek</option>
 
- 
+                            <option value="Danish">
+                                🇩🇰 Danish</option>
 
-    <option value="Guatemalan">
-    🇬🇹 Guatemalan</option>
 
- 
 
-    <option value="Haitian">
-    🇭🇹 Haitian</option>
+                            <option value="Dominican">
+                                🇩🇴 Dominican</option>
 
- 
 
-    <option value="Honduran">
-    🇭🇳 Honduran</option>
 
- 
+                            <option value=" Dutch">
+                                🇳🇱 Dutch</option>
 
-    <option value="Hungarian">
-    🇭🇺 Hungarian</option>
 
- 
 
-    <option value="Indian">
-    🇮🇳 Indian</option>
+                            <option value="Ecuadorian">
+                                🇪🇨 Ecuadorian</option>
 
- 
 
-    <option value="Indonesian">
-    🇮🇩 Indonesian</option>
 
- 
+                            <option value="English">
+                                🇬🇧 English</option>
 
-    <option value="Irish">
-    🇮🇪 Irish</option>
 
- 
 
-    <option value="Italian">
-    🇮🇹 Italian</option>
+                            <option value="Estonian">
+                                🇪🇪 Estonian</option>
 
- 
 
-    <option value="Jamaican">
-    🇯🇲 Jamaican</option>
 
- 
+                            <option value="Filipino">
+                                🇵🇭 Filipino</option>
 
-    <option value="Japanese">
-    🇯🇵 Japanese</option>
 
- 
 
-    <option value="Kenyan">
-    🇰🇪 Kenyan</option>
+                            <option value="Finnish">
+                                🇫🇮 Finnish</option>
 
- 
 
-    <option value="Latvian">
-    🇱🇻 Latvian</option>
 
- 
+                            <option value="French">
+                                🇫🇷 French</option>
 
-    <option value="Lithuanian">
-    🇱🇹 Lithuanian</option>
 
- 
 
-    <option value="Malaysian">
-    🇲🇾 Malaysian</option>
+                            <option value="German">
+                                🇩🇪 German</option>
 
- 
 
-    <option value="Maldivian">
-    🇲🇻 Maldivian</option>
 
- 
+                            <option value=" Greek">
+                                🇬🇷 Greek</option>
 
-    <option value="Mexican">
-    🇲🇽 Mexican</option>
 
- 
 
-    <option value="Moldovan">
-    🇲🇩 Moldovan</option>
+                            <option value="Guatemalan">
+                                🇬🇹 Guatemalan</option>
 
- 
 
-    <option value="Moroccan">
-    🇲🇦 Moroccan</option>
 
- 
+                            <option value="Haitian">
+                                🇭🇹 Haitian</option>
 
-    <option value="New Zealander">
-    🇳🇿 New Zealander</option>
 
- 
 
-    <option value="Nicaraguan">
-    🇳🇮 Nicaraguan</option>
+                            <option value="Honduran">
+                                🇭🇳 Honduran</option>
 
- 
 
-    <option value="Nigerian">
-    🇳🇬 Nigerian</option>
 
- 
+                            <option value="Hungarian">
+                                🇭🇺 Hungarian</option>
 
-    <option value="Norwegian">
-    🇳🇴 Norwegian</option>
 
- 
 
-    <option value="Pakistani">
-    🇵🇰 Pakistani</option>
+                            <option value="Indian">
+                                🇮🇳 Indian</option>
 
- 
 
-    <option value="Panamanian">
-    🇵🇦 Panamanian</option>
 
- 
+                            <option value="Indonesian">
+                                🇮🇩 Indonesian</option>
 
-    <option value="Paraguayan">
-    🇵🇾 Paraguayan</option>
 
- 
 
-    <option value="Peruvian">
-    🇵🇪 Peruvian</option>
+                            <option value="Irish">
+                                🇮🇪 Irish</option>
 
- 
 
-    <option value="Polish">
-    🇵🇱 Polish</option>
 
- 
+                            <option value="Italian">
+                                🇮🇹 Italian</option>
 
-    <option value="Portuguese">
-    🇵🇹 Portuguese</option>
 
- 
 
-    <option value="Romanian">
-    🇷🇴 Romanian</option>
+                            <option value="Jamaican">
+                                🇯🇲 Jamaican</option>
 
- 
 
-    <option value="Russian">
-    🇷🇺 Russian</option>
 
- 
+                            <option value="Japanese">
+                                🇯🇵 Japanese</option>
 
-    <option value="Senegalese">
-    🇸🇳 Senegalese</option>
 
- 
 
-    <option value="Serbian">
-    🇷🇸 Serbian</option>
+                            <option value="Kenyan">
+                                🇰🇪 Kenyan</option>
 
- 
 
-    <option value="Singaporean">
-    🇸🇬 Singaporean</option>
 
- 
+                            <option value="Latvian">
+                                🇱🇻 Latvian</option>
 
-    <option value="South African">
-    🇿🇦 South African</option>
 
- 
 
-    <option value="Spanish">
-    🇪🇸 Spanish</option>
+                            <option value="Lithuanian">
+                                🇱🇹 Lithuanian</option>
 
- 
 
-    <option value="Swedish">
-    🇸🇪 Swedish</option>
 
- 
+                            <option value="Malaysian">
+                                🇲🇾 Malaysian</option>
 
-    <option value="Swiss">
-    🇨🇭 Swiss</option>
 
- 
 
-    <option value=" Thai">
-    🇹🇭 Thai</option>
+                            <option value="Maldivian">
+                                🇲🇻 Maldivian</option>
 
- 
 
-    <option value="Tunisian">
-    🇹🇳 Tunisian</option>
 
- 
+                            <option value="Mexican">
+                                🇲🇽 Mexican</option>
 
-    <option value="Turkish">
-    🇹🇷 Turkish</option>
 
- 
 
-    <option value="Ukrainian">
-    🇺🇦 Ukrainian</option>
+                            <option value="Moldovan">
+                                🇲🇩 Moldovan</option>
 
- 
 
-    <option value="Uruguayan">
-    🇺🇾 Uruguayan</option>
 
- 
+                            <option value="Moroccan">
+                                🇲🇦 Moroccan</option>
 
-    <option value="Venezuelan">
-    🇻🇪 Venezuelan</option>
 
- 
 
-    <option value="Vietnamese">
-    🇻🇳 Vietnamese</option>
+                            <option value="New Zealander">
+                                🇳🇿 New Zealander</option>
 
-                                            
-</select>
+
+
+                            <option value="Nicaraguan">
+                                🇳🇮 Nicaraguan</option>
+
+
+
+                            <option value="Nigerian">
+                                🇳🇬 Nigerian</option>
+
+
+
+                            <option value="Norwegian">
+                                🇳🇴 Norwegian</option>
+
+
+
+                            <option value="Pakistani">
+                                🇵🇰 Pakistani</option>
+
+
+
+                            <option value="Panamanian">
+                                🇵🇦 Panamanian</option>
+
+
+
+                            <option value="Paraguayan">
+                                🇵🇾 Paraguayan</option>
+
+
+
+                            <option value="Peruvian">
+                                🇵🇪 Peruvian</option>
+
+
+
+                            <option value="Polish">
+                                🇵🇱 Polish</option>
+
+
+
+                            <option value="Portuguese">
+                                🇵🇹 Portuguese</option>
+
+
+
+                            <option value="Romanian">
+                                🇷🇴 Romanian</option>
+
+
+
+                            <option value="Russian">
+                                🇷🇺 Russian</option>
+
+
+
+                            <option value="Senegalese">
+                                🇸🇳 Senegalese</option>
+
+
+
+                            <option value="Serbian">
+                                🇷🇸 Serbian</option>
+
+
+
+                            <option value="Singaporean">
+                                🇸🇬 Singaporean</option>
+
+
+
+                            <option value="South African">
+                                🇿🇦 South African</option>
+
+
+
+                            <option value="Spanish">
+                                🇪🇸 Spanish</option>
+
+
+
+                            <option value="Swedish">
+                                🇸🇪 Swedish</option>
+
+
+
+                            <option value="Swiss">
+                                🇨🇭 Swiss</option>
+
+
+
+                            <option value=" Thai">
+                                🇹🇭 Thai</option>
+
+
+
+                            <option value="Tunisian">
+                                🇹🇳 Tunisian</option>
+
+
+
+                            <option value="Turkish">
+                                🇹🇷 Turkish</option>
+
+
+
+                            <option value="Ukrainian">
+                                🇺🇦 Ukrainian</option>
+
+
+
+                            <option value="Uruguayan">
+                                🇺🇾 Uruguayan</option>
+
+
+
+                            <option value="Venezuelan">
+                                🇻🇪 Venezuelan</option>
+
+
+
+                            <option value="Vietnamese">
+                                🇻🇳 Vietnamese</option>
+
+
+                        </select>
                     </div>
 
                     <TagGroup
@@ -709,7 +709,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-5">
 
                     <h2 className="text-2xl font-bold mb-1">Services</h2>
-                   
+
 
                     {services.map(service => (
                         <div key={service.id} className="mb-6">
@@ -722,26 +722,26 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             {/* sub services */}
                             <div className="flex flex-wrap gap-3">
 
-                            {service.sub_services.map(sub => {
+                                {service.sub_services.map(sub => {
 
-const active = form.services?.includes(sub.id)
+                                    const active = form.services?.includes(sub.id)
 
-return (
-  <button
-    key={sub.id}
-    type="button"
-    onClick={() => toggleService(sub.id)}
-    className={`px-5 py-2 rounded-full border text-sm font-medium transition
+                                    return (
+                                        <button
+                                            key={sub.id}
+                                            type="button"
+                                            onClick={() => toggleService(sub.id)}
+                                            className={`px-5 py-2 rounded-full border text-sm font-medium transition
     ${active
-      ? "border-red-500 text-red-600 bg-red-50"
-      : "border-gray-300  bg-slate-900 hover:border-gray-400"
-    }`}
-  >
-    {active && "✕ "}
-    {sub.title}
-  </button>
-)
-})}
+                                                    ? "border-red-500 text-red-600 bg-red-50"
+                                                    : "border-gray-300  bg-slate-900 hover:border-gray-400"
+                                                }`}
+                                        >
+                                            {active && "✕ "}
+                                            {sub.title}
+                                        </button>
+                                    )
+                                })}
                             </div>
                         </div>
                     ))}
@@ -829,15 +829,32 @@ return (
                                 Telephone Contact
                             </label>
 
-                            <div className="flex items-center border rounded-lg bg-slate-900 px-3">
-                                <span className="mr-2">🇮🇳</span>
+                            <div className="flex items-center border border-gray-700 rounded-lg bg-slate-900 overflow-hidden">
+
+                                {/* Country Code Select */}
+                                <select
+                                    name="country_code"
+                                    value={form.country_code}
+                                    onChange={handleChange}
+                                    className="bg-slate-900 text-white px-3 py-3 outline-none border-r border-gray-700 appearance-none"
+                                >
+                                    {countryCodes.map((country, index) => (
+                                        <option key={index} value={country.code}>
+                                            {country.code} ({country.name})
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {/* Phone Input */}
                                 <input
                                     name="phone"
                                     value={form.phone}
                                     onChange={handleChange}
                                     type="text"
-                                    className="w-full bg-slate-900 py-3 outline-none"
+                                    placeholder="Enter phone number"
+                                    className="w-full bg-slate-900 text-white py-3 px-3 outline-none"
                                 />
+
                             </div>
                         </div>
                     )}
@@ -845,31 +862,31 @@ return (
                     {/* whatsapp & telegram */}
                     <div className="flex gap-6 mt-4">
 
-                    <button
-  type="button"
-  onClick={() =>
-    setForm((prev) => ({
-      ...prev,
-      is_whatsapp: !prev.is_whatsapp,
-    }))
-  }
-  className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    is_whatsapp: !prev.is_whatsapp,
+                                }))
+                            }
+                            className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
     ${form.is_whatsapp
-      ? "border-green-500 bg-green-50 text-green-600"
-      : "border-gray-300 bg-slate-900"}
+                                    ? "border-green-500 bg-green-50 text-green-600"
+                                    : "border-gray-300 bg-slate-900"}
   `}
->
-  <FaWhatsapp />
-  WhatsApp
-</button>
+                        >
+                            <FaWhatsapp />
+                            WhatsApp
+                        </button>
 
                         <button
-                           onClick={() =>
-                            setForm((prev) => ({
-                              ...prev,
-                              is_telegram: !prev.is_telegram,
-                            }))
-                          }
+                            onClick={() =>
+                                setForm((prev) => ({
+                                    ...prev,
+                                    is_telegram: !prev.is_telegram,
+                                }))
+                            }
                             className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
             ${form.is_telegram ? "border-blue-500 bg-blue-50 text-blue-600" : "border-gray-300 bg-slate-900"}
           `}

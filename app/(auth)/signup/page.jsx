@@ -7,6 +7,7 @@ import Button from "@/components/ui/Button";
 import api from "@/lib/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import WebsiteLogo from "@/components/WebsiteLogo";
 
 const playwrite = Playwrite_AT({ subsets: ["latin"] });
 
@@ -17,6 +18,7 @@ export default function Signup() {
   const [agree, setAgree] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const [email , setEmail] = useState('')
+  const[mobile , setMobile] = useState('')
  
   // password checks
   const hasLower = /[a-z]/.test(password);
@@ -30,6 +32,7 @@ export default function Signup() {
         const formData= new FormData()
         formData.append("email" , email)
         formData.append("password" , password)
+        formData,append("mobile" , toString(mobile))
         formData.append("confirm_password" , password)
         const res = await api.post(`/Wb/register` , formData)
         if(res.data.status == 0){
@@ -44,16 +47,24 @@ export default function Signup() {
   }
   return (
     <div className="min-h-screen bg-(--website-background) flex justify-center py-14 px-4">
-      <div className="w-full max-w-lg border border-(--content-border-color) p-5 rounded" >
+      <div className="w-full max-w-lg border border-(--content-border-color) p-5 rounded-xl" >
 
         {/* Heading */}
-        <h1 className="text-4xl font-bold mb-2">
+        {/* <h1 className="text-4xl font-bold mb-2">
           Join Affair{" "}
           <span className={`${playwrite.className} text-orange-600`}>
             Escorts
           </span>
-        </h1>
-
+        </h1> */}
+        <div className="flex justify-center my-2">
+        <WebsiteLogo />
+        <div>
+         
+        </div>
+      
+        </div>
+        <h1 className="text-center text-2xl font-bold">Join Now </h1>
+         
         {/* login link */}
         
         {/* Email */}
@@ -65,7 +76,15 @@ export default function Signup() {
           onChange={(e)=> setEmail(e.target.value)}
           className="w-full mt-2 mb-6 p-3 rounded-xl border focus:border-orange-600 outline-none"
         />
-
+        {/* mobile */}
+        <label className="font-medium">Mobile</label>
+        <input
+          type="number"
+          placeholder="954xxxx3342"
+          value={mobile}
+          onChange={(e)=> setMobile(e.target.value)}
+          className="w-full mt-2 mb-6 p-3 rounded-xl border focus:border-orange-600 outline-none"
+        />
         {/* Password */}
         <label className="font-medium">Password</label>
         <div className="relative mt-2">
@@ -156,16 +175,16 @@ export default function Signup() {
         >
          
         </button> */}
-        <Button onClick={handelSignup} disabled={!isValid} className={`w-full py-4 rounded-xl font-bold text-lg mt-8 transition ${
+        <Button onClick={handelSignup} disabled={!isValid} className={` mt-6 ${
             isValid
               ? "bg-orange-600 hover:bg-[#e63a00] text-white"
-              : "bg-gray-300   text-gray-500 cursor-not-allowed"
+              : "bg-gray-300   text-gray-500 "
           }`}>
  SIGN UP
         </Button>
         <p className="text-gray-500 mb-8 mt-5 text-center">
           Already have account?{" "}
-          <Link href="/login" className="text-orange-600 font-semibold hover:underline">
+          <Link href="/login" className="text-(--second-color) font-semibold hover:underline">
             Login here
           </Link>
         </p>

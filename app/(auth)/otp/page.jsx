@@ -33,18 +33,31 @@ export default function OTPPage() {
   },[router])
 
   async function resendEmail(){
+    const type = localStorage.getItem("type");
+    const email = localStorage.getItem("email");
     try{
       const formData = new FormData()
       formData.append('email' , email)
+      if (type === "register") {
       const res = await api.post(`/Wb/resend_register_otp` , formData)
 
-      if(res.data.status == 1 ){
+      if(res.data.status == 0 ){
         toast.success(res.data.message)
       }else{
         toast.error(res.data.message)
       }
+    }
+    else if (type === "reset_password") {
+      const res = await api.post(`/Wb/resend_forgot_otp` , formData)
+      if(res.data.status == 0 ){
+        toast.success(res.data.message)
+      }else{
+        toast.error(res.data.message)
+      }
+    }
 
     }catch(e){
+      console.log(e)
       toast.error("Something went wrong")
     }
   }

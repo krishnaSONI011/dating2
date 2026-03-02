@@ -23,6 +23,7 @@ export default function PostAds(){
     email: user?.email || "",
     mobile: "",
     state: "",
+    country_code : '91',
     city: "",
     is_whatsapp: false,
     is_telegram: false,

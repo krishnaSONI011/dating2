@@ -41,17 +41,34 @@ export default function EscortCard({
   }, [images])
 
   /* ================= ACTIONS ================= */
-  function handleCall(){
+  function stopLink(e) {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
+  function handleCall(e){
+    stopLink(e)
     if(!phone) return
     window.location.href = `tel:${phone}`
   }
 
-  function handleWhatsapp(){
+  function handleWhatsapp(e){
+    stopLink(e)
+  
     if(!phone) return
-    window.open(`https://wa.me/${phone}`, "_blank")
+  
+    const message = `Hi, I saw your profile on Affair Escorts - ${title}`
+  
+    const encodedMessage = encodeURIComponent(message)
+  
+    window.open(
+      `https://wa.me/${phone}?text=${encodedMessage}`,
+      "_blank"
+    )
   }
 
-  function handleTelegram(){
+  function handleTelegram(e){
+    stopLink(e)
     if(!telegram) return
     window.open(`https://t.me/${telegram}`, "_blank")
   }
