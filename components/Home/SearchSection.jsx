@@ -151,7 +151,7 @@ export default function SearchSection({ title, banner, subtitle }) {
                   area: ''
                 }))
               }
-              className="bg-transparent outline-none w-full text-sm text-gray-300"
+              className="= outline-none w-full text-sm text-black"
             >
               <option value="">Select City</option>
               {cities.map((c) => (
