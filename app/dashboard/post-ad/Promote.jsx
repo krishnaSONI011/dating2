@@ -21,6 +21,12 @@ export default function Promote({ prevStep ,form , images }) {
   const [tagNew, setTagNew] = useState(false)
   const [allInOne, setAllInOne] = useState(false)
   const { user } = useContext(AuthContext)
+  const [previewImages, setPreviewImages] = useState([])
+  const [contact, setContact] = useState(null)
+const [rechargeCoins, setRechargeCoins] = useState(0)
+
+const pricePerCoin = 49
+const rechargeTotal = rechargeCoins * pricePerCoin
   const router = useRouter()
   //  pricing
   const slotPrice = 2
@@ -55,6 +61,52 @@ export default function Promote({ prevStep ,form , images }) {
       setHighlight(false)
       setTagNew(false)
     }
+  }
+  useEffect(() => {
+    async function loadContact() {
+      try {
+        const fd = new FormData()
+        fd.append("contect_id", 1)
+  
+        const res = await api.post("/Wb/contect_detail", fd)
+  
+        if (res.data.status === 0) {
+          setContact(res.data.data)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  
+    loadContact()
+  }, [])
+  const buildRechargeMessage = () => {
+    return `Hi 👋
+  
+  User ID: ${user?.id}
+  Email: ${user?.email}
+  Mobile: ${form.country_code}${form.phone}
+  
+  Current Wallet Balance: ${balance} Coins
+  Coins Want To Buy: ${rechargeCoins}
+  Total Amount: ₹${rechargeTotal}
+  
+  Please share payment details.`
+  }
+  const handleRechargeWhatsApp = () => {
+
+    if (!rechargeCoins || rechargeCoins <= 0)
+      return toast.error("Enter coins amount")
+  
+    if (!contact?.whatsapp)
+      return toast.error("WhatsApp not available")
+  
+    const message = encodeURIComponent(buildRechargeMessage())
+  
+    window.open(
+      `https://wa.me/${contact.whatsapp}?text=${message}`,
+      "_blank"
+    )
   }
   async function postWithout(){
     if(balance < 1){
@@ -207,7 +259,31 @@ export default function Promote({ prevStep ,form , images }) {
       setAllInOne(false)
     }
   }, [superTop, highlight, tagNew])
+  useEffect(() => {
 
+    if (!images || images.length === 0) {
+      setPreviewImages([])
+      return
+    }
+  
+    const urls = images.map((img) => {
+  
+      // If image already string (edit case)
+      if (typeof img === "string") {
+        return img
+      }
+  
+      // If new uploaded file
+      if (img.file) {
+        return URL.createObjectURL(img.file)
+      }
+  
+      return ""
+    })
+  
+    setPreviewImages(urls)
+  
+  }, [images])
   return (
     <div className="max-w-7xl mx-auto mt-10 grid grid-cols-3 gap-8">
 
@@ -222,10 +298,11 @@ export default function Promote({ prevStep ,form , images }) {
           <EscortCard
             age={form.age}
             title={form.title}
-            image={images?.preview}
+            images={previewImages}
             desc={form.description}
             is_superTop={superTop}
             is_new={tagNew}
+            country={form.nationality}
             highlight={highlight}
             location={form.local_area + ','+ form.city}
           />
@@ -394,6 +471,54 @@ export default function Promote({ prevStep ,form , images }) {
              
             </>
           )}
+          <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 mt-6">
+
+<h4 className="text-lg font-bold mb-4">
+  Recharge Wallet
+</h4>
+
+<p className="text-sm text-gray-400 mb-3">
+  1 Coin = ₹49
+</p>
+
+<input
+  type="number"
+  value={rechargeCoins}
+  onChange={(e) => setRechargeCoins(Number(e.target.value))}
+  placeholder="Enter coins"
+  className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 mb-4 outline-none focus:border-red-500"
+/>
+
+{rechargeCoins > 0 && (
+  <div className="flex justify-between mb-4">
+    <span>Total Amount</span>
+    <span className="font-bold text-red-600">
+      ₹{rechargeTotal}
+    </span>
+  </div>
+)}
+
+{/* WhatsApp Recharge */}
+{contact?.is_whatsapp === "1" && (
+  <Button
+    onClick={handleRechargeWhatsApp}
+    className="w-full bg-green-600 hover:bg-green-700 text-white"
+  >
+    Recharge via WhatsApp
+  </Button>
+)}
+
+{/* Email Option */}
+{contact?.is_email === "1" && (
+  <a
+    href={`mailto:${contact.email}?subject=Wallet Recharge Request&body=${encodeURIComponent(buildRechargeMessage())}`}
+    className="block text-center mt-3 text-blue-400 text-sm"
+  >
+    Or Send via Email
+  </a>
+)}
+
+</div>
            {/* WITHOUT PROMOTION */}
            <div className="bg-salte-900 border border-(--content-border-color)rounded-xl p-4 text-center mt-4">
                 <p className="text-sm text-(--second-color) mb-2">
@@ -411,6 +536,9 @@ export default function Promote({ prevStep ,form , images }) {
               </div>
         </div>
       </div>
+      {/* ================= WALLET RECHARGE ================= */}
+
+
     </div>
   )
 }

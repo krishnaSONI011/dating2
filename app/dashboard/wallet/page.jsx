@@ -1,8 +1,9 @@
 'use client'
 
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import { WalletContext } from "@/context/WalletContext"
 import { AuthContext } from "@/context/AuthContext"
+import api from "@/lib/api"
 import { toast } from "react-toastify"
 
 export default function Wallet() {
@@ -11,9 +12,38 @@ export default function Wallet() {
   const { user } = useContext(AuthContext)
 
   const [coins, setCoins] = useState(0)
+  const [contact, setContact] = useState(null)
 
   const pricePerCoin = 49
   const total = coins * pricePerCoin
+
+  /* ================= LOAD CONTACT SETTINGS ================= */
+
+  useEffect(() => {
+
+    async function fetchContact() {
+      try {
+
+        const fd = new FormData()
+        fd.append("contect_id", 1)
+
+        const res = await api.post("/Wb/contect_detail", fd)
+
+        if (res.data.status === 0) {
+          setContact(res.data.data)
+        }
+
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchContact()
+
+  }, [])
+
+
+  /* ================= BUILD MESSAGE ================= */
 
   const buildMessage = () => {
     return `Hi 👋
@@ -27,52 +57,69 @@ Total Pay: ₹${total}
 Please confirm payment details.`
   }
 
-  const handleCopy = async () => {
+
+  /* ================= COMMON VALIDATION ================= */
+
+  const validate = () => {
     if (!coins || coins <= 0) {
       toast.error("Enter coin amount")
-      return
+      return false
     }
+    return true
+  }
+
+
+  /* ================= COPY ================= */
+
+  const handleCopy = async () => {
+
+    if (!validate()) return
 
     try {
       await navigator.clipboard.writeText(buildMessage())
-      toast.success("Copied! Send to admin/payment")
+      toast.success("Copied! Send to admin")
     } catch {
       toast.error("Copy failed")
     }
   }
 
+
+  /* ================= WHATSAPP ================= */
+
   const handleWhatsApp = () => {
-    if (!coins || coins <= 0) {
-      toast.error("Enter coin amount")
-      return
-    }
+
+    if (!validate()) return
+    if (!contact?.whatsapp) return
 
     const message = encodeURIComponent(buildMessage())
-
-    const phoneNumber = "919876543210" // e.g. 919876543210
-
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, "_blank")
+    window.open(
+      `https://wa.me/${contact.whatsapp}?text=${message}`,
+      "_blank"
+    )
   }
+
+
+  /* ================= TELEGRAM ================= */
 
   const handleTelegram = () => {
-    if (!coins || coins <= 0) {
-      toast.error("Enter coin amount")
-      return
-    }
+
+    if (!validate()) return
+    if (!contact?.telegram) return
 
     const message = encodeURIComponent(buildMessage())
-
-    const username = "YOUR_TELEGRAM_USERNAME" // without @
-
-    window.open(`https://t.me/${username}?text=${message}`, "_blank")
+    window.open(
+      `https://t.me/${contact.telegram}?text=${message}`,
+      "_blank"
+    )
   }
+
 
   return (
     <div className="min-h-screen bg-gray-950 flex justify-center items-start pt-10 px-4">
 
       <div className="w-full max-w-xl bg-slate-900 border border-orange-600 rounded-2xl shadow-lg p-6 sm:p-8">
 
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-white">
           Wallet
         </h1>
 
@@ -84,9 +131,9 @@ Please confirm payment details.`
           </h2>
         </div>
 
-        {/* Input */}
         <div className="space-y-4">
 
+          {/* Coin Input */}
           <div>
             <label className="text-sm text-gray-400">Enter Coins</label>
             <input
@@ -98,12 +145,11 @@ Please confirm payment details.`
             />
           </div>
 
-          {/* Calculation box */}
+          {/* Total */}
           <div className="bg-gray-800 rounded-xl p-5 text-center">
             <p className="text-gray-400 text-sm">
               1 Coin = ₹49
             </p>
-
             <p className="text-lg sm:text-xl font-semibold mt-2 text-orange-400">
               Total: ₹{total}
             </p>
@@ -117,22 +163,26 @@ Please confirm payment details.`
             Copy Payment Details
           </button>
 
-          {/* WhatsApp + Telegram */}
+          {/* Dynamic Contact Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-            <button
-              onClick={handleWhatsApp}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
-            >
-              WhatsApp
-            </button>
+            {contact?.is_whatsapp === "1" && (
+              <button
+                onClick={handleWhatsApp}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
+              >
+                WhatsApp
+              </button>
+            )}
 
-            <button
-              onClick={handleTelegram}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
-            >
-              Telegram
-            </button>
+            {contact?.is_telegram === "1" && (
+              <button
+                onClick={handleTelegram}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+              >
+                Telegram
+              </button>
+            )}
 
           </div>
 

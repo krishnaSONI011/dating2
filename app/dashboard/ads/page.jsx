@@ -175,7 +175,7 @@ export default function MyAds(){
               <div className="flex justify-between items-center px-6 py-4 border-t border-gray-800">
 
                 <div className="flex gap-3">
-                  {/* <ActionBtn icon={<FaEdit/>} label="Edit"/> */}
+                  <Link href={`/dashboard/ads/edit/${ad.slug}`}><ActionBtn icon={<FaEdit/>} label="Edit"/></Link>
                   <Button 
                     onClick={()=>deleteMyList(ad.id)} 
                     className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">

@@ -15,7 +15,7 @@ const playwrite = Playwrite_AT({
 export default function Footer() {
 
   const router = useRouter()
-
+  const [legalPages, setLegalPages] = useState([])
   const [city, setCity] = useState([])
   const [footerData, setFooterData] = useState(null)
 
@@ -54,7 +54,23 @@ export default function Footer() {
 
     getFooterDetails()
   }, [])
+/* ================= LEGAL PAGES ================= */
+useEffect(() => {
+  async function getLegalPages() {
+    try {
+      const res = await api.post("/Wb/legal_pages_by_footer_cat")
 
+      if (res.data.status == "0") {
+        setLegalPages(res.data.data)
+      }
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  getLegalPages()
+}, [])
   return (
     <footer className="w-full bg-[#05060a] text-gray-300 pt-16 pb-10 border-t border-gray-800">
 
@@ -76,6 +92,7 @@ export default function Footer() {
             </div>
 
             {/* trafficking */}
+            <Link href={'https://trafficking.help/in/ '} target="_blank">
             <div className="inline-flex items-center gap-3 border border-red-500/40 bg-red-500/10 px-5 py-3 rounded-xl">
               <div className="w-10 h-10 flex items-center justify-center bg-red-600 rounded-full text-white">
                 <FaHandPaper/>
@@ -84,9 +101,10 @@ export default function Footer() {
                 STOP HUMAN TRAFFICKING
               </span>
             </div>
+            </Link>
 
             {/* DMCA Image (Dynamic) */}
-            {footerData?.img && (
+            {/* {footerData?.img && (
               <div className="mt-5 w-fit">
                 <Link href={"#"}>
                   <img
@@ -96,8 +114,14 @@ export default function Footer() {
                   />
                 </Link>
               </div>
-            )}
-
+            )} */}
+{/* DMCA HTML (Dynamic) */}
+{footerData?.link && (
+  <div
+    className="mt-5 w-fit"
+    dangerouslySetInnerHTML={{ __html: footerData.link }}
+  />
+)}
           </div>
 
           {/* About (Dynamic Description) */}
@@ -113,43 +137,28 @@ export default function Footer() {
         <div className="border-t border-gray-800 mb-10"></div>
 
         {/* ===== LINKS ===== */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+        {/* ===== DYNAMIC FOOTER LINKS ===== */}
+<div className="grid grid-cols-2 md:grid-cols-4 gap-10">
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">LEGAL</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/2257-exemption'}>2257 Exemption</Link></li>
-              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/term-and-condition'}>Terms of Service</Link></li>
-              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/disclaimer'}>Disclaimer</Link></li>
-            </ul>
-          </div>
+{legalPages.map((cat) => (
+  <div key={cat.category_id}>
+    <h3 className="text-white font-semibold mb-4">
+      {cat.category_name.toUpperCase()}
+    </h3>
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">SUPPORT</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer">Contact Us</li>
-              <li className="hover:text-orange-300 cursor-pointer">Help & FAQ</li>
-              <li className="hover:text-orange-300 cursor-pointer">Sitemap</li>
-            </ul>
-          </div>
+    <ul className="space-y-2 text-gray-400">
+      {cat.pages.map((page) => (
+        <li key={page.id} className="hover:text-orange-300 cursor-pointer">
+          <Link href={`/${page.slug}`}>
+            {page.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
 
-          <div>
-            <h3 className="text-white font-semibold mb-4">SECURITY</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/privacy-policy'}>Privacy Policy</Link></li>
-              <li className="hover:text-orange-300 cursor-pointer"><Link href={'/cookie-policy'}>Cookie Policy</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-white font-semibold mb-4">COMPANY</h3>
-            <ul className="space-y-2 text-gray-400">
-              <li className="hover:text-orange-300 cursor-pointer">About Us</li>
-              <li className="hover:text-orange-300 cursor-pointer">Latest Blog</li>
-            </ul>
-          </div>
-
-        </div>
+</div>
 
         {/* ===== BOTTOM CARD ===== */}
         <div className="mt-14 bg-gradient-to-r from-[#0c0d14] to-[#11121a] border border-gray-800 rounded-2xl p-6 grid md:grid-cols-2 gap-6 items-center">

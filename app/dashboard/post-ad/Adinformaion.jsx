@@ -7,16 +7,20 @@ import api from "@/lib/api"
 import { useContext, useEffect, useState } from "react"
 import { FaEnvelope, FaTelegram, FaWhatsapp } from "react-icons/fa"
 import { countryCodes } from "@/data/country_code"
+import { useParams } from "next/navigation"
 export default function Adinformation({ form, setForm, handleChange, nextStep, setImages, images, services, setServices }) {
+    
     const { user } = useContext(AuthContext)
     const [ethnicity, setEthnicity] = useState("")
     const [category, setCategory] = useState([])
     const [city, setCity] = useState([])
+    const params = useParams()
+    const slug = params.slug ?? ''
     const [local, setLocal] = useState([])
     const [breast, setBreast] = useState("")
     const [hair, setHair] = useState("")
     const [bodyType, setBodyType] = useState("")
-
+    
     const [selected, setSelected] = useState([]) // store selected sub_service ids
     const [contactType, setContactType] = useState("phone")
     const [email, setEmail] = useState(user?.email ?? "")
@@ -24,6 +28,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
     const [telegram, setTelegram] = useState(false)
 
     useEffect(() => {
+        
         async function fetchServices() {
             try {
                 const res = await api.get("/Wb/all_services")
@@ -55,6 +60,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 console.log(e)
             }
         }
+       
         getCity()
         fetchServices()
         getCategory()
