@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react"
 import EscortCard from "@/components/ui/AdsCard"
 import api from "@/lib/api"
-import { getExpiryDate } from "@/lib/DateTimeFormate"
 import { 
-  FaCrown, FaEdit, FaRedo, FaRegCalendarAlt, 
+  FaCrown, FaEdit, FaRedo, 
   FaRocket, FaClock 
 } from "react-icons/fa"
 import Button from "@/components/ui/Button"
@@ -18,22 +17,24 @@ export default function MyAds(){
   const [activeTab,setActiveTab] = useState("all")
   const [loading,setLoading] = useState(true)
 
-  function isExpired(createdAt, days = 15){
-    const d = new Date(createdAt)
-    d.setDate(d.getDate() + days)
-    return new Date() > d
-  }
+  const [repostingId,setRepostingId] = useState(null)
+  const [showModal,setShowModal] = useState(false)
+  const [selectedAd,setSelectedAd] = useState(null)
 
   useEffect(()=>{ getAds() },[])
 
   async function getAds(){
     try{
       const res = await api.get("/Wb/get_ads_by_id")
-      if(res.data.status === 0){
+      if(res.data.status == 0){
         setAds(res.data.data)
       }
-    }catch(e){ console.log(e) }
-    finally{ setLoading(false) }
+    }catch(e){ 
+      console.log(e) 
+    }
+    finally{ 
+      setLoading(false) 
+    }
   }
 
   async function deleteMyList(id){
@@ -54,27 +55,79 @@ export default function MyAds(){
     }
   }
 
+  /* ================= OPEN MODAL ================= */
+
+  function openRepostModal(ad){
+    setSelectedAd(ad)
+    setShowModal(true)
+  }
+
+  /* ================= CONFIRM REPOST ================= */
+
+  async function confirmRepost(){
+
+    if(!selectedAd) return
+
+    try{
+      setRepostingId(selectedAd.id)
+
+      const formData = new FormData()
+      formData.append("ads_id", selectedAd.id)
+      formData.append("total", 1)
+
+      const res = await api.post("/Wb/ads_repost", formData)
+
+      if(res.data.status == 0){
+        toast.success(res.data.message || "Ad reposted successfully")
+        setShowModal(false)
+        getAds()
+      }else{
+        toast.error(res.data.message || "Repost failed")
+      }
+
+    }catch(e){
+      console.log(e)
+      toast.error("Something went wrong")
+    }
+    finally{
+      setRepostingId(null)
+    }
+  }
+
+  /* ================= EXPIRY DATE ================= */
+
+  function getExpiryDate(ad, days = 15){
+    const base = ad.repost_date 
+      ? new Date(ad.repost_date) 
+      : new Date(ad.created_at)
+
+    base.setDate(base.getDate() + days)
+
+    return base.toLocaleDateString()
+  }
+
+  /* ================= FILTER ================= */
+
   const filteredAds = ads.filter(ad=>{
     if(activeTab === "all") return true
-    if(activeTab === "promoted") return ad.is_promoted=="1"
-    if(activeTab === "expired") return isExpired(ad.created_at)
+    if(activeTab === "promoted") return ad.is_promoted == "1"
+    if(activeTab === "expired") return ad.is_approved == "0"
     return true
   })
 
+  /* ================= COUNTS ================= */
+
   const promotedCount = ads.filter(a=>a.is_promoted=="1").length
-  const expiredCount = ads.filter(a=>isExpired(a.created_at)).length
+  const expiredCount = ads.filter(a=>a.is_approved=="0").length
+  const activeCount  = ads.filter(a=>a.is_approved=="1").length
 
   return(
     <div className="bg-gray-950 min-h-screen px-4 sm:px-10 py-10 text-white">
 
-      {/* HEADER */}
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold mb-2">
           My Ads Dashboard
         </h1>
-        <p className="text-gray-400">
-          Manage and promote your listings easily
-        </p>
       </div>
 
       {/* STATS */}
@@ -82,75 +135,50 @@ export default function MyAds(){
         <StatCard icon={<FaRocket/>} title="Total Ads" value={ads.length}/>
         <StatCard icon={<FaCrown/>} title="Promoted" value={promotedCount}/>
         <StatCard icon={<FaClock/>} title="Expired" value={expiredCount}/>
-        <StatCard icon={<FaRocket/>} title="Active" value={ads.length-expiredCount}/>
+        <StatCard icon={<FaRocket/>} title="Active" value={activeCount}/>
       </div>
 
       {/* TABS */}
-      <div className="flex gap-6 border-b border-gray-800 mb-10 overflow-x-auto">
-        <TabBtn
-          label={`All Ads (${ads.length})`}
-          active={activeTab==="all"}
-          onClick={()=>setActiveTab("all")}
-        />
-        <TabBtn
-          label={`Promoted (${promotedCount})`}
-          active={activeTab==="promoted"}
-          onClick={()=>setActiveTab("promoted")}
-        />
-        <TabBtn
-          label={`Expired (${expiredCount})`}
-          active={activeTab==="expired"}
-          onClick={()=>setActiveTab("expired")}
-        />
+      <div className="flex gap-6 border-b border-gray-800 mb-10">
+        <TabBtn label={`All Ads (${ads.length})`} active={activeTab==="all"} onClick={()=>setActiveTab("all")} />
+        <TabBtn label={`Promoted (${promotedCount})`} active={activeTab==="promoted"} onClick={()=>setActiveTab("promoted")} />
+        <TabBtn label={`Expired (${expiredCount})`} active={activeTab==="expired"} onClick={()=>setActiveTab("expired")} />
       </div>
 
       {loading && <div className="text-gray-400">Loading ads...</div>}
 
-      {!loading && filteredAds.length===0 && (
-        <div className="bg-gray-900 p-10 rounded-xl text-center border border-gray-800">
-          <p className="text-gray-400">No ads found</p>
-        </div>
-      )}
-
-      {/* ADS */}
       <div className="grid grid-cols-1 gap-8">
 
         {filteredAds.map(ad=>{
 
+          const isExpired = ad.is_approved == "0"
           const img = ad.images?.length ? ad.images[0] : "/noimage.jpg"
-          const expiry = getExpiryDate(ad.created_at,15)
-          const expired = isExpired(ad.created_at,15)
 
           return(
             <div key={ad.id}
-              className="bg-gray-900 border border-gray-800 rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
+              className={`bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden 
+              ${isExpired ? "opacity-70" : "hover:shadow-xl transition"}`}>
 
               {/* TOP BAR */}
               <div className="flex justify-between items-center bg-gray-800 px-6 py-3 border-b border-gray-700">
 
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <FaRegCalendarAlt/>
-                  Expires:
-                  <span className={`font-bold ml-2 ${expired?"text-red-500":"text-green-400"}`}>
-                    {expiry}
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="text-gray-400">Expires:</span>
+                  <span className={`${isExpired ? "text-red-500" : "text-green-400"} font-semibold`}>
+                    {getExpiryDate(ad)}
                   </span>
-                </div>
-
-                <div className="flex gap-2">
-
-                  {ad.is_promoted=="1" && (
-                    <button  className="flex items-center gap-1 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
-                      <FaCrown size={12}/> Promoted
-                    </button>
-                  )}
-
-                  {expired && (
-                    <span className="bg-black text-white text-xs px-3 py-1 rounded-full">
-                      Expired
+                  {isExpired && (
+                    <span className="bg-red-600 text-white text-xs px-3 py-1 rounded-full font-semibold ml-3">
+                      EXPIRED
                     </span>
                   )}
-
                 </div>
+
+                {ad.is_promoted=="1" && (
+                  <span className="flex items-center gap-1 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                    <FaCrown size={12}/> Promoted
+                  </span>
+                )}
               </div>
 
               {/* CARD */}
@@ -160,10 +188,8 @@ export default function MyAds(){
                   title={ad.title}
                   desc={ad.description}
                   age={ad.age}
-                  is_telegram={ad.is_telegram}
-                  is_whatsapp={ad.is_whatsapp}
-                  location={`${ad.city_name || ""} ${ad.state_name || ""}`}
                   country={ad.nationality}
+                  location={`${ad.city_name || ""} ${ad.state_name || ""}`}
                   image={img}
                   is_superTop={ad.super_top=="1"}
                   is_new={ad.new=="1"}
@@ -175,7 +201,10 @@ export default function MyAds(){
               <div className="flex justify-between items-center px-6 py-4 border-t border-gray-800">
 
                 <div className="flex gap-3">
-                  <Link href={`/dashboard/ads/edit/${ad.slug}`}><ActionBtn icon={<FaEdit/>} label="Edit"/></Link>
+                  <Link href={`/dashboard/ads/edit/${ad.slug}`}>
+                    <ActionBtn icon={<FaEdit/>} label="Edit"/>
+                  </Link>
+
                   <Button 
                     onClick={()=>deleteMyList(ad.id)} 
                     className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">
@@ -184,13 +213,19 @@ export default function MyAds(){
                 </div>
 
                 <div>
-                  {ad.is_promoted!="1" && !expired && (
-                    <Link href={`/dashboard/ads/promote/${ad.id}`}>
-                    <ActionBtn icon={<FaRocket/>} label="Promote" primary/>
-                    </Link>
+                  {isExpired && (
+                    <button
+                      onClick={() => openRepostModal(ad)}
+                      className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-black text-white hover:bg-gray-800"
+                    >
+                      <FaRedo/> Repost
+                    </button>
                   )}
-                  {expired && (
-                    <ActionBtn icon={<FaRedo/>} label="Repost" dark/>
+
+                  {!isExpired && ad.is_promoted!="1" && (
+                    <Link href={`/dashboard/ads/promote/${ad.id}`}>
+                      <ActionBtn icon={<FaRocket/>} label="Promote" primary/>
+                    </Link>
                   )}
                 </div>
 
@@ -199,8 +234,49 @@ export default function MyAds(){
             </div>
           )
         })}
-
       </div>
+
+      {/* ================= MODAL ================= */}
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+          <div className="bg-gray-900 p-8 rounded-2xl border border-gray-700 w-[400px]">
+
+            <h2 className="text-xl font-bold mb-4">
+              Confirm Repost
+            </h2>
+
+            <p className="text-gray-400 mb-6">
+              Are you sure you want to repost this ad?
+              <br/>
+              <span className="text-red-500 font-semibold">
+                This will cost 1 Coin.
+              </span>
+            </p>
+
+            <div className="flex justify-end gap-4">
+
+              <button
+                onClick={()=>setShowModal(false)}
+                className="px-4 py-2 border border-gray-600 rounded-lg"
+              >
+                Cancel
+              </button>
+
+              <button
+                onClick={confirmRepost}
+                disabled={repostingId}
+                className="px-6 py-2 bg-red-600 hover:bg-red-700 rounded-lg font-semibold"
+              >
+                {repostingId ? "Processing..." : "Repost (1 Coin)"}
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
@@ -211,10 +287,8 @@ function TabBtn({label,active,onClick}){
   return(
     <button
       onClick={onClick}
-      className={`pb-3 px-2 font-semibold border-b-2 transition whitespace-nowrap
-      ${active
-        ? "border-red-600 text-red-500"
-        : "border-transparent text-gray-400 hover:text-white"}`}
+      className={`pb-3 px-2 font-semibold border-b-2 transition
+      ${active ? "border-red-600 text-red-500" : "border-transparent text-gray-400 hover:text-white"}`}
     >
       {label}
     </button>
@@ -233,10 +307,9 @@ function StatCard({icon,title,value}){
   )
 }
 
-function ActionBtn({icon,label,primary,dark}){
+function ActionBtn({icon,label,primary}){
   let cls="bg-gray-800 hover:bg-gray-700 text-gray-300"
   if(primary) cls="bg-red-600 hover:bg-red-700 text-white"
-  if(dark) cls="bg-black text-white hover:bg-gray-800"
 
   return(
     <button className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition ${cls}`}>
