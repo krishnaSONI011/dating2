@@ -19,6 +19,7 @@ export default function Signup() {
   const [marketing, setMarketing] = useState(false);
   const [email , setEmail] = useState('')
   const[mobile , setMobile] = useState('')
+  const [loading , setLoading] = useState(false)
  
   // password checks
   const hasLower = /[a-z]/.test(password);
@@ -29,6 +30,7 @@ export default function Signup() {
   const isValid = hasLower && hasUpper && hasNumber && hasLength && agree; 
   async function handelSignup() {
     try{
+      setLoading(true)
         const formData= new FormData()
         formData.append("email" , email)
         formData.append("password" , password)
@@ -40,9 +42,12 @@ export default function Signup() {
             localStorage.setItem("email" , email)
             localStorage.setItem('type' , 'register')
             router.push('/otp')
-        }else toast.error(res.data.message)
+        }else {toast.error(res.data.message)}
     }catch(e){
+        setLoading(false)
         console.log(e)
+    }finally{
+      setLoading(false)
     }
   }
   return (
@@ -175,7 +180,7 @@ export default function Signup() {
         >
          
         </button> */}
-        <Button onClick={handelSignup} disabled={!isValid} className={` mt-6 ${
+        <Button loading={loading} onClick={handelSignup} disabled={!isValid} className={` mt-6 ${
             isValid
               ? "bg-orange-600 hover:bg-[#e63a00] text-white"
               : "bg-gray-300   text-gray-500 "

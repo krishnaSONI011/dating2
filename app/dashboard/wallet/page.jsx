@@ -13,37 +13,54 @@ export default function Wallet() {
 
   const [coins, setCoins] = useState(0)
   const [contact, setContact] = useState(null)
+  const [payment, setPayment] = useState(null)
 
   const pricePerCoin = 49
   const total = coins * pricePerCoin
 
-  /* ================= LOAD CONTACT SETTINGS ================= */
+  /* ================= LOAD CONTACT ================= */
 
   useEffect(() => {
-
     async function fetchContact() {
       try {
-
         const fd = new FormData()
-        fd.append("contect_id", 1)
+        fd.append("contect_id", "1")
 
         const res = await api.post("/Wb/contect_detail", fd)
 
         if (res.data.status === 0) {
           setContact(res.data.data)
         }
-
       } catch (err) {
         console.log(err)
       }
     }
 
     fetchContact()
-
   }, [])
 
+  /* ================= LOAD PAYMENT ================= */
 
-  /* ================= BUILD MESSAGE ================= */
+  useEffect(() => {
+    async function fetchPayment() {
+      try {
+        const fd = new FormData()
+        fd.append("payment_id", "1")
+
+        const res = await api.post("/Wb/payments_detail", fd)
+
+        if (res.data.status == 0 && res.data.data.status == "1") {
+          setPayment(res.data.data)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchPayment()
+  }, [])
+
+  /* ================= MESSAGE ================= */
 
   const buildMessage = () => {
     return `Hi 👋
@@ -57,9 +74,6 @@ Total Pay: ₹${total}
 Please confirm payment details.`
   }
 
-
-  /* ================= COMMON VALIDATION ================= */
-
   const validate = () => {
     if (!coins || coins <= 0) {
       toast.error("Enter coin amount")
@@ -68,120 +82,158 @@ Please confirm payment details.`
     return true
   }
 
-
-  /* ================= COPY ================= */
-
   const handleCopy = async () => {
-
     if (!validate()) return
-
-    try {
-      await navigator.clipboard.writeText(buildMessage())
-      toast.success("Copied! Send to admin")
-    } catch {
-      toast.error("Copy failed")
-    }
+    await navigator.clipboard.writeText(buildMessage())
+    toast.success("Copied! Send to admin")
   }
 
-
-  /* ================= WHATSAPP ================= */
-
   const handleWhatsApp = () => {
-
     if (!validate()) return
     if (!contact?.whatsapp) return
 
     const message = encodeURIComponent(buildMessage())
-    window.open(
-      `https://wa.me/${contact.whatsapp}?text=${message}`,
-      "_blank"
-    )
+    window.open(`https://wa.me/${contact.whatsapp}?text=${message}`, "_blank")
   }
-
-
-  /* ================= TELEGRAM ================= */
-
-  const handleTelegram = () => {
-
-    if (!validate()) return
-    if (!contact?.telegram) return
-
-    const message = encodeURIComponent(buildMessage())
-    window.open(
-      `https://t.me/${contact.telegram}?text=${message}`,
-      "_blank"
-    )
-  }
-
 
   return (
-    <div className="min-h-screen bg-gray-950 flex justify-center items-start pt-10 px-4">
+    <div className="min-h-screen bg-gray-950 px-4 py-10 flex justify-center">
+      <div className="w-full max-w-5xl space-y-8">
 
-      <div className="w-full max-w-xl bg-slate-900 border border-orange-600 rounded-2xl shadow-lg p-6 sm:p-8">
+        {/* ================= WALLET CARD ================= */}
+        <div className="bg-slate-900 border border-orange-600 rounded-2xl p-6 sm:p-8">
 
-        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center text-white">
-          Wallet
-        </h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white text-center mb-6">
+            Wallet
+          </h1>
 
-        {/* Balance */}
-        <div className="bg-black border border-orange-600 rounded-xl p-6 text-center mb-8">
-          <p className="text-gray-400 text-sm">Current Balance</p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-orange-500 mt-2">
-            {balance} Coins
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-
-          {/* Coin Input */}
-          <div>
-            <label className="text-sm text-gray-400">Enter Coins</label>
-            <input
-              type="number"
-              value={coins}
-              onChange={(e) => setCoins(Number(e.target.value))}
-              placeholder="Enter coins"
-              className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-4 py-3 mt-1 outline-none focus:border-orange-500"
-            />
+          <div className="bg-black border border-orange-600 rounded-xl p-6 text-center mb-8">
+            <p className="text-gray-400 text-sm">Current Balance</p>
+            <h2 className="text-3xl font-bold text-orange-500 mt-2">
+              {balance} Coins
+            </h2>
           </div>
 
-          {/* Total */}
-          <div className="bg-gray-800 rounded-xl p-5 text-center">
-            <p className="text-gray-400 text-sm">
-              1 Coin = ₹49
-            </p>
-            <p className="text-lg sm:text-xl font-semibold mt-2 text-orange-400">
-              Total: ₹{total}
-            </p>
-          </div>
+          <div
+  className={`grid grid-cols-1 ${
+    payment ? "md:grid-cols-2" : "max-w-md mx-auto"
+  } gap-8`}
+>
 
-          {/* Copy Button */}
-          <button
-            onClick={handleCopy}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-xl transition"
-          >
-            Copy Payment Details
-          </button>
+            {/* LEFT SIDE */}
+            <div className="space-y-4">
 
-          {/* Dynamic Contact Buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-sm text-gray-400">Enter Coins</label>
+                <input
+                  type="number"
+                  value={coins}
+                  onChange={(e) => setCoins(Number(e.target.value))}
+                  className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-4 py-3 mt-1 focus:border-orange-500 outline-none"
+                />
+              </div>
 
-            {contact?.is_whatsapp === "1" && (
+              <div className="bg-gray-800 rounded-xl p-5 text-center">
+                <p className="text-gray-400 text-sm">1 Coin = ₹49</p>
+                <p className="text-lg font-semibold mt-2 text-orange-400">
+                  Total: ₹{total}
+                </p>
+              </div>
+
               <button
-                onClick={handleWhatsApp}
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
+                onClick={handleCopy}
+                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-xl transition"
               >
-                WhatsApp
+                Copy Payment Details
               </button>
-            )}
 
-            {contact?.is_telegram === "1" && (
-              <button
-                onClick={handleTelegram}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
-              >
-                Telegram
-              </button>
+             {/* ================= CONTACT BUTTONS ================= */}
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+{/* WHATSAPP */}
+{contact?.is_whatsapp === "1" && contact?.whatsapp && (
+  <button
+    onClick={handleWhatsApp}
+    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
+  >
+    WhatsApp
+  </button>
+)}
+
+{/* TELEGRAM */}
+{contact?.is_telegram === "1" && contact?.telegram && (
+  <button
+    onClick={() => {
+      if (!validate()) return
+      const message = encodeURIComponent(buildMessage())
+      window.open(
+        `https://t.me/${contact.telegram}?text=${message}`,
+        "_blank"
+      )
+    }}
+    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+  >
+    Telegram
+  </button>
+)}
+
+{/* EMAIL */}
+{contact?.is_email === "1" && contact?.email && (
+  <button
+    onClick={() => {
+      if (!validate()) return
+      window.location.href = `mailto:${contact.email}?subject=Wallet Recharge&body=${encodeURIComponent(buildMessage())}`
+    }}
+    className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition"
+  >
+    Email
+  </button>
+)}
+
+</div>
+
+            </div>
+
+            {/* RIGHT SIDE - PAYMENT INFO */}
+            {payment && (
+              <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 space-y-5">
+
+                <h2 className="text-xl font-semibold text-orange-500 mb-4">
+                  Payment Information
+                </h2>
+
+                {/* QR */}
+                {payment.qr && (
+                  <div className="flex justify-center">
+                    <img
+                      src={payment.qr}
+                      alt="QR"
+                      className="w-40 h-40 object-contain rounded-lg border border-gray-700"
+                    />
+                  </div>
+                )}
+
+                {/* DETAILS GRID */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <p className="text-gray-400">UPI ID</p>
+                    <p className="font-semibold break-all">{payment.upi}</p>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <p className="text-gray-400">IFSC</p>
+                    <p className="font-semibold">{payment.ifsc}</p>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg sm:col-span-2">
+                    <p className="text-gray-400">Account Number</p>
+                    <p className="font-semibold break-all">{payment.account_no}</p>
+                  </div>
+
+                </div>
+
+              </div>
             )}
 
           </div>
