@@ -32,7 +32,7 @@ export default function Signup() {
         const formData= new FormData()
         formData.append("email" , email)
         formData.append("password" , password)
-        formData,append("mobile" , toString(mobile))
+        formData.append("mobile", mobile.toString());
         formData.append("confirm_password" , password)
         const res = await api.post(`/Wb/register` , formData)
         if(res.data.status == 0){
