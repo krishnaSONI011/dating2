@@ -148,11 +148,11 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
 
     return (
         <>
-            <div className="mx-30">
-                <h1 className="text-3xl font-bold my-10">Informaition</h1>
+            <div className="mx-0 md:mx-30">
+                <h1 className="text-lg md:text-3xl font-bold my-10">Informaition</h1>
                 {/* Ads Informaition */}
                 <div className="bg-slate-800 rounded border border-(--content-border-color) p-3">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {/* category */}
                         <div>
                             <label htmlFor="" className="font-bold text-xl">* Select Category</label><br />
@@ -232,7 +232,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
 
                 </div>
                 <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1  md:grid-cols-2 gap-3">
                         {/* category */}
                         <div>
                             <label htmlFor="" className="font-bold text-xl">* Age</label><br />

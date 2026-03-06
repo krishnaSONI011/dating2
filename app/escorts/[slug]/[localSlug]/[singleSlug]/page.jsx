@@ -9,6 +9,7 @@ import Button from "@/components/ui/Button"
 import ReusableModal from "@/components/ui/Model"
 import { AuthContext } from "@/context/AuthContext"
 import { toast } from "react-toastify"
+import WarningAlert from "@/components/Warninf"
 
 export default function SingleAdPage() {
 
@@ -169,11 +170,11 @@ export default function SingleAdPage() {
 
           </div>
         </div>
-
+ 
         {/* RIGHT CONTACT - DESKTOP */}
         <div className="hidden lg:block lg:sticky lg:top-24 h-fit">
           <div className="rounded-3xl border border-slate-700 p-6">
-
+            <WarningAlert />
             <h3 className="text-xl font-bold mb-6 text-white">
               Contact Information
             </h3>
@@ -209,6 +210,7 @@ export default function SingleAdPage() {
 
       {/* MOBILE STICKY CONTACT */}
       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-[#0f172a] border-t border-slate-700 p-3 shadow-[0_-5px_20px_rgba(0,0,0,0.4)] z-50">
+      <WarningAlert />
         <div className="flex gap-3">
           <a href={`tel:${ad.mobile}`} className="flex-1">
             <button className="w-full bg-green-600 text-white py-3 rounded-xl text-sm font-semibold">

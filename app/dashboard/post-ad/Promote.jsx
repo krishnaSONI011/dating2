@@ -8,25 +8,27 @@ import api from "@/lib/api"
 import { AuthContext } from "@/context/AuthContext"
 import { useRouter } from "next/navigation"
 
-export default function Promote({ prevStep ,form , images }) {
+export default function Promote({ prevStep, form, images }) {
 
   const [timeSlot, setTimeSlot] = useState("")
-  const [fromTime , setFromtime] = useState("")
-  const [toTime  , setToTime ] = useState("")
-  const [days, setDays] = useState(1)
-  const [boost, setBoost] = useState(3)
+  const [fromTime, setFromtime] = useState("")
+  const [toTime, setToTime] = useState("")
+  const [days, setDays] = useState(null)
+const [boost, setBoost] = useState(null)
   const { balance } = useContext(WalletContext)
   const [superTop, setSuperTop] = useState(false)
   const [highlight, setHighlight] = useState(false)
   const [tagNew, setTagNew] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [loading2, setLoading2] = useState(false)
   const [allInOne, setAllInOne] = useState(false)
   const { user } = useContext(AuthContext)
   const [previewImages, setPreviewImages] = useState([])
   const [contact, setContact] = useState(null)
-const [rechargeCoins, setRechargeCoins] = useState(0)
+  const [rechargeCoins, setRechargeCoins] = useState(0)
 
-const pricePerCoin = 49
-const rechargeTotal = rechargeCoins * pricePerCoin
+  const pricePerCoin = 49
+  const rechargeTotal = rechargeCoins * pricePerCoin
   const router = useRouter()
   //  pricing
   const slotPrice = 2
@@ -67,9 +69,9 @@ const rechargeTotal = rechargeCoins * pricePerCoin
       try {
         const fd = new FormData()
         fd.append("contect_id", 1)
-  
+
         const res = await api.post("/Wb/contect_detail", fd)
-  
+
         if (res.data.status === 0) {
           setContact(res.data.data)
         }
@@ -77,7 +79,7 @@ const rechargeTotal = rechargeCoins * pricePerCoin
         console.log(e)
       }
     }
-  
+
     loadContact()
   }, [])
   const buildRechargeMessage = () => {
@@ -97,86 +99,90 @@ const rechargeTotal = rechargeCoins * pricePerCoin
 
     if (!rechargeCoins || rechargeCoins <= 0)
       return toast.error("Enter coins amount")
-  
+
     if (!contact?.whatsapp)
       return toast.error("WhatsApp not available")
-  
+
     const message = encodeURIComponent(buildRechargeMessage())
-  
+
     window.open(
       `https://wa.me/${contact.whatsapp}?text=${message}`,
       "_blank"
     )
   }
-  async function postWithout(){
-    if(balance < 1){
-        return toast.error("Insufficient balance")
-      }
-      try{
-        const formData = new FormData()
-    
-        formData.append("cat_id", form.cat_id)
-        formData.append("name", form.name)
-        formData.append("nick_name", form.nick_name)
-        formData.append("age", form.age)
-        formData.append("ethnicity", form.ethnicity)
-        formData.append("nationality", form.nationality)
-        formData.append("breast", form.breast)
-        formData.append("hair", form.hair)
-        formData.append("is_telegram", form.is_telegram ? "1" : "0")
-        formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
-        formData.append("hair", form.hair)
-
-        formData.append("body_type", form.body_type)
-        formData.append("email", user?.email)
-        formData.append("gender", form.gender)
-        formData.append("mobile", form.country_code+form.phone )
-        formData.append("state", form.state)
-        formData.append("city", form.city)
-        formData.append("local_area", form.local_area)
-        formData.append("postal_code", form.postal_code)
-        formData.append("address", form.address)
-        formData.append("title", form.title)
-        formData.append("description", form.description)
-        formData.append("total", 1)
-    
-        // services
-        form.services?.forEach((s)=>{
-          formData.append("service[]", s)
-        })
-    
-        // images if exist
-        images?.forEach((img)=>{
-          formData.append("img[]", img.file)
-        })
-        
-    
-        const res = await api.post('/Wb/ads', formData)
-    
-        if(res.data.status == 0){
-    
-          toast.success(res.data.message)
-          router.push('/dashboard/')
-    
-        }else{
-          toast.error(res.data.message)
-        }
-    
-      }catch(e){
-        console.log(e)
-        toast.error("Something went wrong")
-      }
-
-  }
-  async function publishWithMoney(){
-
-    if(balance < total){
+  async function postWithout() {
+    if (balance < 1) {
       return toast.error("Insufficient balance")
     }
-  
-    try{
+    try {
+      setLoading(true)
       const formData = new FormData()
-  
+
+      formData.append("cat_id", form.cat_id)
+      formData.append("name", form.name)
+      formData.append("nick_name", form.nick_name)
+      formData.append("age", form.age)
+      formData.append("ethnicity", form.ethnicity)
+      formData.append("nationality", form.nationality)
+      formData.append("breast", form.breast)
+      formData.append("hair", form.hair)
+      formData.append("is_telegram", form.is_telegram ? "1" : "0")
+      formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
+      formData.append("hair", form.hair)
+
+      formData.append("body_type", form.body_type)
+      formData.append("email", user?.email)
+      formData.append("gender", form.gender)
+      formData.append("mobile", form.country_code + form.phone)
+      formData.append("state", form.state)
+      formData.append("city", form.city)
+      formData.append("local_area", form.local_area)
+      formData.append("postal_code", form.postal_code)
+      formData.append("address", form.address)
+      formData.append("title", form.title)
+      formData.append("description", form.description)
+      formData.append("total", 1)
+
+      // services
+      form.services?.forEach((s) => {
+        formData.append("service[]", s)
+      })
+
+      // images if exist
+      images?.forEach((img) => {
+        formData.append("img[]", img.file)
+      })
+
+
+      const res = await api.post('/Wb/ads', formData)
+
+      if (res.data.status == 0) {
+
+        toast.success(res.data.message)
+        router.push('/dashboard/')
+
+      } else {
+        toast.error(res.data.message)
+      }
+
+    } catch (e) {
+      console.log(e)
+      setLoading(false)
+      toast.error("Something went wrong")
+    }finally{
+      setLoading(false)
+    }
+
+  }
+  async function publishWithMoney() {
+
+    if (balance < total) {
+      return toast.error("Insufficient balance")
+    }
+
+    try {
+      const formData = new FormData()
+
       formData.append("cat_id", form.cat_id)
       formData.append("name", form.name)
       formData.append("nick_name", form.nick_name)
@@ -186,13 +192,13 @@ const rechargeTotal = rechargeCoins * pricePerCoin
       formData.append("breast", form.breast)
       formData.append("hair", form.hair)
       formData.append("is_telegram", form.is_telegram)
-        formData.append("is_whatsapp", form.is_whatsapp)
+      formData.append("is_whatsapp", form.is_whatsapp)
       formData.append("body_type", form.body_type)
       formData.append("email", user?.email)
       formData.append("gender", form.gender)
       formData.append("is_telegram", form.is_telegram ? "1" : "0")
-        formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
-      formData.append("mobile", form.country_code+form.phone )
+      formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
+      formData.append("mobile", form.country_code + form.phone)
       formData.append("state", form.state)
       formData.append("city", form.city)
       formData.append("local_area", form.local_area)
@@ -201,21 +207,21 @@ const rechargeTotal = rechargeCoins * pricePerCoin
       formData.append("title", form.title)
       formData.append("description", form.description)
       formData.append("total", total)
-  
+
       // services
-      form.services?.forEach((s)=>{
+      form.services?.forEach((s) => {
         formData.append("service[]", s)
       })
-  
+
       // images if exist
-      images?.forEach((img)=>{
+      images?.forEach((img) => {
         formData.append("img[]", img.file)
       })
-      
-  
+
+
       const res = await api.post('/Wb/ads', formData)
-  
-      if(res.data.status == 0){
+
+      if (res.data.status == 0) {
         const sup = superTop ? "1" : "0"
         const high = highlight ? "1" : "0"
         const n = tagNew ? "1" : "0"
@@ -223,29 +229,29 @@ const rechargeTotal = rechargeCoins * pricePerCoin
         boostData.append("ads_id", res.data.data.ads.id)
         boostData.append("from_time", fromTime)
         boostData.append("to_time", toTime)
-        boostData.append("super_top", sup  )
-        boostData.append("hight_light", high )
-        boostData.append("new", n )
-        boostData.append("all_upgrade", allInOne )
+        boostData.append("super_top", sup)
+        boostData.append("hight_light", high)
+        boostData.append("new", n)
+        boostData.append("all_upgrade", allInOne)
         boostData.append("days", days)
         boostData.append("boost_times", boost)
         boostData.append("total", total)
-  
+
         const boostRes = await api.post(`/Wb/bost_plan`, boostData)
-  
-        if(boostRes.data.status == 0){
+
+        if (boostRes.data.status == 0) {
           toast.success("Ad Published & Boosted ")
           router.push('/dashboard/')
-        }else{
+        } else {
           toast.error(boostRes.data.message)
         }
-       
-  
-      }else{
+
+
+      } else {
         toast.error(res.data.message)
       }
-  
-    }catch(e){
+
+    } catch (e) {
       console.log(e)
       toast.error("Something went wrong")
     }
@@ -265,36 +271,39 @@ const rechargeTotal = rechargeCoins * pricePerCoin
       setPreviewImages([])
       return
     }
-  
+
     const urls = images.map((img) => {
-  
+
       // If image already string (edit case)
       if (typeof img === "string") {
         return img
       }
-  
+
       // If new uploaded file
       if (img.file) {
         return URL.createObjectURL(img.file)
       }
-  
+
       return ""
     })
-  
+
     setPreviewImages(urls)
-  
+
   }, [images])
   return (
-    <div className="max-w-7xl mx-auto mt-10 grid grid-cols-3 gap-8">
-
+    <div className="max-w-7xl mx-auto px-4 md:px-6 mt-6 md:mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+  
       {/* ================= LEFT ================= */}
-      <div className="col-span-2 bg-(--website-background) p-8 rounded-2xl border shadow-sm border-(--content-border-color)">
-
-        <h2 className="text-3xl font-bold mb-6">Promote Your Ad</h2>
-
+      <div className="lg:col-span-2 bg-(--website-background) p-4 md:p-6 lg:p-8 rounded-2xl border shadow-sm border-(--content-border-color)">
+  
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          Promote Your Ad
+        </h2>
+  
         {/* PREVIEW */}
         <div className="mb-10">
           <h3 className="font-semibold mb-3">Ad Preview</h3>
+  
           <EscortCard
             age={form.age}
             title={form.title}
@@ -304,31 +313,43 @@ const rechargeTotal = rechargeCoins * pricePerCoin
             is_new={tagNew}
             country={form.nationality}
             highlight={highlight}
-            location={form.local_area + ','+ form.city}
+            location={form.local_area + "," + form.city}
           />
         </div>
-
+  
         {/* TIME SLOT */}
-        <h3 className="text-xl font-semibold mb-4">Choose promotion time</h3>
-
-        <div className="grid grid-cols-2 gap-4 mb-10">
+        <h3 className="text-lg md:text-xl font-semibold mb-4">
+          Choose promotion time
+        </h3>
+  
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
   {[
     { id: "morning", label: "Morning", from: "06:00", to: "12:00" },
     { id: "afternoon", label: "Afternoon", from: "12:00", to: "18:00" },
-    { id: "evening", label: "Evening", from: "18:00", to: "00:00" },
-    { id: "night", label: "Night", from: "00:00", to: "06:00" },
+    { id: "evening", label: "Evening", from: "18:00", to: "23:59" },
+    { id: "night", label: "Night", from: "23:59", to: "06:00" },
   ].map(slot => (
     <button
       key={slot.id}
       onClick={() => {
-        setTimeSlot(slot.id)
-        setFromtime(slot.from)
-        setToTime(slot.to)
+        if (timeSlot === slot.id) {
+          // deselect
+          setTimeSlot("")
+          setFromtime("")
+          setToTime("")
+        } else {
+          // select
+          setTimeSlot(slot.id)
+          setFromtime(slot.from)
+          setToTime(slot.to)
+        }
       }}
-      className={`border rounded-xl p-5 text-left transition font-semibold
-      ${timeSlot === slot.id
-        ? "border-red-500 bg-red-50 text-red-600"
-        : "border-gray-300 hover:border-gray-400"}`}
+      className={`border rounded-xl p-4 md:p-5 text-left transition font-semibold
+      ${
+        timeSlot === slot.id
+          ? "border-red-500 bg-red-50 text-red-600"
+          : "border-gray-300 hover:border-gray-400"
+      }`}
     >
       <div>{slot.label}</div>
       <div className="text-sm text-gray-500">
@@ -337,213 +358,231 @@ const rechargeTotal = rechargeCoins * pricePerCoin
     </button>
   ))}
 </div>
+  
+      {/* AFTER SLOT */}
+{timeSlot && (
+  <>
+    {/* DAYS */}
+    <h3 className="text-lg md:text-xl font-semibold mb-4">
+      Select days
+    </h3>
 
-        {/* AFTER SLOT */}
-        {timeSlot && (
-          <>
-            {/* DAYS */}
-            <h3 className="text-xl font-semibold mb-4">Select days</h3>
+    <div className="flex flex-wrap gap-3 md:gap-4 mb-8">
+  {[1, 3, 7].map(d => (
+    <button
+      key={d}
+      onClick={() => setDays(days === d ? null : d)}
+      className={`px-5 py-2 md:px-6 md:py-3 rounded-xl border font-semibold transition
+      ${
+        days === d
+          ? "border-red-500 bg-red-50 text-red-600"
+          : "border-gray-300 hover:border-gray-400"
+      }`}
+    >
+      {d} Day{d > 1 && "s"}
+    </button>
+  ))}
+</div>
 
-            <div className="flex gap-4 mb-8">
-              {[1, 3, 7].map(d => (
-                <button
-                  key={d}
-                  onClick={() => setDays(d)}
-                  className={`px-6 py-3 rounded-xl border font-semibold
-                  ${days === d
-                      ? "border-red-500 bg-red-50 text-red-600"
-                      : "border-gray-300"}`}
-                >
-                  {d} Day{d > 1 && "s"}
-                </button>
-              ))}
-            </div>
+    {/* BOOST */}
+    <h3 className="text-lg md:text-xl font-semibold mb-4">
+      Contribution increase
+    </h3>
 
-            {/* BOOST */}
-            <h3 className="text-xl font-semibold mb-4">
-              Contribution increase
-            </h3>
+    <div className="flex flex-wrap gap-3 md:gap-4 mb-10">
+  {[3, 6].map(b => (
+    <button
+      key={b}
+      onClick={() => setBoost(boost === b ? null : b)}
+      className={`px-5 py-2 md:px-6 md:py-3 rounded-xl border font-semibold transition
+      ${
+        boost === b
+          ? "border-red-500 bg-red-50 text-red-600"
+          : "border-gray-300 hover:border-gray-400"
+      }`}
+    >
+      {b} Boosts
+    </button>
+  ))}
+</div>
 
-            <div className="flex gap-4 mb-10">
-              {[3, 6].map(b => (
-                <button
-                  key={b}
-                  onClick={() => setBoost(b)}
-                  className={`px-6 py-3 rounded-xl border font-semibold
-                  ${boost === b
-                      ? "border-red-500 bg-red-50 text-red-600"
-                      : "border-gray-300"}`}
-                >
-                  {b} Boosts
-                </button>
-              ))}
-            </div>
+    {/* STAND OUT */}
+    <h2 className="text-xl md:text-2xl font-bold mb-6 text-(--second-color)">
+      Make your ad stand out
+    </h2>
 
-            {/* STAND OUT */}
-            <h2 className="text-2xl font-bold mb-6 text-(--second-color)">
-              Make your ad stand out
-            </h2>
+    <StandCard
+      title="Super Top"
+      desc="Get more visibility with top placement."
+      price="+ Rs 200 (5 Coins)"
+      active={superTop}
+      setActive={setSuperTop}
+    />
 
-            <StandCard
-              title="Super Top"
-              desc="Get more visibility with top placement."
-              price="+ Rs 200 (5 Coins)"
-              active={superTop}
-              setActive={setSuperTop}
-            />
+    <StandCard
+      title="Highlight"
+      desc="Colored background for your ad."
+      price="+ Rs 80 (2 Coins)"
+      active={highlight}
+      setActive={setHighlight}
+    />
 
-            <StandCard
-              title="Highlight"
-              desc="Colored background for your ad."
-              price="+ Rs 80 (2 Coins)"
-              active={highlight}
-              setActive={setHighlight}
-            />
+    <StandCard
+      title="Tag New"
+      desc="Add NEW label to listing."
+      price="+ Rs 80 (2 Coins)"
+      active={tagNew}
+      setActive={setTagNew}
+    />
 
-            <StandCard
-              title="Tag New"
-              desc="Add NEW label to listing."
-              price="+ Rs 80 (2 Coins)"
-              active={tagNew}
-              setActive={setTagNew}
-            />
-
-            <StandCard
-              title=" All in One"
-              desc="Super Top + Highlight + New tag"
-              price="+ Rs 360 (9 Coins)"
-              active={allInOne}
-              setActive={handleAllInOne}
-              highlightAll
-            />
-          </>
-        )}
-
+    <StandCard
+      title="All in One"
+      desc="Super Top + Highlight + New tag"
+      price="+ Rs 360 (9 Coins)"
+      active={allInOne}
+      setActive={handleAllInOne}
+      highlightAll
+    />
+  </>
+)}
+  
         <div className="mt-10">
           <Button onClick={prevStep}>← Back</Button>
         </div>
-
+  
       </div>
-
+  
       {/* ================= RIGHT SUMMARY ================= */}
-      <div className="sticky top-24 h-fit">
+      <div className="lg:sticky lg:top-24 h-fit">
 
-        <div className="bg-(--website-background) border border-gray-200 rounded-2xl p-7 shadow-xl">
+<div className="bg-(--website-background) border border-gray-200 rounded-2xl p-5 md:p-7 shadow-xl">
 
-          <h3 className="text-xl font-bold mb-6">Promotions Summary</h3>
+  <h3 className="text-lg md:text-xl font-bold mb-6">
+    Promotions Summary
+  </h3>
 
-          {!timeSlot && (
-            <p className="">Select time slot first</p>
-          )}
+  {!timeSlot && (
+    <p>Select time slot first</p>
+  )}
 
-          {timeSlot && (
-            <>
-              <div className="space-y-3 ">
-                <div className="flex justify-between">
-                  <span>Time Slot</span>
-                  <b className="capitalize">{timeSlot}</b>
-                </div>
+  {timeSlot && (
+    <>
+      <div className="space-y-3">
+        <div className="flex justify-between">
+          <span>Time Slot</span>
+          <b className="capitalize">{timeSlot}</b>
+        </div>
 
-                <div className="flex justify-between">
-                  <span>Days</span>
-                  <b>{days}</b>
-                </div>
+        <div className="flex justify-between">
+          <span>Days</span>
+          <b>{days}</b>
+        </div>
 
-                <div className="flex justify-between">
-                  <span>Boost</span>
-                  <b>{boost}</b>
-                </div>
-              </div>
-
-              <div className="h-px bg-(--website-background) my-5" />
-
-              <div className="flex justify-between items-center mb-6">
-                <span className="text-lg font-semibold">Total Coin</span>
-                <span className="text-3xl font-bold text-red-600">
-                   {total}
-                </span>
-              </div>
-
-              <Button onClick={publishWithMoney} className="w-full bg-red-600 hover:bg-red-700 text-lg py-3 mb-3">
-                Buy & Publish
-              </Button>
-
-             
-            </>
-          )}
-          <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 mt-6">
-
-<h4 className="text-lg font-bold mb-4">
-  Recharge Wallet
-</h4>
-
-<p className="text-sm text-gray-400 mb-3">
-  1 Coin = ₹49
-</p>
-
-<input
-  type="number"
-  value={rechargeCoins}
-  onChange={(e) => setRechargeCoins(Number(e.target.value))}
-  placeholder="Enter coins"
-  className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 mb-4 outline-none focus:border-red-500"
-/>
-
-{rechargeCoins > 0 && (
-  <div className="flex justify-between mb-4">
-    <span>Total Amount</span>
-    <span className="font-bold text-red-600">
-      ₹{rechargeTotal}
-    </span>
-  </div>
-)}
-
-{/* WhatsApp Recharge */}
-{contact?.is_whatsapp === "1" && (
-  <Button
-    onClick={handleRechargeWhatsApp}
-    className="w-full bg-green-600 hover:bg-green-700 text-white"
-  >
-    Recharge via WhatsApp
-  </Button>
-)}
-
-{/* Email Option */}
-{contact?.is_email === "1" && (
-  <a
-    href={`mailto:${contact.email}?subject=Wallet Recharge Request&body=${encodeURIComponent(buildRechargeMessage())}`}
-    className="block text-center mt-3 text-blue-400 text-sm"
-  >
-    Or Send via Email
-  </a>
-)}
-
-</div>
-           {/* WITHOUT PROMOTION */}
-           <div className="bg-salte-900 border border-(--content-border-color)rounded-xl p-4 text-center mt-4">
-                <p className="text-sm text-(--second-color) mb-2">
-                  Don’t want promotion?
-                </p>
-
-                <p className="font-semibold mb-3">
-                  Publish normally for{" "}
-                  <span className="text-red-600">1 Coin</span>
-                </p>
-
-                <Button onClick={postWithout} className="w-full bg-black hover:bg-gray-900 text-white">
-                  Publish Without Promotion
-                </Button>
-              </div>
+        <div className="flex justify-between">
+          <span>Boost</span>
+          <b>{boost}</b>
         </div>
       </div>
-      {/* ================= WALLET RECHARGE ================= */}
 
+      <div className="h-px bg-gray-700 my-5" />
 
+      <div className="flex justify-between items-center mb-6">
+        <span className="text-lg font-semibold">Total Coin</span>
+        <span className="text-2xl md:text-3xl font-bold text-red-600">
+          {total}
+        </span>
+      </div>
+
+      {/* BUY & PUBLISH */}
+      <Button
+        onClick={publishWithMoney}
+        className="w-full bg-red-600 hover:bg-red-700 text-lg py-3 mb-4"
+      >
+        Buy & Publish
+      </Button>
+    </>
+  )}
+
+  {/* ================= WALLET RECHARGE ================= */}
+
+  <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 mt-6">
+
+    <h4 className="text-lg font-bold mb-4">
+      Recharge Wallet
+    </h4>
+
+    <p className="text-sm text-gray-400 mb-3">
+      1 Coin = ₹49
+    </p>
+
+    <input
+      type="number"
+      value={rechargeCoins}
+      onChange={(e) => setRechargeCoins(Number(e.target.value))}
+      placeholder="Enter coins"
+      className="w-full bg-black border border-gray-600 rounded-lg px-4 py-3 mb-4 outline-none focus:border-red-500"
+    />
+
+    {rechargeCoins > 0 && (
+      <div className="flex justify-between mb-4">
+        <span>Total Amount</span>
+        <span className="font-bold text-red-600">
+          ₹{rechargeTotal}
+        </span>
+      </div>
+    )}
+
+    {contact?.is_whatsapp === "1" && (
+      <Button
+        onClick={handleRechargeWhatsApp}
+        className="w-full bg-green-600 hover:bg-green-700 text-white"
+      >
+        Recharge via WhatsApp
+      </Button>
+    )}
+
+    {contact?.is_email === "1" && (
+      <a
+        href={`mailto:${contact.email}?subject=Wallet Recharge Request&body=${encodeURIComponent(buildRechargeMessage())}`}
+        className="block text-center mt-3 text-blue-400 text-sm"
+      >
+        Or Send via Email
+      </a>
+    )}
+
+  </div>
+
+  {/* ================= WITHOUT PROMOTION ================= */}
+
+  <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 text-center mt-6">
+
+    <p className="text-sm text-gray-400 mb-2">
+      Don’t want promotion?
+    </p>
+
+    <p className="font-semibold mb-4">
+      Publish normally for
+      <span className="text-red-600 ml-1">1 Coin</span>
+    </p>
+
+    <Button
+      loading={loading2}
+      onClick={postWithout}
+      className="w-full"
+    >
+      Publish Without Promotion
+    </Button>
+
+  </div>
+
+</div>
+
+</div>
     </div>
   )
 }
 
-function StandCard({ title, desc, price, active, setActive, highlightAll=false }) {
+function StandCard({ title, desc, price, active, setActive, highlightAll = false }) {
   return (
     <div className="border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center">
 

@@ -1,7 +1,5 @@
 'use client'
 import { useState, useContext, useEffect } from "react";
-
-
 import { AuthContext } from "@/context/AuthContext";
 import { useParams } from "next/navigation";
 import api from "@/lib/api";
@@ -46,7 +44,7 @@ export default function PostAds(){
     setForm({...form, [e.target.name]: e.target.value})
   }
 
-  // 🔥 EDIT MODE FETCH
+  // EDIT MODE FETCH
   useEffect(()=>{
     if(!editId) return;
 
@@ -94,7 +92,7 @@ export default function PostAds(){
           setImages={setImages}
           setServices={setServices}
           services={services}
-          editId={editId}   // 🔥 pass edit id
+          editId={editId}   //  pass edit id
         />
       )}
 
@@ -103,7 +101,7 @@ export default function PostAds(){
           form={form}
           prevStep={()=> setStep(1)}
           images={images}
-          editId={editId}   // 🔥 pass edit id
+          editId={editId}   //  pass edit id
         />
       )}
     </>
