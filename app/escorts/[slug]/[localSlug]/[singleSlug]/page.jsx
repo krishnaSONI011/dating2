@@ -130,7 +130,7 @@ export default function SingleAdPage() {
           <div className="text-white rounded-3xl border border-slate-700 p-5 sm:p-7">
 
             <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-orange-300 mb-3">
-              {ad.title} - Escorts in {ad.city_name}
+              {ad.title} - Escort in {ad.city_name}
             </h1>
 
             <p className="flex items-center gap-2 mb-6 text-sm sm:text-base">
