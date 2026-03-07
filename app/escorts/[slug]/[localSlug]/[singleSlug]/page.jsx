@@ -129,13 +129,13 @@ export default function SingleAdPage() {
           {/* DETAILS */}
           <div className="text-white rounded-3xl border border-slate-700 p-5 sm:p-7">
 
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-orange-300 mb-3">
-              {ad.title}
+            <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-orange-300 mb-3">
+              {ad.title} - Escorts in {ad.city_name}
             </h1>
 
             <p className="flex items-center gap-2 mb-6 text-sm sm:text-base">
               <FaMapMarkerAlt className="text-orange-500" />
-              {ad.local_area} , {ad.city_name}
+              {ad.local_area_name} , {ad.city_name}
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-7">
@@ -161,7 +161,7 @@ export default function SingleAdPage() {
                   {services.map(s => (
                     <span key={s.id}
                       className="bg-blue-950 border border-orange-400 px-3 py-1 rounded-full text-xs sm:text-sm">
-                      {s.title}
+                      {s.title} 
                     </span>
                   ))}
                 </div>
