@@ -207,6 +207,9 @@ export default function SingleAdPage() {
         </div>
 
       </div>
+      <ReusableModal open={open}>
+            asjdfnk 
+      </ReusableModal>
 
       {/* MOBILE STICKY CONTACT */}
       <div className="lg:hidden fixed bottom-0 left-0 w-full bg-[#0f172a] border-t border-slate-700 p-3 shadow-[0_-5px_20px_rgba(0,0,0,0.4)] z-50">
