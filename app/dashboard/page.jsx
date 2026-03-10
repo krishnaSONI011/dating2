@@ -102,43 +102,43 @@ function Card({ name, icon }) {
 
 function StartVerificationCard() {
   return (
-    <div className="w-full bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-8 flex items-center justify-between shadow-lg hover:shadow-2xl transition duration-300">
+    <div className="w-full bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl p-5 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-lg hover:shadow-2xl transition duration-300">
 
-      <div className="flex items-center gap-5">
-        <div className="bg-white/20 p-4 rounded-xl text-white text-3xl">
+      <div className="flex items-center gap-4 md:gap-5">
+        <div className="bg-white/20 p-3 md:p-4 rounded-xl text-white text-2xl md:text-3xl">
           <FaUserCheck />
         </div>
 
         <div>
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-lg md:text-2xl font-bold text-white">
             Start Verification
           </h2>
-          <p className="text-white/90 mt-1">
+          <p className="text-white/90 text-sm md:text-base mt-1">
             Complete your verification to unlock all features
           </p>
         </div>
       </div>
-     <Link href={`/dashboard/verification`}>
-      <button className="bg-white text-orange-600 font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition">
-        Verify Now →
-      </button>
-      </Link>
 
+      <Link href={`/dashboard/verification`} className="w-full md:w-auto">
+        <button className="w-full md:w-auto bg-white text-orange-600 font-semibold px-5 md:px-6 py-3 rounded-xl hover:bg-gray-100 transition">
+          Verify Now →
+        </button>
+      </Link>
     </div>
-  )
+  );
 }
 
 function VerifiedCard() {
   return (
-    <div className="bg-green-50 border border-green-200 rounded-2xl p-6 flex items-center justify-between shadow-sm">
+    <div className="bg-green-50 border border-green-200 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
 
-      <div className="flex items-center gap-4">
-        <div className="bg-green-500 text-white p-4 rounded-xl text-2xl">
+      <div className="flex items-center gap-3 md:gap-4">
+        <div className="bg-green-500 text-white p-3 md:p-4 rounded-xl text-xl md:text-2xl">
           <FaCheckCircle />
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-green-700">
+          <h2 className="text-lg md:text-xl font-bold text-green-700">
             Verified Account
           </h2>
           <p className="text-green-600 text-sm mt-1">
@@ -146,26 +146,25 @@ function VerifiedCard() {
           </p>
         </div>
       </div>
-      
-      <div className="bg-green-500 text-white px-5 py-2 rounded-lg text-sm font-semibold">
+
+      <div className="bg-green-500 text-white px-4 md:px-5 py-2 rounded-lg text-sm font-semibold">
         Verified ✓
       </div>
-
     </div>
-  )
+  );
 }
 
 function RejectedCard({ reason }) {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 shadow-sm">
+    <div className="bg-red-50 border border-red-200 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col gap-4">
 
-      <div className="flex items-center gap-4">
-        <div className="bg-red-500 text-white p-4 rounded-xl text-2xl">
+      <div className="flex items-center gap-3 md:gap-4">
+        <div className="bg-red-500 text-white p-3 md:p-4 rounded-xl text-xl md:text-2xl">
           <FaTimesCircle />
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-red-700">
+          <h2 className="text-lg md:text-xl font-bold text-red-700">
             Verification Rejected
           </h2>
           <p className="text-red-600 text-sm mt-1">
@@ -173,26 +172,27 @@ function RejectedCard({ reason }) {
           </p>
         </div>
       </div>
-     <Link href={`/dashboard/verification`}>
-      <button className="mt-5 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition">
-        Re-upload Documents
-      </button>
+
+      <Link href={`/dashboard/verification`} className="w-full md:w-auto">
+        <button className="w-full md:w-auto bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-semibold transition">
+          Re-upload Documents
+        </button>
       </Link>
     </div>
-  )
+  );
 }
 
 function PendingCard() {
   return (
-    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 shadow-sm flex items-center justify-between">
+    <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 md:p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
 
-      <div className="flex items-center gap-4">
-        <div className="bg-yellow-500 text-white p-4 rounded-xl text-2xl">
+      <div className="flex items-center gap-3 md:gap-4">
+        <div className="bg-yellow-500 text-white p-3 md:p-4 rounded-xl text-xl md:text-2xl">
           <FaClock />
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-yellow-700">
+          <h2 className="text-lg md:text-xl font-bold text-yellow-700">
             Verification Pending
           </h2>
           <p className="text-yellow-600 text-sm mt-1">
@@ -201,9 +201,9 @@ function PendingCard() {
         </div>
       </div>
 
-      <div className="bg-yellow-500 text-white px-5 py-2 rounded-lg text-sm font-semibold">
+      <div className="bg-yellow-500 text-white px-4 md:px-5 py-2 rounded-lg text-sm font-semibold">
         Pending
       </div>
     </div>
-  )
+  );
 }

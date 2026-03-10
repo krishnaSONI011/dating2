@@ -92,6 +92,7 @@ export default function Home() {
     <p className="text-(--web) mb-6">
       I have reviewed and agree to abide by the
       <Link href={'#'}>
+      
       <span className="text-(--second-color) font-semibold ml-1">
         TERMS AND CONDITIONS
       </span>
