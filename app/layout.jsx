@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@/context/AuthContext";
 import { WalletContext, WalletProvider } from "@/context/WalletContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import axios from "axios";
+import api from "@/lib/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,10 +23,37 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "Affair Escorts",
-  description: "call girls ",
-};
+// export const metadata = {
+//   title: "Affair Escorts",
+//   description: "call girls ",
+// };
+export async function generateMetadata() {
+
+  const fd = new FormData()
+  fd.append("meta_id", "1")
+
+  const res = await api.post("/Wb/meta_detail", fd)
+  const data = res.data?.data
+
+  return {
+    metadataBase: new URL("https://affairescorts.com"),
+
+    title: data?.title,
+    description: data?.description,
+
+    alternates: {
+      canonical: "./",
+    },
+
+    openGraph: {
+      title: data?.title,
+      description: data?.description,
+      url: "./",
+      siteName: data?.title,
+      type: "website",
+    },
+  }
+}
 
 export default function RootLayout({ children }) {
   return (
