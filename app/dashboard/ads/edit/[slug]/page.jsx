@@ -615,7 +615,7 @@ export default function EditAdinformation() {
                         </div>
                         {/* city */}
                         <div>
-                            <label htmlFor="" className="font-bold text-xl">* Nick Name</label><br />
+                            <label htmlFor="" className="font-bold text-xl"> Nick Name</label><br />
                             <input
                                 name="nick_name"
                                 value={form.nick_name}

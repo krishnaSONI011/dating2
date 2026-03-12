@@ -1,5 +1,6 @@
 'use client'
 import Button from "@/components/ui/Button";
+import WebsiteLogo from "@/components/WebsiteLogo";
 import api from "@/lib/api";
 import { Playwrite_AT } from "next/font/google";
 import { useRouter } from "next/navigation";
@@ -121,12 +122,15 @@ export default function OTPPage() {
       <div className="w-full max-w-md bg-[#0b1220] border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8 text-center">
 
         {/* Heading */}
-        <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-white">
+        {/* <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-white">
           Verify to Join Affair{" "}
           <span className={`${playwrite.className} text-orange-500`}>
             Escorts
           </span>
-        </h1>
+        </h1> */}
+        <div className="my-5 flex justify-center">
+          <WebsiteLogo />
+        </div>
 
         <p className="text-gray-400 mb-8 text-sm sm:text-base">
           Enter the 4 digit OTP sent to your email

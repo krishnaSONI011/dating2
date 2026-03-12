@@ -90,8 +90,8 @@ export default function Alert(){
           <div className="mt-6 pt-4 border-t border-dashed border-gray-200 text-center">
             <p className="text-sm text-white">
               Got scammed? Report at{" "}
-              <a href="mailto:help@affairescorts.com" className="text-red-500 font-semibold">
-                help@affairescorts.com
+              <a href="mailto:support@affairescorts.com" className="text-red-500 font-semibold">
+                support@affairescorts.com
               </a>
             </p>
           </div>

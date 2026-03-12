@@ -12,7 +12,7 @@ export default function CardShower({
 }) {
 console.log(items)
   return (
-    <div className="max-1xl md:max-w-7xl mx-auto px-6 py-10">
+    <div className="max-1xl md:max-w-7xl mx-auto px-0 md:px-6 py-10">
 
       {/* Grid */}
       <div className="grid grid-cols-1 gap-10">

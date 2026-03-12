@@ -130,7 +130,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
             !form.city ||
             !form.local_area ||
             !form.age ||
-            !form.nick_name ||
+            
             !form.title ||
             !form.description
         ) {
@@ -246,7 +246,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                         </div>
                         {/* city */}
                         <div>
-                            <label htmlFor="" className="font-bold text-xl">* Nick Name</label><br />
+                            <label htmlFor="" className="font-bold text-xl"> Nick Name</label><br />
                             <input
                                 name="nick_name"
                                 value={form.nick_name}

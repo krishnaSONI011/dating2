@@ -196,12 +196,12 @@ export default function EscortCard({
               {desc}
             </p>
 
-            <div className="hidden sm:flex items-center gap-2 text-gray-400 text-xs mt-3">
-              <FaMapMarkerAlt className="text-orange-400 text-xs"/>
+            <div className="flex items-center gap-2 text-gray-400 text-xs mt-3">
+              <FaMapMarkerAlt  className="text-orange-400 hidden sm:block text-xs"/>
               {location}
             </div>
 
-            <div className="hidden sm:flex gap-2 mt-3 flex-wrap text-xs">
+            <div className=" sm:flex  gap-2 mt-3 flex-wrap text-xs">
               <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 Female
               </span>

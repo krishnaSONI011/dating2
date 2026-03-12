@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import api from "@/lib/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import WebsiteLogo from "@/components/WebsiteLogo";
 
 const playwrite = Playwrite_AT({
   subsets: ["latin"],
@@ -84,12 +85,15 @@ export default function ResetPassword() {
       <div className="w-full max-w-md bg-[#0b1220] border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8">
 
         {/* Heading */}
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center text-white">
+        {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center text-white">
           Join Affair{" "}
           <span className={`${playwrite.className} text-orange-500`}>
             Escorts
           </span>
-        </h1>
+        </h1> */}
+        <div className="my-5 flex justify-center">
+                  <WebsiteLogo />
+                </div>
 
         <p className="text-gray-400 text-center mb-8 text-sm sm:text-base">
           Reset your password

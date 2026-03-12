@@ -16,6 +16,7 @@ export default function Promote({ prevStep ,form , images }) {
   const [days, setDays] = useState(1)
   const [boost, setBoost] = useState(3)
   const { balance } = useContext(WalletContext)
+  const [loading , setLoading] =  useState(false)
   const [superTop, setSuperTop] = useState(false)
   const [highlight, setHighlight] = useState(false)
   const [tagNew, setTagNew] = useState(false)
@@ -125,7 +126,7 @@ export default function Promote({ prevStep ,form , images }) {
     }
   
     try{
-     
+     setLoading(true)
   
       
         const sup = superTop ? "1" : "0"
@@ -158,6 +159,8 @@ export default function Promote({ prevStep ,form , images }) {
     }catch(e){
       console.log(e)
       toast.error("Something went wrong")
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -304,9 +307,9 @@ export default function Promote({ prevStep ,form , images }) {
           </>
         )}
 
-        <div className="mt-10">
+        {/* <div className="mt-10">
           <Button onClick={prevStep}>← Back</Button>
-        </div>
+        </div> */}
 
       </div>
 
@@ -349,7 +352,7 @@ export default function Promote({ prevStep ,form , images }) {
                 </span>
               </div>
 
-              <Button onClick={publishWithMoney} className="w-full bg-red-600 hover:bg-red-700 text-lg py-3 mb-3">
+              <Button loading={loading} onClick={publishWithMoney} className="w-full bg-red-600 hover:bg-red-700 text-lg py-3 mb-3">
                 Buy & Publish
               </Button>
 

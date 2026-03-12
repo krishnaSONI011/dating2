@@ -5,6 +5,7 @@ import PageContent from "@/components/Home/PageContent";
 import SearchSection from "@/components/Home/SearchSection";
 import TopSearches from "@/components/Home/TopSearch";
 import ReusableModal from "@/components/ui/Model";
+import WebsiteLogo from "@/components/WebsiteLogo";
 import api from "@/lib/api";
 import { Playwrite_AT } from "next/font/google";
 import Link from "next/link";
@@ -72,12 +73,15 @@ export default function Home() {
   <div className="flex flex-col items-center">
 
     {/* icon circle */}
-    <h1 className="text-5xl mb-5 font-semibold tracking-wide cursor-pointer">
+    {/* <h1 className="text-5xl mb-5 font-semibold tracking-wide cursor-pointer">
             Affair{" "}
             <span className={`${playwrite.className} text-orange-600`}>
               Escorts
             </span>
-          </h1>
+          </h1> */}
+          <div className="my-10 flex justify-center">
+            <WebsiteLogo />
+          </div>
     {/* title */}
     <h2 className="text-3xl md:text-4xl font-extrabold text-(--webiste-text) mb-4">
       Please read the following notice<br/>before you continue
@@ -91,7 +95,7 @@ export default function Home() {
 
     <p className="text-(--web) mb-6">
       I have reviewed and agree to abide by the
-      <Link href={'#'}>
+      <Link href={'/term-and-condition'}>
       
       <span className="text-(--second-color) font-semibold ml-1">
         TERMS AND CONDITIONS

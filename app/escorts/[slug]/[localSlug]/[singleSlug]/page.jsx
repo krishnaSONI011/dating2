@@ -10,6 +10,7 @@ import ReusableModal from "@/components/ui/Model"
 import { AuthContext } from "@/context/AuthContext"
 import { toast } from "react-toastify"
 import WarningAlert from "@/components/Warninf"
+import WebsiteLogo from "@/components/WebsiteLogo"
 
 export default function SingleAdPage() {
 
@@ -43,6 +44,36 @@ export default function SingleAdPage() {
       setLoading(false)
     }
   }
+  useEffect(() => {
+    if (!data?.ads) return;
+  
+    const timer = setTimeout(() => {
+      const ad = data.ads;
+  
+      const title = `${ad.title} Escorts in ${ad.city_name} | Affair Escorts`;
+      const description =
+        ad.description?.replace(/<[^>]*>/g, "").slice(0, 160) ||
+        `Book ${ad.title} escort service in ${ad.city_name}.`;
+  
+      // Set title
+      document.title = title;
+  
+      // Handle meta description
+      let meta = document.querySelector('meta[name="description"]');
+  
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.setAttribute("name", "description");
+        document.head.appendChild(meta);
+      }
+  
+      meta.setAttribute("content", description);
+    }, 500); // delay in milliseconds
+  
+    return () => clearTimeout(timer);
+  }, [data, slug]);
+  
+
 
   async function handelReport(){
     if(!description.trim()){
@@ -77,10 +108,12 @@ export default function SingleAdPage() {
   const images = data.images || []
   const services = data.services || []
   const time = data.time?.[0]
+  
 
   return (
+    
     <div className="min-h-screen py-6 sm:py-10 px-4 pb-24">
-
+ 
       <Breadcrumb />
 
       <div className="mt-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -91,11 +124,18 @@ export default function SingleAdPage() {
           {/* IMAGE CARD */}
           <div className="rounded-3xl border border-slate-600 p-4 sm:p-5">
 
-            <div className="relative">
-              <img
-                src={images[active]?.img || "/no-image.png"}
-                className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-contain bg-black rounded-2xl"
-              />
+          <div className="relative">
+
+  <img
+    src={images[active]?.img || "/no-image.png"}
+    className="w-full h-[300px] sm:h-[400px] lg:h-[500px] object-contain bg-black rounded-2xl"
+  />
+
+  {/* Logo Overlay */}
+  <div className="absolute inset-0 flex items-center justify-center opacity-80 pointer-events-none">
+  <WebsiteLogo width={300}/>
+</div>
+
 
               {images.length > 1 && (
                 <>
@@ -130,7 +170,7 @@ export default function SingleAdPage() {
           <div className="text-white rounded-3xl border border-slate-700 p-5 sm:p-7">
 
             <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-orange-300 mb-3">
-              {ad.title} - Escort in {ad.city_name}
+              {ad.title} - Escorts in {ad.city_name}
             </h1>
 
             <p className="flex items-center gap-2 mb-6 text-sm sm:text-base">
@@ -185,11 +225,17 @@ export default function SingleAdPage() {
               </button>
             </a>
 
-            <a href={`https://wa.me/${ad.mobile}`} target="_blank">
-              <button className="w-full bg-[#25D366] text-white py-3 rounded-xl mb-3">
-                <FaWhatsapp className="inline mr-2"/> WhatsApp
-              </button>
-            </a>
+            <a
+  href={`https://wa.me/${ad.mobile}?text=${encodeURIComponent(
+    `Hi, I saw your profile on Affair Escorts ${ad.title}`
+  )}`} 
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button className="w-full bg-[#25D366] text-white py-3 rounded-xl mb-3">
+    <FaWhatsapp className="inline mr-2" /> WhatsApp
+  </button>
+</a>
 
             {ad.telegram && (
               <a href={`https://t.me/${ad.telegram}`} target="_blank">
@@ -208,7 +254,17 @@ export default function SingleAdPage() {
 
       </div>
       <ReusableModal open={open}>
-            asjdfnk 
+       
+            <select onChange={(e)=> setReport(e.target.value)} className="w-full p-3 border rounded bg-slate-800 text-white" value={report}>
+              <option value={'Fake Profile / Not Matching'}>Fake Profile / Not Matching</option>
+              <option value={'Asking Advance'}>Asking Advance Payment (Fraud)</option>
+              <option value={'Wrong Category / Spam'}>Wrong Category / Spam</option>
+            </select>
+            <textarea onChange={(e)=> setDescription(e.target.value)} value={description} name="" id=" " className="mt-5 w-full border border-white border-rounded text-white p-2" placeholder="Description"></textarea>
+            <div className="flex gap-2">
+              <Button onClick={handelReport}>Submit</Button>
+              <Button onClick={()=> setOpen(false)} className="bg-red-600 hover:bg-red-700">Cancle</Button>
+            </div>
       </ReusableModal>
 
       {/* MOBILE STICKY CONTACT */}
@@ -221,7 +277,9 @@ export default function SingleAdPage() {
             </button>
           </a>
 
-          <a href={`https://wa.me/${ad.mobile}`} target="_blank" className="flex-1">
+          <a href={`https://wa.me/${ad.mobile}?text=${encodeURIComponent(
+    `Hi, I saw your profile on Affair Escorts ${ad.title}`
+  )}`} target="_blank" className="flex-1">
             <button className="w-full bg-[#25D366] text-white py-3 rounded-xl text-sm font-semibold">
               <FaWhatsapp className="inline mr-2"/> WhatsApp
             </button>

@@ -3,7 +3,7 @@
 import { useContext } from "react"
 import { ThemeContext } from "@/context/ThemeContext"
 
-export default function WebsiteLogo(){
+export default function WebsiteLogo({ width = 200 }) {
 
   const { themeData } = useContext(ThemeContext)
 
@@ -17,11 +17,11 @@ export default function WebsiteLogo(){
         <img
           src={logo}
           alt={title}
+          style={{ maxWidth: `${width}px` }}
           className="
             h-10 sm:h-12 md:h-14
             w-auto
             object-contain
-            max-w-[180px]
           "
         />
       ) : (

@@ -13,8 +13,9 @@ export default function Promote({ prevStep, form, images }) {
   const [timeSlot, setTimeSlot] = useState("")
   const [fromTime, setFromtime] = useState("")
   const [toTime, setToTime] = useState("")
+  const [buyLoading , setBuyLoading] = useState(false)
   const [days, setDays] = useState(null)
-const [boost, setBoost] = useState(null)
+  const [boost, setBoost] = useState(null)
   const { balance } = useContext(WalletContext)
   const [superTop, setSuperTop] = useState(false)
   const [highlight, setHighlight] = useState(false)
@@ -26,6 +27,7 @@ const [boost, setBoost] = useState(null)
   const [previewImages, setPreviewImages] = useState([])
   const [contact, setContact] = useState(null)
   const [rechargeCoins, setRechargeCoins] = useState(0)
+  const [freeLoading , setFreeLoading] = useState(false)
 
   const pricePerCoin = 49
   const rechargeTotal = rechargeCoins * pricePerCoin
@@ -175,12 +177,13 @@ const [boost, setBoost] = useState(null)
 
   }
   async function publishWithMoney() {
-
+    setBuyLoading(true)
     if (balance < total) {
       return toast.error("Insufficient balance")
     }
 
     try {
+
       const formData = new FormData()
 
       formData.append("cat_id", form.cat_id)
@@ -254,6 +257,8 @@ const [boost, setBoost] = useState(null)
     } catch (e) {
       console.log(e)
       toast.error("Something went wrong")
+    } finally{
+      setBuyLoading(false)
     }
   }
 
@@ -495,8 +500,10 @@ const [boost, setBoost] = useState(null)
 
       {/* BUY & PUBLISH */}
       <Button
+        loading={buyLoading}
         onClick={publishWithMoney}
         className="w-full bg-red-600 hover:bg-red-700 text-lg py-3 mb-4"
+        disabled={buyLoading}
       >
         Buy & Publish
       </Button>
@@ -566,7 +573,7 @@ const [boost, setBoost] = useState(null)
     </p>
 
     <Button
-      loading={loading2}
+      loading={loading}
       onClick={postWithout}
       className="w-full"
     >

@@ -14,11 +14,40 @@ export default function Search(){
   const [list, setListing] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPage] = useState(1)
+  const [metaData , setMetaData] = useState({
+    title : '',
+    description : ''
+  })
   const [loading, setLoading] = useState(false)
   const [htmlContent , setHtmlContent] = useState('')
   const [city , setCity] = useState([])
   const params = useParams();
   const slug = params?.slug ?? ""
+  useEffect(() => {
+
+    if (!metaData?.title) return;
+  
+    const timer = setTimeout(() => {
+  
+      // Title
+      document.title = metaData.title;
+  
+      // Description
+      let meta = document.querySelector("meta[name='description']");
+  
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "description";
+        document.head.appendChild(meta);
+      }
+  
+      meta.setAttribute("content", metaData.description);
+  
+    }, 200); // delay in milliseconds
+  
+    return () => clearTimeout(timer);
+  
+  }, [metaData]);
   useEffect(() => {
 
     async function getListingData() {
@@ -33,7 +62,10 @@ export default function Search(){
           
           setListing(res?.data?.data || [])
           setTotalPage(res.data.total_pages)
-          
+          setMetaData({
+            title: res.data.State_city_area.city.meta_title,
+            description: res.data.State_city_area.city.meta_description
+          });
           setHtmlContent(res.data.State_city_area.city.description)
           setCity(res.data.State_city_area.local_area)
           console.log(res.data.State_city_area)
