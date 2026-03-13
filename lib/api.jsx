@@ -39,7 +39,7 @@ api.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
 
-      // 🔥 token expired / invalid
+      //  token expired / invalid
       if (status === 401) {
         if (typeof window !== "undefined") {
           localStorage.removeItem("user");
@@ -56,5 +56,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
+ 
 export default api;
