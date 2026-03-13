@@ -24,31 +24,38 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata() {
+  try {
+    const fd = new FormData();
+    fd.append("meta_id", "1");
 
-  const fd = new FormData();
-  fd.append("meta_id", "1");
+    const res = await api.post("/Wb/meta_detail", fd);
+    const data = res.data?.data;
 
-  const res = await api.post("/Wb/meta_detail", fd);
-  const data = res.data?.data;
+    return {
+      metadataBase: new URL("https://affairescorts.com"),
+      title: data?.title || "Affair Escorts",
+      description: data?.description || "Best escort service",
+      alternates: {
+        canonical: "./",
+      },
+      openGraph: {
+        title: data?.title,
+        description: data?.description,
+        url: "./",
+        siteName: data?.title,
+        type: "website",
+      },
+    };
 
-  return {
-    metadataBase: new URL("https://affairescorts.com"),
+  } catch (error) {
+    console.log("Metadata API failed:", error);
 
-    title: data?.title,
-    description: data?.description,
-
-    alternates: {
-      canonical: "./",
-    },
-
-    openGraph: {
-      title: data?.title,
-      description: data?.description,
-      url: "./",
-      siteName: data?.title,
-      type: "website",
-    },
-  };
+    return {
+      metadataBase: new URL("https://affairescorts.com"),
+      title: "Affair Escorts",
+      description: "Best escort service",
+    };
+  }
 }
 
 export default function RootLayout({ children }) {
