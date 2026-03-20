@@ -4,6 +4,12 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { FaHome, FaChevronRight } from "react-icons/fa"
 
+// Add any category redirects here
+const SEGMENT_REDIRECTS = {
+  escort: "/escorts",
+  escorts: "/escorts",
+}
+
 export default function Breadcrumb() {
 
   const pathname = usePathname()
@@ -25,6 +31,7 @@ export default function Breadcrumb() {
 
             const href = "/" + pathSegments.slice(0, index + 1).join("/")
             const isLast = index === pathSegments.length - 1
+            const redirectHref = SEGMENT_REDIRECTS[segment.toLowerCase()] ?? href
 
             return (
               <div key={index} className="flex items-center gap-2 sm:gap-3">
@@ -36,7 +43,7 @@ export default function Breadcrumb() {
                     {segment.replace(/-/g, " ")}
                   </span>
                 ) : (
-                  <Link href={href} className="text-gray-400 hover:text-orange-300 transition capitalize">
+                  <Link href={redirectHref} className="text-gray-400 hover:text-orange-300 transition capitalize">
                     {segment.replace(/-/g, " ")}
                   </Link>
                 )}

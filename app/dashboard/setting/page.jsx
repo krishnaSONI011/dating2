@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import api from "@/lib/api";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { countryCodes } from "@/data/country_code";
 
 export default function Setting() {
 
@@ -16,6 +17,7 @@ export default function Setting() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [mobile, setMobile] = useState('')
 
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -79,12 +81,54 @@ export default function Setting() {
             <div className="space-y-3 text-white">
               <p><strong>Name:</strong> {user.name}</p>
               <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Phone : </strong>{user.mobile}</p>
             </div>
           ) : (
             <p>Loading profile...</p>
           )}
         </div>
 
+
+        <div className="mx-8">
+          <h2 className="text-2xl font-bold mb-4">Change Mobile</h2>
+          <div>
+            <div className="flex items-center border border-gray-700 rounded-lg bg-slate-900 overflow-hidden">
+
+              {/* Country Code Select */}
+              <select
+                name="country_code"
+                value={''}
+                // onChange={handleChange}
+                className="bg-slate-900 text-white px-3 py-3 outline-none border-r border-gray-700 appearance-none"
+              >
+                {countryCodes.map((country, index) => (
+                  <option key={index} value={country.code}>
+                    {country.code} ({country.name})
+                  </option>
+                ))}
+              </select>
+
+              {/* Phone Input */}
+              <input
+                name="phone"
+                value={mobile}
+                onChange={(e)=> setMobile(e.target.value)}
+                type="text"
+                placeholder="Enter Mobile Number"
+                className="w-full bg-slate-900 text-white py-3 px-3 outline-none"
+              />
+
+
+
+            </div>
+            <div className="mt-5">
+            <Button loading={loading} onClick={changePassword}>
+              Update Password
+            </Button>
+            </div>
+           
+          </div>
+        </div>
         {/* 🔐 Change Password Section */}
         <div className="bg-salte-900 rounded-2xl shadow p-6">
           <h2 className="text-2xl font-bold mb-4">Change Password</h2>

@@ -21,7 +21,7 @@ export default function Blogs() {
           const categories = res.data.data
 
           // merge all blogs
-          const allBlogs = categories.flatMap((cat) => cat.blogs)
+          const allBlogs = categories?.flatMap((cat) => cat.blogs)
 
           setBlogs(allBlogs)
 

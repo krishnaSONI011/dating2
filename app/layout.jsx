@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "@/context/AuthContext";
 import { WalletProvider } from "@/context/WalletContext";
 import { ThemeProvider } from "@/context/ThemeContext";
-import api from "@/lib/api";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,56 +24,95 @@ const geistMono = Geist_Mono({
 
 export async function generateMetadata() {
   try {
-  const fd = new FormData();
-  fd.append("meta_id", "1");
-  
+    const fd = new FormData();
+    fd.append("meta_id", "1");
 
-  const res = await fetch("https://irisinformatics.net/dating/Wb/meta_detail", {
-    method: "POST",
-    body: fd,
-    cache: "no-store", // important for dynamic data
-  });
-  
-  const json = await res.json();
-  const data = json?.data;
-  
-  return {
-    metadataBase: new URL("https://affairescorts.com"),
-    title: data?.title || "Affair Escorts",
-    description: data?.description || "Best escort service",
-  
-    alternates: {
-      canonical: "./",
-    },
-  
-    openGraph: {
-      title: data?.title,
-      description: data?.description,
-      url: "./",
-      siteName: data?.title,
-      type: "website",
-    },
-  };
+    const res = await fetch("https://irisinformatics.net/dating/Wb/meta_detail", {
+      method: "POST",
+      body: fd,
+      cache: "no-store",
+    });
 
-  
+    const json = await res.json();
+    const data = json?.data;
+
+    return {
+      metadataBase: new URL("https://affairescorts.com"),
+      title: data?.title || "Affair Escorts",
+      description: data?.description || "Best escort service",
+      keywords: data?.keyword || "escorts, affair escorts",
+      //  Dynamic favicon from API
+      icons: {
+        icon: data?.favicon
+          ? [{ url: data.favicon, type: "image/webp" }]
+          : [{ url: "/favicon.ico" }],
+        apple: data?.favicon
+          ? [{ url: data.favicon, type: "image/webp" }]
+          : [{ url: "/apple-touch-icon.png" }],
+      },
+
+      alternates: {
+        canonical: "./",
+      },
+
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-snippet": -1,
+          "max-image-preview": "large",
+          "max-video-preview": -1,
+        },
+      },
+
+      openGraph: {
+        title: data?.title || "Affair Escorts",
+        description: data?.description || "Best escort service",
+        url: "https://affairescorts.com",
+        siteName: data?.title || "Affair Escorts",
+        type: "website",
+      },
+    };
   } catch (error) {
-  console.log("Metadata API failed:", error);
-  
-  
-  return {
-    metadataBase: new URL("https://affairescorts.com"),
-    title: "Affair Escorts",
-    description: "Best escort service",
-  };
+    console.log("Metadata API failed:", error);
 
-  
+    return {
+      metadataBase: new URL("https://affairescorts.com"),
+      title: "Affair Escorts",
+      description: "Best escort service",
+
+      //  Fallback to local favicon if API fails
+      icons: {
+        icon: [{ url: "/favicon.ico" }],
+        apple: [{ url: "/apple-touch-icon.png" }],
+      },
+
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-snippet": -1,
+          "max-image-preview": "large",
+          "max-video-preview": -1,
+        },
+      },
+
+      openGraph: {
+        title: "Affair Escorts",
+        description: "Best escort service",
+        url: "https://affairescorts.com",
+        siteName: "Affair Escorts",
+        type: "website",
+      },
+    };
   }
-  }
-  
-  
+}
 
 export default function RootLayout({ children }) {
-
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -84,13 +122,13 @@ export default function RootLayout({ children }) {
     sameAs: [
       "https://www.facebook.com/",
       "https://www.instagram.com/",
-      "https://twitter.com/"
+      "https://twitter.com/",
     ],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      availableLanguage: ["English"]
-    }
+      availableLanguage: ["English"],
+    },
   };
 
   return (
@@ -108,17 +146,14 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <WalletProvider>
             <ThemeProvider>
-
               <ToastContainer
                 position="top-center"
                 autoClose={5000}
                 theme="colored"
               />
-
               <Navbar />
               {children}
               <Footer />
-
             </ThemeProvider>
           </WalletProvider>
         </AuthProvider>

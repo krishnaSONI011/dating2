@@ -19,7 +19,7 @@ console.log(items)
 
 {items?.length > 0 ? (
   items.map(item => (
-    <Link key={item.id} href={`/escorts/${item.city_name}/${item.local_area_slug}/${item.slug}`}>
+    <Link key={item.id} href={`/${item.cat_slug}/${item.local_area_slug}/${item.slug}`}>
     <EscortCard
       
       age={item.age}

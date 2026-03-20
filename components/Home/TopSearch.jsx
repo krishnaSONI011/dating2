@@ -20,9 +20,7 @@ export default function TopSearches() {
       try {
         const formData = new FormData()
 
-        // 👇 agar tum category/city bhejna chaho to yaha append karo
-        // formData.append("cat_slug", "call-girl")
-        // formData.append("city_slug", "mumbai")
+        
 
         const res = await api.post("/Wb/pages", formData)
 

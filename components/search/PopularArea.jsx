@@ -1,9 +1,9 @@
 import Link from "next/link"
 
-export default function PopularArea({areas , slug}){
+export default function PopularArea({areas , slug , is_category}){
 
  
-console.log(areas)
+// console.log(areas)
  
 
   return(
@@ -25,7 +25,7 @@ console.log(areas)
       <div className="space-y-1 p-2 text-white overflow-auto h-[500px]">
 
         {areas.map((area, index)=>(
-          <Link key={index} href={`/escorts/${slug}/${area.slug}`}>
+          <Link key={index} href={is_category ? `/${area.slug}` : `/escort/${slug}/${area.slug}`}>
           <div
             
             className="flex justify-between items-center px-3 py-3 rounded-lg hover:bg-orange-50 text-white cursor-pointer transition group"

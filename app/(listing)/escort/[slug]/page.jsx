@@ -16,7 +16,8 @@ export default function Search(){
   const [totalPages, setTotalPage] = useState(1)
   const [metaData , setMetaData] = useState({
     title : '',
-    description : ''
+    description : '',
+    keywords: ''
   })
   const [loading, setLoading] = useState(false)
   const [htmlContent , setHtmlContent] = useState('')
@@ -42,7 +43,13 @@ export default function Search(){
       }
   
       meta.setAttribute("content", metaData.description);
-  
+      let metaKeywords = document.querySelector("meta[name='keywords']");
+      if (!metaKeywords) {
+        metaKeywords = document.createElement("meta");
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", metaData.keywords); 
     }, 200); // delay in milliseconds
   
     return () => clearTimeout(timer);
@@ -64,7 +71,8 @@ export default function Search(){
           setTotalPage(res.data.total_pages)
           setMetaData({
             title: res.data.State_city_area.city.meta_title,
-            description: res.data.State_city_area.city.meta_description
+            description: res.data.State_city_area.city.meta_description,
+            keywords: res.data.State_city_area.city.keyword
           });
           setHtmlContent(res.data.State_city_area.city.description)
           setCity(res.data.State_city_area.local_area)

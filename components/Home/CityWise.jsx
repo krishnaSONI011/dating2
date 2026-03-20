@@ -35,7 +35,7 @@ export default function CityWise({title}){
         <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3 md:px-10 px-0">
             {
                 topCity.map((city)=>(
-                    <Link  key={city.id} href={`/escorts/${city.slug}`}>
+                    <Link  key={city.id} href={`/escort/${city.slug}`}>
                     <ImageCard count={city.ads_count} image={city.image} city={city.name} state={city.state_name}/></Link>
                 ))
             }

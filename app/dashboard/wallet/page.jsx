@@ -14,41 +14,34 @@ export default function Wallet() {
   const [coins, setCoins] = useState(0)
   const [contact, setContact] = useState(null)
   const [payment, setPayment] = useState(null)
+  const [plans, setPlans] = useState([])
+  const [selectedPlan, setSelectedPlan] = useState(null)
 
   const pricePerCoin = 49
-  const total = coins * pricePerCoin
+  const total = selectedPlan ? Number(selectedPlan.price) : coins * pricePerCoin
 
   /* ================= LOAD CONTACT ================= */
-
   useEffect(() => {
     async function fetchContact() {
       try {
         const fd = new FormData()
         fd.append("contect_id", "1")
-
         const res = await api.post("/Wb/contect_detail", fd)
-
-        if (res.data.status === 0) {
-          setContact(res.data.data)
-        }
+        if (res.data.status === 0) setContact(res.data.data)
       } catch (err) {
         console.log(err)
       }
     }
-
     fetchContact()
   }, [])
 
   /* ================= LOAD PAYMENT ================= */
-
   useEffect(() => {
     async function fetchPayment() {
       try {
         const fd = new FormData()
         fd.append("payment_id", "1")
-
         const res = await api.post("/Wb/payments_detail", fd)
-
         if (res.data.status == 0 && res.data.data.status == "1") {
           setPayment(res.data.data)
         }
@@ -56,19 +49,33 @@ export default function Wallet() {
         console.log(err)
       }
     }
-
     fetchPayment()
   }, [])
 
-  /* ================= MESSAGE ================= */
+  /* ================= LOAD PLANS ================= */
+  useEffect(() => {
+    async function fetchPlans() {
+      try {
+        const res = await api.post("/Wb/plan")
+        if (res.data.status == "0") {
+          setPlans(res.data.data ?? [])
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fetchPlans()
+  }, [])
 
+  /* ================= MESSAGE ================= */
   const buildMessage = () => {
-    return `Hi 👋
+    return `Hi Affair Escorts,
 
 User ID: ${user?.id}
 Email: ${user?.email}
 Current Balance: ${balance} Coins
 Coins Want: ${coins}
+Plan: ${selectedPlan ? selectedPlan.title : "Custom"}
 Total Pay: ₹${total}
 
 Please confirm payment details.`
@@ -76,7 +83,7 @@ Please confirm payment details.`
 
   const validate = () => {
     if (!coins || coins <= 0) {
-      toast.error("Enter coin amount")
+      toast.error("Enter coin amount or select a plan")
       return false
     }
     return true
@@ -91,9 +98,46 @@ Please confirm payment details.`
   const handleWhatsApp = () => {
     if (!validate()) return
     if (!contact?.whatsapp) return
-
     const message = encodeURIComponent(buildMessage())
     window.open(`https://wa.me/${contact.whatsapp}?text=${message}`, "_blank")
+  }
+
+  const handleTelegram = () => {
+    if (!validate()) return
+    if (!contact?.telegram) return
+    const message = encodeURIComponent(buildMessage())
+    window.open(`https://t.me/${contact.telegram}?text=${message}`, "_blank")
+  }
+
+  const handleEmail = () => {
+    if (!validate()) return
+    if (!contact?.email) return
+    window.location.href = `mailto:${contact.email}?subject=Wallet Recharge&body=${encodeURIComponent(buildMessage())}`
+  }
+
+  // ✅ Click same plan again = deselect, else select
+  const handleSelectPlan = (plan) => {
+    if (selectedPlan?.id === plan.id) {
+      setSelectedPlan(null)
+      setCoins(0)
+      return
+    }
+    setCoins(Number(plan.coins))
+    setSelectedPlan(plan)
+    toast.success(`Selected: ${plan.title}`)
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  // ✅ Manual coin input clears selected plan
+  const handleCoinsChange = (e) => {
+    setCoins(Number(e.target.value))
+    setSelectedPlan(null)
+  }
+
+  // ✅ Clear selected plan
+  const handleClearPlan = () => {
+    setSelectedPlan(null)
+    setCoins(0)
   }
 
   return (
@@ -114,11 +158,7 @@ Please confirm payment details.`
             </h2>
           </div>
 
-          <div
-  className={`grid grid-cols-1 ${
-    payment ? "md:grid-cols-2" : "max-w-md mx-auto"
-  } gap-8`}
->
+          <div className={`grid grid-cols-1 ${payment ? "md:grid-cols-2" : "max-w-md mx-auto"} gap-8`}>
 
             {/* LEFT SIDE */}
             <div className="space-y-4">
@@ -128,13 +168,28 @@ Please confirm payment details.`
                 <input
                   type="number"
                   value={coins}
-                  onChange={(e) => setCoins(Number(e.target.value))}
+                  onChange={handleCoinsChange}
                   className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-4 py-3 mt-1 focus:border-orange-500 outline-none"
                 />
               </div>
 
+              {/* ✅ Selected plan badge with Clear button */}
+              {selectedPlan && (
+                <div className="bg-orange-950 border border-orange-600 rounded-lg px-4 py-2 text-sm text-orange-300 flex items-center justify-between">
+                  <span>Plan: <span className="font-semibold">{selectedPlan.title}</span></span>
+                  <button
+                    onClick={handleClearPlan}
+                    className="text-orange-400 hover:text-white text-xs ml-3 underline"
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+
               <div className="bg-gray-800 rounded-xl p-5 text-center">
-                <p className="text-gray-400 text-sm">1 Coin = ₹49</p>
+                <p className="text-gray-400 text-sm">
+                  {selectedPlan ? "Plan Price" : `1 Coin = ₹${pricePerCoin}`}
+                </p>
                 <p className="text-lg font-semibold mt-2 text-orange-400">
                   Total: ₹{total}
                 </p>
@@ -147,51 +202,37 @@ Please confirm payment details.`
                 Copy Payment Details
               </button>
 
-             {/* ================= CONTACT BUTTONS ================= */}
-<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* ================= CONTACT BUTTONS ================= */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-{/* WHATSAPP */}
-{contact?.is_whatsapp === "1" && contact?.whatsapp && (
-  <button
-    onClick={handleWhatsApp}
-    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
-  >
-    WhatsApp
-  </button>
-)}
+                {contact?.is_whatsapp === "1" && contact?.whatsapp && (
+                  <button
+                    onClick={handleWhatsApp}
+                    className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition"
+                  >
+                    WhatsApp
+                  </button>
+                )}
 
-{/* TELEGRAM */}
-{contact?.is_telegram === "1" && contact?.telegram && (
-  <button
-    onClick={() => {
-      if (!validate()) return
-      const message = encodeURIComponent(buildMessage())
-      window.open(
-        `https://t.me/${contact.telegram}?text=${message}`,
-        "_blank"
-      )
-    }}
-    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
-  >
-    Telegram
-  </button>
-)}
+                {contact?.is_telegram === "1" && contact?.telegram && (
+                  <button
+                    onClick={handleTelegram}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+                  >
+                    Telegram
+                  </button>
+                )}
 
-{/* EMAIL */}
-{contact?.is_email === "1" && contact?.email && (
-  <button
-    onClick={() => {
-      if (!validate()) return
-      window.location.href = `mailto:${contact.email}?subject=Wallet Recharge&body=${encodeURIComponent(buildMessage())}`
-    }}
-    className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition"
-  >
-    Email
-  </button>
-)}
+                {contact?.is_email === "1" && contact?.email && (
+                  <button
+                    onClick={handleEmail}
+                    className="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 rounded-xl transition"
+                  >
+                    Email
+                  </button>
+                )}
 
-</div>
-
+              </div>
             </div>
 
             {/* RIGHT SIDE - PAYMENT INFO */}
@@ -202,7 +243,6 @@ Please confirm payment details.`
                   Payment Information
                 </h2>
 
-                {/* QR */}
                 {payment.qr && (
                   <div className="flex justify-center">
                     <img
@@ -213,32 +253,80 @@ Please confirm payment details.`
                   </div>
                 )}
 
-                {/* DETAILS GRID */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-
                   <div className="bg-gray-800 p-4 rounded-lg">
                     <p className="text-gray-400">UPI ID</p>
                     <p className="font-semibold break-all">{payment.upi}</p>
                   </div>
-
                   <div className="bg-gray-800 p-4 rounded-lg">
                     <p className="text-gray-400">IFSC</p>
                     <p className="font-semibold">{payment.ifsc}</p>
                   </div>
-
                   <div className="bg-gray-800 p-4 rounded-lg sm:col-span-2">
                     <p className="text-gray-400">Account Number</p>
                     <p className="font-semibold break-all">{payment.account_no}</p>
                   </div>
-
                 </div>
 
               </div>
             )}
 
           </div>
-
         </div>
+
+        {/* ================= PRICING PLANS ================= */}
+        {plans.length > 0 && (
+          <div className="bg-slate-900 border border-orange-600 rounded-2xl p-6 sm:p-8">
+
+            <h2 className="text-2xl font-bold text-white text-center mb-6">
+              Choose a Plan
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {plans.map((plan) => (
+                <div
+                  key={plan.id}
+                  onClick={() => handleSelectPlan(plan)}
+                  className={`cursor-pointer rounded-xl border p-5 space-y-3 transition hover:border-orange-500 hover:shadow-lg hover:shadow-orange-900/30
+                    ${selectedPlan?.id === plan.id
+                      ? "border-orange-500 bg-orange-950"
+                      : "border-gray-700 bg-gray-900"
+                    }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-white font-semibold text-lg">{plan.title}</h3>
+                    {selectedPlan?.id === plan.id && (
+                      <span className="text-xs bg-orange-600 text-white px-2 py-0.5 rounded-full">
+                        Selected
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex items-end justify-between">
+                    <p className="text-orange-400 text-2xl font-bold">
+                      {plan.coins}
+                      <span className="text-sm text-gray-400 ml-1">Coins</span>
+                    </p>
+                    <p className="text-white text-xl font-semibold">
+                      ₹{Number(plan.price).toFixed(0)}
+                    </p>
+                  </div>
+
+                  {/* ✅ Button label changes based on selection */}
+                  <button className={`w-full text-sm font-semibold py-2 rounded-lg transition
+                    ${selectedPlan?.id === plan.id
+                      ? "bg-gray-600 hover:bg-gray-700 text-white"
+                      : "bg-orange-600 hover:bg-orange-700 text-white"
+                    }`}>
+                    {selectedPlan?.id === plan.id ? "Deselect" : "Select Plan"}
+                  </button>
+
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
 
       </div>
     </div>

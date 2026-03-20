@@ -171,7 +171,7 @@ useEffect(() => {
           <div>
             <h3 className="text-white font-semibold mb-3">QUICK LOCATION ACCESS</h3>
             <select
-              onChange={(e)=>{router.push(`/escorts/${e.target.value}`)}}
+              onChange={(e)=>{router.push(`/escort/${e.target.value}`)}}
               className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-orange-300"
             >
               <option>Select city</option>

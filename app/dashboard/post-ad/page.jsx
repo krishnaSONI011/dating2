@@ -16,6 +16,7 @@ export default function PostAds(){
     nick_name: "",
     age: "",
     ethnicity: "",
+    teleragm_id : '',
     nationality: "",
     breast: "",
     hair: "",

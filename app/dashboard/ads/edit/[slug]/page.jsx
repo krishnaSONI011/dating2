@@ -1196,14 +1196,15 @@ export default function EditAdinformation() {
                             </p>
                         </div>
                     )}
-
+ 
                     {/* phone */}
                     {(contactType === "phone" || contactType === "both") && (
                         <div className="mb-6">
                             <label className="font-semibold text-(--second-color) block mb-2">
+                           
                                 Telephone Contact
                             </label>
-
+                           
                             <div className="flex items-center border border-gray-700 rounded-lg bg-slate-900 overflow-hidden">
 
                                 {/* Country Code Select */}
@@ -1231,8 +1232,12 @@ export default function EditAdinformation() {
                                 />
 
                             </div>
+                           
                         </div>
+                         
                     )}
+                    {/* Phone Input */}
+                   
 
                     {/* whatsapp & telegram */}
                     <div className="flex gap-6 mt-4">

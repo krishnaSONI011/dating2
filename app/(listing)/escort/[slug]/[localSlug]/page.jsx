@@ -19,6 +19,50 @@ export default function Search(){
   const [city , setCity] = useState([])
   const params = useParams();
   const slug = params?.localSlug ?? ""
+  const citySlug = params?.slug ?? ""
+  const [metaData , setMetaData] = useState({
+    title : '',
+    description : '',
+    keyword : ""
+  })
+
+
+  useEffect(() => {
+
+    if (!metaData?.title) return;
+  
+    const timer = setTimeout(() => {
+  
+      // Title
+      document.title = metaData.title;
+  
+      // Description
+      let meta = document.querySelector("meta[name='description']");
+  
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "description";
+        document.head.appendChild(meta);
+      }
+  
+      meta.setAttribute("content", metaData.description);
+      let metaKeywords = document.querySelector("meta[name='keywords']");
+      if (!metaKeywords) {
+        metaKeywords = document.createElement("meta");
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", metaData.keyword); 
+    }, 200); // delay in milliseconds
+  
+    return () => clearTimeout(timer);
+  
+  }, [metaData]);
+
+
+
+
+
   useEffect(() => {
 
     async function getListingData() {
@@ -33,10 +77,16 @@ export default function Search(){
           
           setListing(res?.data?.data || [])
           setTotalPage(res.data.total_pages)
+          const local_area = res.data.State_city_area.local_area.find((l) => l.slug === slug)
+          setMetaData({
+            title: local_area.meta_title,
+            description:local_area.meta_description,
+            keyword : local_area.keyword
+          });
+          setHtmlContent(local_area?.description)
           
-          setHtmlContent(res.data.State_city_area.city.description)
           setCity(res.data.State_city_area.local_area)
-          console.log(res.data.State_city_area)
+         
        
 
       }catch(e){
@@ -71,7 +121,7 @@ export default function Search(){
       <div className="grid grid-cols-1 md:grid-cols-4  ">
       <div className="col-span-3">
       <CardShower
-        
+        slug= {citySlug}
         items={list}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -79,7 +129,7 @@ export default function Search(){
       />
       </div>
       <div className="mx-5 mt-10">
-      <PopularArea areas={city}/>
+      <PopularArea areas={city} slug={citySlug}/>
       </div>
       
       </div>

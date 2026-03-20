@@ -20,7 +20,8 @@ export default function Search(){
 
   const [metaData, setMetaData] = useState({
     title: "",
-    description: ""
+    description: "",
+    keyword : ""
   })
 
   const params = useParams();
@@ -51,10 +52,12 @@ export default function Search(){
 
         setHtmlContent(pageData?.description || "")
 
-        // ✅ Set meta data
+        //  Set meta data
         setMetaData({
           title: pageData?.meta_title || `${slug2} in ${slug}`,
-          description: pageData?.meta_description || pageData?.description?.slice(0,160) || ""
+          description: pageData?.meta_description ,
+          keyword : pageData?.keyword
+
         })
 
         setCity(response?.city_area?.local_area || [])
@@ -94,6 +97,13 @@ export default function Search(){
       }
 
       meta.setAttribute("content", metaData.description)
+      let metaKeywords = document.querySelector("meta[name='keywords']");
+      if (!metaKeywords) {
+        metaKeywords = document.createElement("meta");
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", metaData.keyword); 
 
     }, 200)
 
