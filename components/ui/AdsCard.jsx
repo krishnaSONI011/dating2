@@ -54,17 +54,10 @@ export default function EscortCard({
 
   function handleWhatsapp(e){
     stopLink(e)
-  
     if(!phone) return
-  
     const message = `Hi, I saw your profile on Affair Escorts - ${title}`
-  
     const encodedMessage = encodeURIComponent(message)
-  
-    window.open(
-      `https://wa.me/${phone}?text=${encodedMessage}`,
-      "_blank"
-    )
+    window.open(`https://wa.me/${phone}?text=${encodedMessage}`, "_blank")
   }
 
   function handleTelegram(e){
@@ -113,22 +106,22 @@ export default function EscortCard({
       className={`
       relative rounded-2xl border transition-all duration-300 
       ${highlight 
-        ? "border-orange-400 bg-orange-500/30 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
-        : "border-gray-700 bg-gradient-to-r from-[#0f172a] to-[#1e293b]"}
+        ? "border-(--primary-color) bg-(--listing-box-highlight)/50 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
+        : "border-gray-700 bg-(--listing-box-background)"}
       `}
     >
 
       {/* SUPER TOP */}
       {is_superTop && (
-        <div className="absolute right-3 -top-2 bg-orange-500 text-white text-[10px] px-2 py-1 rounded-full font-semibold z-30">
+        <div className="absolute right-3 -top-2 bg-(--listing-box-superTop-color) text-white text-[10px] px-2 py-1 rounded-full font-semibold z-30">
           SUPER TOP
         </div>
       )}
 
       <div className="flex overflow-hidden">
 
-        {/* IMAGE SLIDER */}
-        <div className="relative w-[130px] sm:w-[150px] md:w-[180px] h-[200px] sm:h-[220px] md:h-[240px] flex-shrink-0 overflow-hidden rounded-l-2xl">
+        {/* IMAGE SLIDER — self-stretch fills full card height */}
+        <div className="relative w-[130px] sm:w-[150px] md:w-[180px] min-h-[250px] self-stretch flex-shrink-0 overflow-hidden rounded-l-2xl">
 
           {/* NEW Badge */}
           {is_new && (
@@ -152,7 +145,7 @@ export default function EscortCard({
                 max-w-[70%] max-h-[70%]
                 object-contain
                 z-50
-                opacity-30
+                opacity-60
                 pointer-events-none
                 select-none
               "
@@ -176,7 +169,7 @@ export default function EscortCard({
           ) : (
             <img
               src="/noimage.jpg"
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
               alt="card"
             />
           )}
@@ -184,33 +177,51 @@ export default function EscortCard({
         </div>
 
         {/* RIGHT CONTENT */}
-        <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between">
+        <div className="flex-1 p-3 sm:p-4 flex flex-col justify-between min-w-0">
 
           <div>
 
-            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-orange-300 leading-snug">
+            {/* Title — max 2 lines then ellipsis */}
+            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-orange-300 leading-snug overflow-hidden"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
               {title}
             </h2>
 
-            <p className="text-gray-400 text-xs sm:text-sm mt-2 line-clamp-2">
+            {/* Description — max 2 lines then ellipsis */}
+            <p
+              className="text-gray-400 text-xs sm:text-sm mt-2"
+              style={{
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+            >
               {desc}
             </p>
 
             <div className="flex items-center gap-2 text-gray-400 text-xs mt-3">
-              <FaMapMarkerAlt  className="text-orange-400 hidden sm:block text-xs"/>
-              {location}
+              <FaMapMarkerAlt className="text-orange-400 hidden sm:block text-xs flex-shrink-0"/>
+              <span className="truncate">{location}</span>
             </div>
 
-            <div className=" sm:flex  gap-2 mt-3 flex-wrap text-xs">
-              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
-                Female
-              </span>
+            <div className="flex gap-2 mt-3 flex-wrap text-xs">
+              
               <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 {age} years
               </span>
-              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
+              {
+                country &&<span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
                 {country}
               </span>
+              }
+              
             </div>
 
           </div>

@@ -122,10 +122,10 @@ export default function MyAds(){
   const activeCount  = ads.filter(a=>a.is_approved=="1").length
 
   return(
-    <div className="bg-gray-950 min-h-screen px-4 sm:px-10 py-10 text-white">
+    <div className="bg-(--website-background) min-h-screen px-4 sm:px-10 py-10 ">
 
       <div className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-2">
+        <h1 className="text-3xl text-(--second-color) sm:text-4xl font-bold mb-2">
           My Ads Dashboard
         </h1>
       </div>
@@ -156,7 +156,7 @@ export default function MyAds(){
 
           return(
             <div key={ad.id}
-              className={`bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden 
+              className={`bg-(--website-background) border border-(--primary-color) rounded-2xl overflow-hidden 
               ${isExpired ? "opacity-70" : "hover:shadow-xl transition"}`}>
 
               {/* TOP BAR */}
@@ -190,6 +190,7 @@ export default function MyAds(){
                   age={ad.age}
                   country={ad.nationality}
                   location={`${ad.city_name || ""} ${ad.state_name || ""}`}
+                  telegram={ad.telegram_id}
                   image={img}
                   is_superTop={ad.super_top=="1"}
                   is_new={ad.new=="1"}
@@ -207,7 +208,7 @@ export default function MyAds(){
 
                   <Button 
                     onClick={()=>deleteMyList(ad.id)} 
-                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">
+                    className="px-4 py-2  rounded-lg">
                     Delete
                   </Button>
                 </div>
@@ -288,7 +289,7 @@ function TabBtn({label,active,onClick}){
     <button
       onClick={onClick}
       className={`pb-3 px-2 font-semibold border-b-2 transition
-      ${active ? "border-red-600 text-red-500" : "border-transparent text-gray-400 hover:text-white"}`}
+      ${active ? "border-(--primary-color) text-(--primary-color)" : "border-transparent "}`}
     >
       {label}
     </button>
@@ -297,18 +298,18 @@ function TabBtn({label,active,onClick}){
 
 function StatCard({icon,title,value}){
   return(
-    <div className="bg-gray-900 p-6 rounded-xl border border-gray-800 flex items-center gap-4">
-      <div className="text-red-500 text-2xl">{icon}</div>
+    <div className="bg-(--website-background)/40 p-6 rounded-xl border border-(--primary-color) flex items-center gap-4">
+      <div className="text-(--primary-color) text-2xl">{icon}</div>
       <div>
-        <p className="text-gray-400 text-sm">{title}</p>
-        <h2 className="text-2xl font-bold text-white">{value}</h2>
+        <p className="text-(--second-color) text-sm">{title}</p>
+        <h2 className="text-2xl font-bold ">{value}</h2>
       </div>
     </div>
   )
 }
 
 function ActionBtn({icon,label,primary}){
-  let cls="bg-gray-800 hover:bg-gray-700 text-gray-300"
+  let cls="bg-(--website-background)/20  "
   if(primary) cls="bg-red-600 hover:bg-red-700 text-white"
 
   return(

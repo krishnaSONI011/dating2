@@ -56,7 +56,7 @@ export default function Login() {
           <WebsiteLogo />
         </div>
 
-        <p className="text-gray-500 text-center mb-8">
+        <p className="text-(--second-color) text-center mb-8">
           Login to your premium account
         </p>
 

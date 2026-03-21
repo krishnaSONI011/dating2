@@ -72,7 +72,7 @@ useEffect(() => {
   getLegalPages()
 }, [])
   return (
-    <footer className="w-full bg-[#05060a] text-gray-300 pt-16 pb-10 border-t border-gray-800">
+    <footer className="w-full bg-(--footer-color) text-gray-300 pt-16 pb-10 border-t border-gray-800">
 
       <div className="max-w-7xl mx-auto px-6">
 
@@ -194,7 +194,7 @@ useEffect(() => {
       {/* Back To Top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-6 right-6 bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 rounded-full shadow-lg"
+        className="fixed bottom-6 right-6 bg-(--primary-color) hoverbg-(--primary-color)/80  text-white px-5 py-3 rounded-full shadow-lg"
       >
         ↑
       </button>

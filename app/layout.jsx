@@ -41,7 +41,6 @@ export async function generateMetadata() {
       title: data?.title || "Affair Escorts",
       description: data?.description || "Best escort service",
       keywords: data?.keyword || "escorts, affair escorts",
-      //  Dynamic favicon from API
       icons: {
         icon: data?.favicon
           ? [{ url: data.favicon, type: "image/webp" }]
@@ -50,11 +49,7 @@ export async function generateMetadata() {
           ? [{ url: data.favicon, type: "image/webp" }]
           : [{ url: "/apple-touch-icon.png" }],
       },
-
-      alternates: {
-        canonical: "./",
-      },
-
+      alternates: { canonical: "./" },
       robots: {
         index: true,
         follow: true,
@@ -66,7 +61,6 @@ export async function generateMetadata() {
           "max-video-preview": -1,
         },
       },
-
       openGraph: {
         title: data?.title || "Affair Escorts",
         description: data?.description || "Best escort service",
@@ -77,18 +71,14 @@ export async function generateMetadata() {
     };
   } catch (error) {
     console.log("Metadata API failed:", error);
-
     return {
       metadataBase: new URL("https://affairescorts.com"),
       title: "Affair Escorts",
       description: "Best escort service",
-
-      //  Fallback to local favicon if API fails
       icons: {
         icon: [{ url: "/favicon.ico" }],
         apple: [{ url: "/apple-touch-icon.png" }],
       },
-
       robots: {
         index: true,
         follow: true,
@@ -100,7 +90,6 @@ export async function generateMetadata() {
           "max-video-preview": -1,
         },
       },
-
       openGraph: {
         title: "Affair Escorts",
         description: "Best escort service",
@@ -140,9 +129,8 @@ export default function RootLayout({ children }) {
         />
       </head>
 
-      <body
-        className={`${poppins.className} antialiased bg-(--website-background) text-(--webiste-text)`}
-      >
+      {/*  Removed color classes — ThemeContext sets body bg/text dynamically */}
+      <body className={`${poppins.className} antialiased`}>
         <AuthProvider>
           <WalletProvider>
             <ThemeProvider>

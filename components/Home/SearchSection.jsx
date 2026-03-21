@@ -96,7 +96,7 @@ export default function SearchSection({ title, banner, subtitle }) {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center w-full">
   
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide mb-4 uppercase">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide mb-4 uppercase text-white">
           {title}
         </h1>
   

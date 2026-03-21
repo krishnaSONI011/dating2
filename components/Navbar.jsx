@@ -35,7 +35,7 @@ export default function Navbar(){
   },[])
 
   return(
-    <header className="w-full bg-[#111827]  border-bs-blue-950  ">
+    <header className="w-full bg-(--navbar-color)  border-bs-blue-950  ">
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex items-center justify-between">
 
         {/* Logo */}
@@ -54,9 +54,9 @@ export default function Navbar(){
 
           {/* Wallet */}
           {isAuthenticated && (
-            <div className="flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-full border border-orange-200">
-              <FaCoins className="text-orange-500" />
-              <span className="font-semibold text-gray-800 text-sm">
+            <div className="flex items-center gap-2 bg-(--primary-color)/10 px-4 py-2 rounded-full border border-(--primary-color)">
+              <FaCoins className="text-(--primary-color)" />
+              <span className="font-semibold text-(--primary-color) text-sm">
                 {balance}
               </span>
             </div>
@@ -66,7 +66,7 @@ export default function Navbar(){
           <div className="relative" ref={dropdownRef}>
             {!isAuthenticated ? (
               <Link href="/login">
-                <button className="p-2 border border-orange-600 rounded-full text-orange-600 hover:bg-orange-600 hover:text-white">
+                <button className="p-2 border border-(--primary-color) rounded-full text-(--primary-color) hover:bg-(--primary-color)/70 hover:text-white">
                   <FaUser />
                 </button>
               </Link>
@@ -74,26 +74,26 @@ export default function Navbar(){
               <>
                 <button
                   onClick={()=> setOpen(!open)}
-                  className="p-2 border border-orange-600 rounded-full text-orange-600 hover:bg-orange-600 hover:text-white"
+                  className="p-2 border border-(--primary-color) rounded-full text-(--primary-color) hover:bg-(--primary-color)/70 hover:text-white"
                 >
                   <FaUser />
                 </button>
 
                 {open && (
-                  <div className="absolute overflow-hidden right-0 mt-3 w-44 bg-(--website-background) border rounded-xl shadow-lg z-50">
+                  <div className="absolute overflow-hidden right-0 mt-3 w-44 bg-(--website-background) border border-(--primary-color) rounded-xl shadow-lg z-50">
                     <Link href="/dashboard">
-                      <div className="px-4 py-3 hover:bg-slate-800 text-sm">Dashboard</div>
+                      <div className="px-4 py-3 text-(--primary-color) hover:bg-(--primary-color)/10 text-sm">Dashboard</div>
                     </Link>
 
                     <Link href="/dashboard/wallet">
-                      <div className="px-4 py-3 hover:bg-slate-800 text-sm">Wallet</div>
+                      <div className="px-4 py-3 text-(--primary-color) hover:bg-(--primary-color)/10 text-sm">Wallet</div>
                     </Link>
 
                     <div className="border-t"></div>
 
                     <button
                       onClick={logout}
-                      className="w-full text-left px-4 py-3 hover:bg-slate-800 text-red-500 text-sm"
+                      className="w-full text-left px-4 py-3 hover:bg-(--primary-color)/10 text-red-500 text-sm"
                     >
                       Logout
                     </button>
@@ -105,7 +105,7 @@ export default function Navbar(){
 
           {/* CTA */}
           <Link href={isAuthenticated ? "/dashboard/post-ad" : "/login"}>
-            <Button className="px-6 py-2 bg-orange-600 text-white rounded-full">
+            <Button className="px-6 py-2  text-white rounded-full">
               Post Your Ads
             </Button>
           </Link>

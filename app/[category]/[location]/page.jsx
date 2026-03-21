@@ -9,22 +9,22 @@ import api from "@/lib/api";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function Search(){
+export default function Search() {
 
   const [list, setListing] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const [htmlContent , setHtmlContent] = useState('')
-  const [city , setCity] = useState([])
+  const [htmlContent, setHtmlContent] = useState('')
+  const [city, setCity] = useState([])
 
   const [metaData, setMetaData] = useState({
     title: "",
     description: "",
-    keyword : ""
+    keyword: ""
   })
 
-  const params = useParams();
+  const params = useParams()
   const slug = params?.location ?? ""
   const slug2 = params?.category ?? ''
 
@@ -32,7 +32,6 @@ export default function Search(){
 
     async function getListingData() {
       try {
-
         setLoading(true)
 
         const formData = new FormData()
@@ -40,27 +39,41 @@ export default function Search(){
         formData.append("city_slug", slug)
 
         const res = await api.post("/Wb/pages", formData)
-
         const response = res?.data
 
         setListing(response?.data?.ads || [])
         setTotalPage(response?.total_pages || 0)
+        setCity(response?.city_area?.local_area || [])
 
-        const pageData = response?.data?.pages?.find(
-          (v) => v.city_slug === slug && v.cat_slug === slug2
-        )
+        //  Handle both: pages as object OR pages as array
+        const rawPages = response?.data?.pages
 
+        const pageData = (() => {
+          if (!rawPages) return null
+
+          // Case 1: pages is an array → find by slug or take first
+          if (Array.isArray(rawPages)) {
+            return rawPages.find(
+              (p) =>
+                p.city_slug === slug ||
+                p.cat_slug === slug2 ||
+                p.area_slug === slug
+            ) ?? rawPages[0] ?? null
+          }
+
+          // Case 2: pages is a plain object
+          return rawPages
+        })()
+
+        // ✅ Set description — only arrays have full description field
         setHtmlContent(pageData?.description || "")
 
-        //  Set meta data
+        //  Set meta — works for both cases
         setMetaData({
-          title: pageData?.meta_title || `${slug2} in ${slug}`,
-          description: pageData?.meta_description ,
-          keyword : pageData?.keyword
-
+          title:       pageData?.meta_title       || `${slug2} in ${slug}`,
+          description: pageData?.meta_description || "",
+          keyword:     pageData?.keyword          || "",
         })
-
-        setCity(response?.city_area?.local_area || [])
 
       } catch (e) {
         console.log(e)
@@ -70,47 +83,40 @@ export default function Search(){
     }
 
     getListingData()
-
     window.scrollTo({ top: 0, behavior: "smooth" })
 
   }, [currentPage, slug, slug2])
 
-
   /* ================= META TAG HANDLER ================= */
-
   useEffect(() => {
 
     if (!metaData?.title) return
 
     const timer = setTimeout(() => {
 
-      // Title
       document.title = metaData.title
 
-      // Description
       let meta = document.querySelector("meta[name='description']")
-
       if (!meta) {
         meta = document.createElement("meta")
         meta.name = "description"
         document.head.appendChild(meta)
       }
-
       meta.setAttribute("content", metaData.description)
-      let metaKeywords = document.querySelector("meta[name='keywords']");
+
+      let metaKeywords = document.querySelector("meta[name='keywords']")
       if (!metaKeywords) {
-        metaKeywords = document.createElement("meta");
-        metaKeywords.name = "keywords";
-        document.head.appendChild(metaKeywords);
+        metaKeywords = document.createElement("meta")
+        metaKeywords.name = "keywords"
+        document.head.appendChild(metaKeywords)
       }
-      metaKeywords.setAttribute("content", metaData.keyword); 
+      metaKeywords.setAttribute("content", metaData.keyword)
 
     }, 200)
 
     return () => clearTimeout(timer)
 
   }, [metaData])
-
 
   return (
     <div>
@@ -142,13 +148,13 @@ export default function Search(){
           </div>
 
           <div className="mx-5 mt-10">
-            <PopularArea areas={city} slug={slug}/>
+            <PopularArea areas={city} slug={slug} is_category_page_area={true} />
           </div>
 
         </div>
 
         <div>
-          <PageContent html={htmlContent}/>
+          <PageContent html={htmlContent} />
         </div>
 
       </div>

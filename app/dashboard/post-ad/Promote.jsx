@@ -29,27 +29,25 @@ export default function Promote({ prevStep, form, images }) {
   const [rechargeCoins, setRechargeCoins] = useState(0)
   const [freeLoading, setFreeLoading] = useState(false)
 
-  // ✅ Pricing state from API
   const [pricing, setPricing] = useState({
     superTop: 0,
     tagNew: 0,
     highlight: 0,
-    slot1: 0, // First Time Slot
-    slot2: 0, // Second Time Slot
-    slot3: 0, // Third Time Slot
-    slot4: 0, // Fourth Time Slot
-    day1: 0,  // 1 Day
-    day3: 0,  // 3 Days
-    day7: 0,  // 7 Days
-    boost3: 0, // 3 Time Boost
-    boost6: 0, // 6 Time Boost
-    pricePerCoin: 49, // Price per coin fallback
+    slot1: 0,
+    slot2: 0,
+    slot3: 0,
+    slot4: 0,
+    day1: 0,
+    day3: 0,
+    day7: 0,
+    boost3: 0,
+    boost6: 0,
+    pricePerCoin: 49,
   })
 
   const rechargeTotal = rechargeCoins * pricing.pricePerCoin
   const router = useRouter()
 
-  // ✅ Map slot id to pricing key
   const slotPriceMap = {
     night:     pricing.slot1,
     morning:   pricing.slot2,
@@ -57,22 +55,24 @@ export default function Promote({ prevStep, form, images }) {
     evening:   pricing.slot4,
   }
 
-  // ✅ Map days to pricing key
   const dayPriceMap = {
     1: pricing.day1,
     3: pricing.day3,
     7: pricing.day7,
   }
 
-  // ✅ Map boost to pricing key
   const boostPriceMap = {
     3: pricing.boost3,
     6: pricing.boost6,
   }
 
-  // ✅ Dynamic total calculation
+  // ✅ Check if user selected any promotion option
+  const hasSlotSelection = timeSlot && days && boost
+  const hasStandoutSelection = superTop || highlight || tagNew || allInOne
+
+  // ✅ total: slot section only counts if all 3 selected
   let total = 0
-  if (timeSlot && days && boost) {
+  if (hasSlotSelection) {
     total = (slotPriceMap[timeSlot] || 0) + (dayPriceMap[days] || 0) + (boostPriceMap[boost] || 0)
   }
   if (allInOne) {
@@ -82,6 +82,9 @@ export default function Promote({ prevStep, form, images }) {
     if (highlight) total += pricing.highlight
     if (tagNew) total += pricing.tagNew
   }
+
+  //  Can publish if either slot OR standout is selected
+  const canPublish = hasSlotSelection || hasStandoutSelection
 
   const handleAllInOne = () => {
     const newVal = !allInOne
@@ -97,14 +100,12 @@ export default function Promote({ prevStep, form, images }) {
     }
   }
 
-  // ✅ Fetch pricing from API
   useEffect(() => {
     async function loadPricing() {
       try {
         const res = await api.post("/Wb/get_pricing")
         if (res.data.status == 0) {
           const data = res.data.data ?? []
-
           const find = (title) =>
             Number(data.find((p) => p.title.trim().toLowerCase() === title.toLowerCase())?.coins ?? 0)
 
@@ -181,7 +182,7 @@ Please share payment details.`
       formData.append("hair", form.hair)
       formData.append("is_telegram", form.is_telegram ? "1" : "0")
       formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
-      formData.append("teleragm_id", form.teleragm_id ?? "")
+      formData.append("telegram_id", form.teleragm_id ?? "")
       formData.append("body_type", form.body_type)
       formData.append("email", user?.email)
       formData.append("gender", form.gender)
@@ -213,9 +214,11 @@ Please share payment details.`
   }
 
   async function publishWithMoney() {
-    if (!timeSlot) return toast.error("Please select a time slot")
-    if (!days) return toast.error("Please select number of days")
-    if (!boost) return toast.error("Please select boost count")
+    //  Fixed: only require slot+days+boost if user chose a slot
+    if (timeSlot && (!days || !boost)) {
+      return toast.error("Please select days and boost count for the time slot")
+    }
+    if (!canPublish) return toast.error("Please select at least one promotion option")
     if (balance < total) return toast.error("Insufficient balance")
 
     try {
@@ -232,7 +235,7 @@ Please share payment details.`
       formData.append("body_type", form.body_type)
       formData.append("email", user?.email)
       formData.append("gender", form.gender)
-      formData.append("teleragm_id", form.teleragm_id ?? "")
+      formData.append("telegram_id", form.teleragm_id ?? "")
       formData.append("is_telegram", form.is_telegram ? "1" : "0")
       formData.append("is_whatsapp", form.is_whatsapp ? "1" : "0")
       formData.append("mobile", form.country_code + form.phone)
@@ -258,8 +261,8 @@ Please share payment details.`
         boostData.append("hight_light", highlight ? "1" : "0")
         boostData.append("new", tagNew ? "1" : "0")
         boostData.append("all_upgrade", allInOne ? "1" : "0")
-        boostData.append("days", days)
-        boostData.append("boost_times", boost)
+        boostData.append("days", days ?? "0")
+        boostData.append("boost_times", boost ?? "0")
         boostData.append("total", total)
 
         const boostRes = await api.post('/Wb/bost_plan', boostData)
@@ -312,6 +315,7 @@ Please share payment details.`
             title={form.title}
             images={previewImages}
             desc={form.description}
+            telegram={form.telegram_id}
             is_superTop={superTop}
             is_new={tagNew}
             country={form.nationality}
@@ -321,7 +325,9 @@ Please share payment details.`
         </div>
 
         {/* TIME SLOT */}
-        <h3 className="text-lg md:text-xl font-semibold mb-4">Choose promotion time</h3>
+        <h3 className="text-lg md:text-xl font-semibold mb-2">Choose promotion time</h3>
+        {/* Optional label */}
+        <p className="text-sm text-gray-400 mb-4">Optional — skip if you only want Super Top / Highlight / New</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           {[
@@ -335,6 +341,7 @@ Please share payment details.`
               onClick={() => {
                 if (timeSlot === slot.id) {
                   setTimeSlot(""); setFromtime(""); setToTime("")
+                  setDays(null); setBoost(null)
                 } else {
                   setTimeSlot(slot.id); setFromtime(slot.from); setToTime(slot.to)
                 }
@@ -344,13 +351,12 @@ Please share payment details.`
             >
               <div>{slot.label}</div>
               <div className="text-sm text-gray-500">{slot.display}</div>
-              {/* ✅ Show dynamic price */}
               <div className="text-xs mt-1 font-semibold text-orange-500">{pricing[slot.priceKey]} Coins</div>
             </button>
           ))}
         </div>
 
-        {/* AFTER SLOT */}
+        {/* DAYS + BOOST — only show if slot selected */}
         {timeSlot && (
           <>
             <h3 className="text-lg md:text-xl font-semibold mb-4">Select days</h3>
@@ -367,66 +373,84 @@ Please share payment details.`
                   ${days === d ? "border-red-500 bg-red-50 text-red-600" : "border-gray-300 hover:border-gray-400"}`}
                 >
                   <div>{d} Day{d > 1 && "s"}</div>
-                  {/* ✅ Show dynamic price */}
                   <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
                 </button>
               ))}
             </div>
 
             <h3 className="text-lg md:text-xl font-semibold mb-4">Contribution increase</h3>
-            <div className="flex flex-wrap gap-3 md:gap-4 mb-10">
-              {[
-                { b: 3, priceKey: "boost3" },
-                { b: 6, priceKey: "boost6" },
-              ].map(({ b, priceKey }) => (
-                <button
-                  key={b}
-                  onClick={() => setBoost(boost === b ? null : b)}
-                  className={`px-5 py-2 md:px-6 md:py-3 rounded-xl border font-semibold transition
-                  ${boost === b ? "border-red-500 bg-red-50 text-red-600" : "border-gray-300 hover:border-gray-400"}`}
-                >
-                  <div>{b} Boosts</div>
-                  {/* ✅ Show dynamic price */}
-                  <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
-                </button>
-              ))}
-            </div>
-
-            <h2 className="text-xl md:text-2xl font-bold mb-6 text-(--second-color)">
-              Make your ad stand out
-            </h2>
-
-            <StandCard
-              title="Super Top"
-              desc="Get more visibility with top placement."
-              price={`${pricing.superTop} Coins`}
-              active={superTop}
-              setActive={setSuperTop}
-            />
-            <StandCard
-              title="Highlight"
-              desc="Colored background for your ad."
-              price={`${pricing.highlight} Coins`}
-              active={highlight}
-              setActive={setHighlight}
-            />
-            <StandCard
-              title="Tag New"
-              desc="Add NEW label to listing."
-              price={`${pricing.tagNew} Coins`}
-              active={tagNew}
-              setActive={setTagNew}
-            />
-            <StandCard
-              title="All in One"
-              desc="Super Top + Highlight + New tag"
-              price={`${pricing.superTop + pricing.tagNew + pricing.highlight} Coins`}
-              active={allInOne}
-              setActive={handleAllInOne}
-              highlightAll
-            />
+<div className="flex flex-wrap gap-3 md:gap-4 mb-10">
+  {[
+    { b: 3, priceKey: "boost3" },
+    { b: 6, priceKey: "boost6" },
+  ].map(({ b, priceKey }) => (
+    <button
+      key={b}
+      onClick={() => {
+        if (boost === b) {
+          // ✅ deselect → reset superTop too
+          setBoost(null)
+          setSuperTop(false)
+        } else {
+          // ✅ select → auto enable superTop
+          setBoost(b)
+          setSuperTop(true)
+        }
+      }}
+      className={`px-5 py-2 md:px-6 md:py-3 rounded-xl border font-semibold transition
+      ${boost === b ? "border-red-500 bg-red-50 text-red-600" : "border-gray-300 hover:border-gray-400"}`}
+    >
+      <div>{b} Boosts</div>
+      <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
+    </button>
+  ))}
+</div>
           </>
         )}
+
+        {/* ================= STAND OUT — always visible ================= */}
+        <h2 className="text-xl md:text-2xl font-bold mb-2 text-(--second-color)">
+          Make your ad stand out
+        </h2>
+        <p className="text-sm text-gray-400 mb-6">
+          {timeSlot
+            ? "These are locked to ON when boost is selected"
+            : "Select any option to promote without a time slot"}
+        </p>
+
+        <StandCard
+  title="Super Top"
+  desc="Get more visibility with top placement."
+  price={`${pricing.superTop} Coins`}
+  active={superTop}
+  locked={!!boost}  // ✅ only Super Top locks when boost selected
+  setActive={(val) => {
+    if (boost) return
+    setSuperTop(val)
+  }}
+/>
+<StandCard
+  title="Highlight"
+  desc="Colored background for your ad."
+  price={`${pricing.highlight} Coins`}
+  active={highlight}
+  setActive={(val) => setHighlight(val)}  // ✅ free to toggle
+/>
+<StandCard
+  title="Tag New"
+  desc="Add NEW label to listing."
+  price={`${pricing.tagNew} Coins`}
+  active={tagNew}
+  setActive={(val) => setTagNew(val)}  // ✅ free to toggle
+/>
+<StandCard
+  title="All in One"
+  desc="Super Top + Highlight + New tag"
+  price={`${pricing.superTop + pricing.tagNew + pricing.highlight} Coins`}
+  active={allInOne}
+  setActive={(val) => handleAllInOne()}  // ✅ free to toggle
+  highlightAll
+/>
 
         <div className="mt-10">
           <Button onClick={prevStep}>← Back</Button>
@@ -440,51 +464,62 @@ Please share payment details.`
 
           <h3 className="text-lg md:text-xl font-bold mb-6">Promotions Summary</h3>
 
-          {!timeSlot && <p className="text-gray-400 text-sm">Select time slot first</p>}
+          {/* ✅ Show message only if nothing selected at all */}
+          {!canPublish && (
+            <p className="text-gray-400 text-sm mb-4">
+              Select a time slot or at least one stand-out option
+            </p>
+          )}
 
-          {timeSlot && (
-            <>
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between">
-                  <span>Time Slot</span>
-                  <b className="capitalize">{timeSlot} ({slotPriceMap[timeSlot]} coins)</b>
-                </div>
-                <div className="flex justify-between">
-                  <span>Days</span>
-                  <b>{days ? `${days} day${days > 1 ? "s" : ""} (${dayPriceMap[days]} coins)` : "—"}</b>
-                </div>
-                <div className="flex justify-between">
-                  <span>Boost</span>
-                  <b>{boost ? `${boost} boosts (${boostPriceMap[boost]} coins)` : "—"}</b>
-                </div>
-                {superTop && !allInOne && (
-                  <div className="flex justify-between">
-                    <span>Super Top</span>
-                    <b>{pricing.superTop} coins</b>
-                  </div>
-                )}
-                {highlight && !allInOne && (
-                  <div className="flex justify-between">
-                    <span>Highlight</span>
-                    <b>{pricing.highlight} coins</b>
-                  </div>
-                )}
-                {tagNew && !allInOne && (
-                  <div className="flex justify-between">
-                    <span>Tag New</span>
-                    <b>{pricing.tagNew} coins</b>
-                  </div>
-                )}
-                {allInOne && (
-                  <div className="flex justify-between">
-                    <span>All in One</span>
-                    <b>{pricing.superTop + pricing.tagNew + pricing.highlight} coins</b>
-                  </div>
-                )}
+          <div className="space-y-3 text-sm">
+
+            {timeSlot && (
+              <div className="flex justify-between">
+                <span>Time Slot</span>
+                <b className="capitalize">{timeSlot} ({slotPriceMap[timeSlot]} coins)</b>
               </div>
+            )}
+            {days && (
+              <div className="flex justify-between">
+                <span>Days</span>
+                <b>{days} day{days > 1 ? "s" : ""} ({dayPriceMap[days]} coins)</b>
+              </div>
+            )}
+            {boost && (
+              <div className="flex justify-between">
+                <span>Boost</span>
+                <b>{boost} boosts ({boostPriceMap[boost]} coins)</b>
+              </div>
+            )}
+            {superTop && !allInOne && (
+              <div className="flex justify-between">
+                <span>Super Top</span>
+                <b>{pricing.superTop} coins</b>
+              </div>
+            )}
+            {highlight && !allInOne && (
+              <div className="flex justify-between">
+                <span>Highlight</span>
+                <b>{pricing.highlight} coins</b>
+              </div>
+            )}
+            {tagNew && !allInOne && (
+              <div className="flex justify-between">
+                <span>Tag New</span>
+                <b>{pricing.tagNew} coins</b>
+              </div>
+            )}
+            {allInOne && (
+              <div className="flex justify-between">
+                <span>All in One</span>
+                <b>{pricing.superTop + pricing.tagNew + pricing.highlight} coins</b>
+              </div>
+            )}
+          </div>
 
+          {canPublish && (
+            <>
               <div className="h-px bg-gray-700 my-5" />
-
               <div className="flex justify-between items-center mb-6">
                 <span className="text-lg font-semibold">Total Coins</span>
                 <span className="text-2xl md:text-3xl font-bold text-red-600">{total}</span>
@@ -538,7 +573,7 @@ Please share payment details.`
 
           {/* WITHOUT PROMOTION */}
           <div className="bg-gray-900 border border-gray-700 rounded-xl p-5 text-center mt-6">
-            <p className="text-sm text-gray-400 mb-2">Dont want promotion?</p>
+            <p className="text-sm text-gray-400 mb-2">Don't want promotion?</p>
             <p className="font-semibold mb-4">
               Publish normally for <span className="text-red-600 ml-1">1 Coin</span>
             </p>
@@ -554,11 +589,22 @@ Please share payment details.`
   )
 }
 
-function StandCard({ title, desc, price, active, setActive, highlightAll = false }) {
+// ✅ Added locked prop
+function StandCard({ title, desc, price, active, setActive, highlightAll = false, locked = false }) {
   return (
-    <div className="border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center">
+    <div className={`border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center
+      ${locked ? "opacity-60" : ""}`}
+    >
       <div className="max-w-[70%]">
-        <h3 className="text-lg font-bold mb-1">{title}</h3>
+        <div className="flex items-center gap-2 mb-1">
+          <h3 className="text-lg font-bold">{title}</h3>
+          {/* ✅ Show locked badge when boost is selected */}
+          {locked && (
+            <span className="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+              Included in boost
+            </span>
+          )}
+        </div>
         <p className="text-(--webiste-text) text-sm mb-2">{desc}</p>
         {highlightAll && (
           <div className="flex gap-2 mb-2">
@@ -571,15 +617,15 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
       </div>
 
       <div
-        onClick={() => setActive(!active)}
-        className={`w-20 h-10 flex items-center rounded-full px-1 cursor-pointer
-        ${active ? "bg-red-600" : "bg-gray-300"}`}
+        onClick={() => !locked && setActive(!active)}
+        className={`w-20 h-10 flex items-center rounded-full px-1 transition
+          ${locked ? "cursor-not-allowed bg-orange-500" : "cursor-pointer " + (active ? "bg-red-600" : "bg-gray-300")}`}
       >
         <div
           className={`bg-white w-8 h-8 rounded-full shadow-md transform transition flex items-center justify-center text-xs font-bold
-          ${active ? "translate-x-10 text-red-600" : "text-gray-500"}`}
+          ${locked ? "translate-x-10 text-orange-500" : active ? "translate-x-10 text-red-600" : "text-gray-500"}`}
         >
-          {active ? "YES" : "NO"}
+          {locked ? "ON" : active ? "YES" : "NO"}
         </div>
       </div>
     </div>

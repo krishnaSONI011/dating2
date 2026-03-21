@@ -13,9 +13,46 @@ export default function Pages() {
 
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [metaData , setMetaData] = useState({
+    title : '',
+    description : '',
+    keywords : ''
+  })
   const [error, setError] = useState(false)
   const [layout, setLayout] = useState(false)
+  const [des , setDes] = useState('')
 
+  useEffect(() => {
+
+    if (!metaData?.title) return;
+  
+    const timer = setTimeout(() => {
+  
+      // Title
+      document.title = metaData.title;
+  
+      // Description
+      let meta = document.querySelector("meta[name='description']");
+  
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.name = "description";
+        document.head.appendChild(meta);
+      }
+  
+      meta.setAttribute("content", metaData.description);
+      let metaKeywords = document.querySelector("meta[name='keywords']");
+      if (!metaKeywords) {
+        metaKeywords = document.createElement("meta");
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", metaData.keywords); 
+    }, 200); // delay in milliseconds
+  
+    return () => clearTimeout(timer);
+  
+  }, [metaData]);
   useEffect(() => {
     if (!slug) return
 
@@ -31,6 +68,13 @@ export default function Pages() {
 
         if (res.data.status == 0) {
           if (res.data.is_category == 1) {
+            const cate_data = res.data.post_categories.find((c)=> c.slug === slug)
+            setMetaData({
+             title : cate_data.meta_title,
+             description : cate_data.meta_description,
+              keywords : cate_data.keyword
+            })
+            setDes(cate_data.description)
             setLayout(true)
           }
           setData(res.data) //  always set data on success
@@ -70,7 +114,7 @@ export default function Pages() {
   }
 
   /* ================= LAYOUT ================= */
-  // ✅ Bug 3 fixed: data is guaranteed to exist here
+  //  Bug 3 fixed: data is guaranteed to exist here
   if (layout) {
     return (
       <ListingLayout
@@ -80,6 +124,7 @@ export default function Pages() {
         totalPages={data.totalPages}
         city={data.post_categories}
         is_category={data.is_category == 1 ? true : false}
+        htmlContent={des}
       />
     )
   }

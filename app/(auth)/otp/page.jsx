@@ -116,10 +116,10 @@ export default function OTPPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-(--website-background) flex items-center justify-center px-4">
 
       {/* Card */}
-      <div className="w-full max-w-md bg-[#0b1220] border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8 text-center">
+      <div className="w-full max-w-md  border border-(--primary-color) rounded-3xl shadow-2xl p-6 sm:p-8 text-center">
 
         {/* Heading */}
         {/* <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-white">
@@ -132,7 +132,7 @@ export default function OTPPage() {
           <WebsiteLogo />
         </div>
 
-        <p className="text-gray-400 mb-8 text-sm sm:text-base">
+        <p className="text-(--second-color) mb-8 text-sm sm:text-base">
           Enter the 4 digit OTP sent to your email
         </p>
 
@@ -142,16 +142,16 @@ export default function OTPPage() {
           value={otp}
           onChange={handleChange}
           placeholder="Enter OTP"
-          className="w-full bg-[#111827] text-white text-center text-2xl tracking-[8px] font-bold 
+          className="w-full   text-center text-2xl tracking-[8px] font-bold 
           border border-slate-600 rounded-xl py-4 mb-6 
-          focus:border-orange-500 focus:ring-2 focus:ring-orange-500/30 outline-none"
+          focus:border-(--primary-color) focus:ring-2 focus:ring-(--primary-color)/30 outline-none"
         />
 
         {/* Verify Button */}
         <Button
           onClick={VerifyOTP}
           loading={loading}
-          className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl"
+          className="w-full  py-3 rounded-xl"
         >
           Verify OTP
         </Button>
@@ -161,7 +161,7 @@ export default function OTPPage() {
           Didn’t receive code?{" "}
           <button
             onClick={resendEmail}
-            className="text-orange-500 font-semibold hover:underline"
+            className="text-(--second-color) font-semibold hover:underline"
           >
             Resend OTP
           </button>

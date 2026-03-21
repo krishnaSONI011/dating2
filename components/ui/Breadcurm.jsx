@@ -16,14 +16,14 @@ export default function Breadcrumb() {
   const pathSegments = pathname.split("/").filter(x => x)
 
   return (
-    <div className="w-full bg-gradient-to-r from-[#0b1220] to-[#0e1a2f]">
+    <div className="w-full bg-(--website-background)">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-6">
 
         <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-sm sm:text-base md:text-lg lg:text-xl overflow-x-auto whitespace-nowrap">
 
           {/* Home */}
-          <Link href="/" className="text-gray-400 hover:text-orange-300 transition flex items-center">
+          <Link href="/" className="text-(--primary-color) hover:text-(--primary-color)/60 transition flex items-center">
             <FaHome className="text-base sm:text-lg md:text-xl lg:text-2xl" />
           </Link>
 
@@ -43,7 +43,7 @@ export default function Breadcrumb() {
                     {segment.replace(/-/g, " ")}
                   </span>
                 ) : (
-                  <Link href={redirectHref} className="text-gray-400 hover:text-orange-300 transition capitalize">
+                  <Link href={redirectHref} className="text-(--primary-color) hover:text-(--primary-color)/60 transition capitalize">
                     {segment.replace(/-/g, " ")}
                   </Link>
                 )}

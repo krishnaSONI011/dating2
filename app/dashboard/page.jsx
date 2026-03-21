@@ -50,7 +50,7 @@ export default function Dashboard() {
         {user?.is_verified === 1 && <AgeAlert />}
 
         {/* title */}
-        <h1 className="text-3xl font-bold text-(--webiste-text) mt-8 mb-6">
+        <h1 className="text-3xl font-bold text-(--second-color) mt-8 mb-6">
           Dashboard
         </h1>
         <ReusableModal open={open}>
@@ -88,12 +88,12 @@ export default function Dashboard() {
 
 function Card({ name, icon }) {
   return (
-    <div className="bg-slate-800 border border-(--content-border-color) rounded-2xl h-[180px] flex flex-col justify-center items-center shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-1 cursor-pointer">
-      <div className="text-4xl text-(--second-color) mb-3">
+    <div className="bg-(--website-background)/30 border border-(--primary-color) rounded-2xl h-[180px] flex flex-col justify-center items-center shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-1 cursor-pointer">
+      <div className="text-4xl text-(--primary-color) mb-3">
         {icon}
       </div>
 
-      <div className="text-xl font-semibold text-(--webiste-text)">
+      <div className="text-xl font-semibold text-(--primary-color)">
         {name}
       </div>
     </div>

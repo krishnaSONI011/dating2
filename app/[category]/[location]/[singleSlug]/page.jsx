@@ -122,7 +122,7 @@ export default function SingleAdPage() {
         <div className="lg:col-span-2 space-y-6">
 
           {/* IMAGE CARD */}
-          <div className="rounded-3xl border border-slate-600 p-4 sm:p-5">
+          <div className="rounded-3xl border border-(--primary-color) p-4 sm:p-5">
 
           <div className="relative">
 
@@ -169,12 +169,12 @@ export default function SingleAdPage() {
           {/* DETAILS */}
           <div className="text-white rounded-3xl border border-slate-700 p-5 sm:p-7">
 
-            <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-orange-300 mb-3">
+            <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-(--second-color) mb-3">
               {ad.title} - Escorts in {ad.city_name}
             </h1>
 
-            <p className="flex items-center gap-2 mb-6 text-sm sm:text-base">
-              <FaMapMarkerAlt className="text-orange-500" />
+            <p className="flex items-center gap-2 mb-6 text-sm sm:text-base text-(--text-color)">
+              <FaMapMarkerAlt className="text-(--primary-color)" />
               {ad.local_area_name} , {ad.city_name}
             </p>
 
@@ -188,8 +188,8 @@ export default function SingleAdPage() {
             </div>
 
             <div className="border-t pt-5">
-              <h3 className="font-semibold text-lg mb-2">About</h3>
-              <p className="leading-6 text-sm sm:text-[15px]">
+              <h3 className="font-semibold text-lg mb-2 text-(--second-color)">About</h3>
+              <p className="leading-6 text-(--text-color) text-sm sm:text-[15px]">
                 {ad.description}
               </p>
             </div>
@@ -200,7 +200,7 @@ export default function SingleAdPage() {
                 <div className="flex flex-wrap gap-2">
                   {services.map(s => (
                     <span key={s.id}
-                      className="bg-blue-950 border border-orange-400 px-3 py-1 rounded-full text-xs sm:text-sm">
+                      className="bg-(--website-text) text-(--text-color) border border-(--primary-color) px-3 py-1 rounded-full text-xs sm:text-sm">
                       {s.title} 
                     </span>
                   ))}
@@ -215,7 +215,7 @@ export default function SingleAdPage() {
         <div className="hidden lg:block lg:sticky lg:top-24 h-fit">
           <div className="rounded-3xl border border-slate-700 p-6">
             <WarningAlert />
-            <h3 className="text-xl font-bold mb-6 text-white">
+            <h3 className="text-xl font-bold mb-6 text-(--second-color)">
               Contact Information
             </h3>
 
@@ -301,9 +301,9 @@ export default function SingleAdPage() {
 
 function Info({ label, value }) {
   return (
-    <div className="bg-blue-950 p-3 rounded-lg text-xs sm:text-sm">
-      <p className="text-orange-300">{label}</p>
-      <p className="font-semibold">{value || "-"}</p>
+    <div className="bg-(--webiste-text) p-3 rounded-lg text-xs sm:text-sm">
+      <p className="text-(--second-color)">{label}</p>
+      <p className="font-semibol text-(text-color)">{value || "-"}</p>
     </div>
   )
 }

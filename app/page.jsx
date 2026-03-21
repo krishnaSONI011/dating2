@@ -58,6 +58,7 @@ export default function Home() {
 
   return (
     <>
+    
       <SearchSection
         title={homeData?.home_title1}
         banner={homeData?.home_banner}
@@ -73,12 +74,7 @@ export default function Home() {
   <div className="flex flex-col items-center">
 
     {/* icon circle */}
-    {/* <h1 className="text-5xl mb-5 font-semibold tracking-wide cursor-pointer">
-            Affair{" "}
-            <span className={`${playwrite.className} text-orange-600`}>
-              Escorts
-            </span>
-          </h1> */}
+   
           <div className="my-10 flex justify-center">
             <WebsiteLogo />
           </div>

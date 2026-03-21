@@ -80,9 +80,9 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-(--website-background) flex items-center justify-center px-4">
 
-      <div className="w-full max-w-md bg-[#0b1220] border border-slate-700 rounded-3xl shadow-2xl p-6 sm:p-8">
+      <div className="w-full max-w-md  border border-(--primary-color) rounded-3xl shadow-2xl p-6 sm:p-8">
 
         {/* Heading */}
         {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center text-white">
@@ -95,7 +95,7 @@ export default function ResetPassword() {
                   <WebsiteLogo />
                 </div>
 
-        <p className="text-gray-400 text-center mb-8 text-sm sm:text-base">
+        <p className="text-(--second-color) text-center mb-8 text-sm sm:text-base">
           Reset your password
         </p>
 
@@ -103,17 +103,17 @@ export default function ResetPassword() {
 
           {/* New Password */}
           <div>
-            <label className="text-sm font-medium text-gray-300">
+            <label className="text-sm font-medium ">
               New Password
             </label>
 
-            <div className="flex items-center bg-[#111827] border border-slate-600 rounded-lg mt-1 px-3 py-3 focus-within:border-orange-500 transition">
+            <div className="flex items-center  border border-(--primary-color) rounded-lg mt-1 px-3 py-3 focus-within:border-(--primary-color) transition">
               <FaLock className="text-gray-400 mr-3 text-sm" />
 
               <input
                 type={show ? "text" : "password"}
                 placeholder="Enter password"
-                className="w-full bg-transparent outline-none text-white placeholder-gray-500 text-sm"
+                className="w-full bg-transparent outline-none  placeholder-gray-500 text-sm"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -129,17 +129,17 @@ export default function ResetPassword() {
 
           {/* Confirm Password */}
           <div>
-            <label className="text-sm font-medium text-gray-300">
+            <label className="text-sm font-medium">
               Confirm Password
             </label>
 
-            <div className="flex items-center bg-[#111827] border border-slate-600 rounded-lg mt-1 px-3 py-3 focus-within:border-orange-500 transition">
+            <div className="flex items-center  border border-(--primary-color) rounded-lg mt-1 px-3 py-3 focus-within:border-(--primary-color) transition">
               <FaLock className="text-gray-400 mr-3 text-sm" />
 
               <input
                 type={show ? "text" : "password"}
                 placeholder="Confirm password"
-                className="w-full bg-transparent outline-none text-white placeholder-gray-500 text-sm"
+                className="w-full bg-transparent outline-none  placeholder-gray-500 text-sm"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -157,7 +157,7 @@ export default function ResetPassword() {
           <Button
             loading={loading}
             onClick={doLogin}
-            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl"
+            className="w-full   py-3 rounded-xl"
           >
             Reset Password
           </Button>

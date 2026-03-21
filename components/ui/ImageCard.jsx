@@ -24,7 +24,7 @@ export default function ImageCard({
       {/* Count Badge */}
       <div className="absolute top-3 right-3 md:top-5 md:right-5 z-20">
         <div className="
-          bg-orange-500 text-white 
+          bg-(--primary-color) text-white 
           text-xs md:text-sm 
           font-semibold 
           px-3 py-1.5 md:px-4 md:py-2 
@@ -55,14 +55,14 @@ export default function ImageCard({
             transition-all duration-500 ease-out
             
             flex items-center gap-2
-            bg-[#0f172a]/80 backdrop-blur-md
-            border border-orange-500/40
-            text-orange-400
+            bg-(--primary-color) backdrop-blur-md
+            border border-(--primary-color)
+            text-white
             text-sm md:text-base
             px-4 py-2 md:px-6 md:py-2.5
             rounded-full
             font-semibold
-            hover:bg-orange-500 hover:text-white
+            hover:bg-(--primary-color)/70 hover:text-white
             shadow-md
           ">
             View Call Girls
