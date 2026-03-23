@@ -19,7 +19,6 @@ export default function Setting() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  //  Mobile state
   const [countryCode, setCountryCode] = useState("+91")
   const [mobile, setMobile] = useState('')
 
@@ -33,26 +32,16 @@ export default function Setting() {
       toast.error("Please enter mobile number")
       return
     }
-
     try {
       setMobileLoading(true)
-
       const formData = new FormData()
-      //  Strip + from country code then concat
       formData.append("mobile", countryCode.replace('+', '') + mobile.trim())
-
       const res = await api.post("/Wb/update_mobile", formData)
 
       if (res.data.status === 0) {
         toast.success(res.data.message || "Mobile updated successfully")
-
-        // ✅ Update localStorage and AuthContext
-        const updatedUser = {
-          ...user,
-          mobile: countryCode.replace('+', '') + mobile.trim()
-        }
+        const updatedUser = { ...user, mobile: countryCode.replace('+', '') + mobile.trim() }
         login(updatedUser, token)
-
         setMobile('')
       } else {
         toast.error(res.data.message)
@@ -67,29 +56,23 @@ export default function Setting() {
 
   /* ================= CHANGE PASSWORD ================= */
   async function changePassword() {
-
     if (!currentPassword || !newPassword || !confirmPassword) {
       toast.error("All fields are required")
       return
     }
-
     if (newPassword.length < 6) {
       toast.error("Password must be at least 6 characters")
       return
     }
-
     if (newPassword !== confirmPassword) {
       toast.error("New password and confirm password do not match")
       return
     }
-
     try {
       setLoading(true)
-
       const formData = new FormData()
       formData.append("old_password", currentPassword)
       formData.append("new_password", newPassword)
-
       const res = await api.post("/Wb/change_password", formData)
 
       if (res.data.status === 0) {
@@ -109,35 +92,46 @@ export default function Setting() {
   }
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen p-4 md:p-6">
+      <div className="max-w-4xl mx-auto space-y-6">
 
         {/* ===== PROFILE INFO ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">Profile Information</h2>
+        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">Profile Information</h2>
           {user ? (
             <div className="space-y-3 text-white">
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Phone:</strong> {user.mobile}</p>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                <span className="font-semibold text-gray-400 sm:w-20">Name</span>
+                <span>{user.name}</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                <span className="font-semibold text-gray-400 sm:w-20">Email</span>
+                <span className="break-all">{user.email}</span>
+              </div>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                <span className="font-semibold text-gray-400 sm:w-20">Phone</span>
+                <span>{user.mobile}</span>
+              </div>
             </div>
           ) : (
-            <p>Loading profile...</p>
+            <p className="text-gray-400">Loading profile...</p>
           )}
         </div>
 
         {/* ===== CHANGE MOBILE ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">Change Mobile</h2>
+        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">Change Mobile</h2>
 
           <div className="space-y-4">
-            <div className="flex items-center border border-gray-700 rounded-lg bg-slate-900 overflow-hidden">
 
-              {/*  Country code — now controlled */}
+            {/* ✅ Fixed: flex-col on mobile, flex-row on sm+ */}
+            <div className="flex flex-col sm:flex-row gap-3">
+
+              {/* ✅ Country code — fixed width, doesn't shrink */}
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                className="bg-slate-900 text-white px-3 py-3 outline-none border-r border-gray-700 appearance-none"
+                className="bg-slate-800 text-white px-3 py-3 outline-none border border-gray-700 rounded-lg appearance-none w-full sm:w-48 flex-shrink-0"
               >
                 {countryCodes.map((country, index) => (
                   <option key={index} value={country.code}>
@@ -146,19 +140,21 @@ export default function Setting() {
                 ))}
               </select>
 
+              {/* ✅ Phone input — takes remaining space */}
               <input
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
                 type="text"
                 placeholder="Enter Mobile Number"
-                className="w-full bg-slate-900 text-white py-3 px-3 outline-none"
+                className="flex-1 w-full bg-slate-800 border border-gray-700 text-white py-3 px-4 rounded-lg outline-none focus:border-orange-500"
               />
+
             </div>
 
-            {/*  Shows what number will be saved */}
+            {/* Preview */}
             {mobile && (
               <p className="text-xs text-gray-400">
-                Will save as: <span className="text-orange-400">{countryCode.replace('+', '')}{mobile}</span>
+               
               </p>
             )}
 
@@ -169,55 +165,50 @@ export default function Setting() {
         </div>
 
         {/* ===== CHANGE PASSWORD ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">Change Password</h2>
 
           <div className="space-y-4">
 
-            <div>
-              <label className="text-sm text-white font-medium">Current Password</label>
-              <div className="flex items-center border rounded-lg px-3 py-2 mt-1">
-                <input
-                  type={showCurrent ? "text" : "password"}
-                  className="w-full outline-none bg-transparent"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                />
-                <span onClick={() => setShowCurrent(!showCurrent)} className="cursor-pointer text-gray-500">
-                  {showCurrent ? <FaEyeSlash /> : <FaEye />}
-                </span>
+            {[
+              {
+                label: "Current Password",
+                value: currentPassword,
+                setter: setCurrentPassword,
+                show: showCurrent,
+                toggle: () => setShowCurrent(!showCurrent),
+              },
+              {
+                label: "New Password",
+                value: newPassword,
+                setter: setNewPassword,
+                show: showNew,
+                toggle: () => setShowNew(!showNew),
+              },
+              {
+                label: "Confirm Password",
+                value: confirmPassword,
+                setter: setConfirmPassword,
+                show: showConfirm,
+                toggle: () => setShowConfirm(!showConfirm),
+              },
+            ].map(({ label, value, setter, show, toggle }) => (
+              <div key={label}>
+                <label className="text-sm font-medium text-gray-300">{label}</label>
+                <div className="flex items-center border border-gray-700 rounded-lg px-3 py-2 mt-1 bg-slate-800 focus-within:border-orange-500">
+                  <input
+                    type={show ? "text" : "password"}
+                    className="w-full outline-none bg-transparent text-white"
+                    value={value}
+                    onChange={(e) => setter(e.target.value)}
+                    placeholder={label}
+                  />
+                  <span onClick={toggle} className="cursor-pointer text-gray-400 hover:text-white ml-2 flex-shrink-0">
+                    {show ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                </div>
               </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">New Password</label>
-              <div className="flex items-center border rounded-lg px-3 py-2 mt-1">
-                <input
-                  type={showNew ? "text" : "password"}
-                  className="w-full outline-none bg-transparent"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <span onClick={() => setShowNew(!showNew)} className="cursor-pointer text-gray-500">
-                  {showNew ? <FaEyeSlash /> : <FaEye />}
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Confirm Password</label>
-              <div className="flex items-center border rounded-lg px-3 py-2 mt-1">
-                <input
-                  type={showConfirm ? "text" : "password"}
-                  className="w-full outline-none bg-transparent"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <span onClick={() => setShowConfirm(!showConfirm)} className="cursor-pointer text-gray-500">
-                  {showConfirm ? <FaEyeSlash /> : <FaEye />}
-                </span>
-              </div>
-            </div>
+            ))}
 
             <Button loading={loading} onClick={changePassword}>
               Update Password

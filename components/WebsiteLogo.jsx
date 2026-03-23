@@ -8,7 +8,7 @@ export default function WebsiteLogo({ width = 200 }) {
   const { themeData } = useContext(ThemeContext)
 
   const logo = themeData?.logo || ""
-  const title = themeData?.website_title || "Website"
+  const title = themeData?.title || "Website"
 
   return (
     <div className="flex items-center">

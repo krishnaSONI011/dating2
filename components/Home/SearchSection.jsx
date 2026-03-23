@@ -91,7 +91,7 @@ export default function SearchSection({ title, banner, subtitle }) {
         alt="bg"
         className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="absolute inset-0 bg-black/20"></div>
   
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center w-full">
   

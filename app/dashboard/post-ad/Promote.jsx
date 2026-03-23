@@ -331,10 +331,12 @@ Please share payment details.`
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           {[
-            { id: "night",     label: "Night",     from: "23:59:59", to: "06:00:00", display: "23:59 - 06:00", priceKey: "slot1" },
+           
             { id: "morning",   label: "Morning",   from: "06:00:01", to: "12:00:00", display: "06:00 - 12:00", priceKey: "slot2" },
+            
             { id: "afternoon", label: "Afternoon", from: "12:00:01", to: "18:00:00", display: "12:00 - 18:00", priceKey: "slot3" },
             { id: "evening",   label: "Evening",   from: "18:00:01", to: "23:59:58", display: "18:00 - 23:59", priceKey: "slot4" },
+            { id: "night",     label: "Night",     from: "23:59:59", to: "06:00:00", display: "23:59 - 06:00", priceKey: "slot1" },
           ].map(slot => (
             <button
               key={slot.id}
@@ -605,7 +607,7 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
             </span>
           )}
         </div>
-        <p className="text-(--webiste-text) text-sm mb-2">{desc}</p>
+        <p className="text-sm mb-2">{desc}</p>
         {highlightAll && (
           <div className="flex gap-2 mb-2">
             <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Super</span>

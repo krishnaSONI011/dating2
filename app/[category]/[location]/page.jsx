@@ -147,7 +147,7 @@ export default function Search() {
             />
           </div>
 
-          <div className="mx-5 mt-10">
+          <div className="mx-5 mt-10 hidden md:block">
             <PopularArea areas={city} slug={slug} is_category_page_area={true} />
           </div>
 

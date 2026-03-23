@@ -2,44 +2,51 @@ import BlogDetailClient from "./BlogDetailClient"
 
 export async function generateMetadata({ params }) {
 
-  const slug = params.slug
+  // ✅ Fixed: await params first
+  const { slug } = await params
 
   try {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Wb/blogs_detail`, {
+    const fd = new FormData()
+    fd.append("slug", slug)
+
+    const res = await fetch(`https://irisinformatics.net/dating/Wb/blogs_detail`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ slug }),
-      cache: "no-store"
+      body: fd,
+      cache: "no-store",
     })
 
-    const data = await res.json()
-    const blog = data.data
+    const json = await res.json()
+    const blog = json?.data
 
     return {
-      title: blog.meta_title || blog.title,
-      description: blog.meta_description || blog.description?.slice(0, 150),
+      title:       blog?.meta_title       || blog?.title        || "Blog",
+      description: blog?.meta_description || "",
+      keywords:    blog?.keyword          || "",
 
       openGraph: {
-        title: blog.meta_title || blog.title,
-        description: blog.meta_description,
-        images: [
-          {
-            url: blog.img
-          }
-        ]
-      }
+        title:       blog?.meta_title       || blog?.title || "Blog",
+        description: blog?.meta_description || "",
+        images: blog?.img
+          ? [{ url: blog.img, alt: blog?.title || "Blog Image" }]
+          : [],
+        type: "article",
+      },
+
+      twitter: {
+        card:        "summary_large_image",
+        title:       blog?.meta_title       || blog?.title || "Blog",
+        description: blog?.meta_description || "",
+        images:      blog?.img ? [blog.img] : [],
+      },
     }
 
   } catch (error) {
-
+    console.log("Blog metadata error:", error)
     return {
       title: "Blog",
-      description: "Blog detail page"
+      description: "Blog detail page",
     }
-
   }
 }
 
