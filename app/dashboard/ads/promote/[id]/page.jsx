@@ -384,7 +384,7 @@ export default function Promote({ prevStep, form, images }) {
   )
 }
 
-// ✅ locked prop added
+
 function StandCard({ title, desc, price, active, setActive, highlightAll = false, locked = false }) {
   return (
     <div className={`border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center

@@ -52,6 +52,7 @@ export default function EditAdinformation() {
     const [services, setServices] = useState([])
     const [images, setImages] = useState([])
     const [contactType, setContactType] = useState("phone")
+    const [loading , setLoading] = useState(false)
 
     const handleChange = (e) => {
         setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -217,6 +218,7 @@ export default function EditAdinformation() {
     /* ================= SAVE ================= */
     async function handleSave() {
         try {
+            setLoading(true)
             const fd = new FormData()
 
             const localAreaId = (() => {
@@ -274,6 +276,8 @@ export default function EditAdinformation() {
         } catch (err) {
             console.log(err)
             toast.error("Something went wrong")
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -617,7 +621,7 @@ export default function EditAdinformation() {
                 </div>
 
                 <div className="flex justify-end mt-8">
-                    <Button onClick={handleSave}>
+                    <Button loading={loading} onClick={handleSave}>
                         Save Changes
                     </Button>
                 </div>
