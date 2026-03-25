@@ -118,6 +118,13 @@ export default function Promote({ prevStep, form, images }) {
     setSuperTop(newVal)
     setHighlight(newVal)
     setTagNew(newVal)
+
+    // ✅ If All in One selected, auto select 3 boost when Super Top is included
+    if (newVal) {
+      setBoost(3)
+    } else {
+      setBoost(null)
+    }
   }
 
   async function publishWithMoney() {
@@ -161,6 +168,19 @@ export default function Promote({ prevStep, form, images }) {
     if (superTop && highlight && tagNew) setAllInOne(true)
     else setAllInOne(false)
   }, [superTop, highlight, tagNew])
+
+  // ✅ NEW CONDITION:
+  // If Super Top is selected, auto select 3 Boost
+  // If Super Top is unselected and boost is 3, remove it
+  useEffect(() => {
+    if (superTop && !boost) {
+      setBoost(3)
+    }
+
+    if (!superTop && boost === 3 && !timeSlot) {
+      setBoost(null)
+    }
+  }, [superTop])
 
   return (
     <div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -274,7 +294,17 @@ export default function Promote({ prevStep, form, images }) {
           price={`${pricing.superTop} Coins`}
           active={superTop}
           locked={!!boost}
-          setActive={(val) => { if (boost) return; setSuperTop(val) }}
+          setActive={(val) => {
+            if (boost) return
+            setSuperTop(val)
+
+            // ✅ NEW CONDITION: Auto select 3 boost if Super Top is selected
+            if (val) {
+              setBoost(3)
+            } else if (boost === 3) {
+              setBoost(null)
+            }
+          }}
         />
         <StandCard
           title="Highlight"
@@ -399,7 +429,7 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
             </span>
           )}
         </div>
-        <p className="text-(--webiste-text) text-sm mb-2">{desc}</p>
+        <p className=" text-sm mb-2">{desc}</p>
         {highlightAll && (
           <div className="flex gap-2 mb-2">
             <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Super</span>
@@ -422,7 +452,7 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
           className={`bg-white w-8 h-8 rounded-full shadow-md transform transition flex items-center justify-center text-xs font-bold
           ${locked
             ? "translate-x-10 text-orange-500"
-            : active ? "translate-x-10 text-red-600" : "text-gray-500"
+            : active ? "translate-x-10 text-red-600" : ""
           }`}
         >
           {locked ? "ON" : active ? "YES" : "NO"}

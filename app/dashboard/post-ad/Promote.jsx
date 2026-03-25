@@ -215,10 +215,10 @@ Please share payment details.`
 
   async function publishWithMoney() {
     //  Fixed: only require slot+days+boost if user chose a slot
-    if (timeSlot && (!days || !boost)) {
-      return toast.error("Please select days and boost count for the time slot")
-    }
-    if (!canPublish) return toast.error("Please select at least one promotion option")
+    // if (timeSlot && (!days || !boost)) {
+    //   return toast.error("Please select days and boost count for the time slot")
+    // }
+    // if (!canPublish) return toast.error("Please select at least one promotion option")
     if (balance < total) return toast.error("Insufficient balance")
 
     try {
