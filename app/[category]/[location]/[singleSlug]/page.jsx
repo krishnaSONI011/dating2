@@ -167,7 +167,7 @@ export default function SingleAdPage() {
           </div>
 
           {/* DETAILS */}
-          <div className="text-white rounded-3xl border border-slate-700 p-5 sm:p-7">
+          <div className=" rounded-3xl border border-slate-700 p-5 sm:p-7">
 
             <h1 className="text-xl sm:text-2xl lg:text-2xl font-bold text-(--second-color) mb-3">
               {ad.title} - Escorts in {ad.city_name}

@@ -10,7 +10,9 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 720,
   maxWidth: "95%",
-  background: "#111827",
+  background: "var(--website-background)", // ✅ dynamic color
+  color: "var(--text-color)", // optional
+  border: "2px solid var(--content-border-color)", // optional
   borderRadius: "22px",
   boxShadow: 24,
   padding: "60px 40px",
@@ -18,7 +20,6 @@ const style = {
 };
 
 export default function ReusableModal({ open, children }) {
-
   return (
     <Modal
       open={open}

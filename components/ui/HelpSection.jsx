@@ -36,15 +36,15 @@ export default function HelpSupport() {
 
   return (
     <div className="w-full bg-(--website-background) p-6">
-      <div className="max-w-5xl mx-auto bg-slate-900 border border-(--content-border-color) rounded-2xl p-6 shadow-sm">
+      <div className="max-w-5xl mx-auto  border border-(--content-border-color) rounded-2xl p-6 shadow-sm">
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">
-          <FaHeadset className="text-white text-xl" />
-          <h2 className="text-xl font-semibold text-white">Need help?</h2>
+          <FaHeadset className=" text-xl" />
+          <h2 className="text-xl font-semibold ">Need help?</h2>
         </div>
 
-        <p className="text-white mb-6">
+        <p className=" mb-6">
           Contact us Monday to Friday, 9:00 am to 4:00 pm.
         </p>
 
@@ -57,7 +57,7 @@ export default function HelpSupport() {
               href={`https://wa.me/${contact.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white font-medium hover:scale-105 transition"
+              className="flex items-center gap-2  font-medium hover:scale-105 transition"
             >
               <FaWhatsapp className="text-xl" />
               WhatsApp
@@ -70,7 +70,7 @@ export default function HelpSupport() {
               href={`https://t.me/${contact.telegram}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white font-medium hover:scale-105 transition"
+              className="flex items-center gap-2 font-medium hover:scale-105 transition"
             >
               <FaTelegramPlane className="text-xl" />
               Telegram
@@ -81,7 +81,7 @@ export default function HelpSupport() {
           {contact?.is_email === "1" && (
             <a
               href={`mailto:${contact.email}`}
-              className="flex items-center gap-2 text-white font-medium hover:scale-105 transition"
+              className="flex items-center gap-2  font-medium hover:scale-105 transition"
             >
               <FaEnvelope className="text-xl" />
               Email

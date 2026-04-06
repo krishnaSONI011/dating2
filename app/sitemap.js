@@ -1,7 +1,7 @@
 export default async function sitemap() {
 
   const baseUrl = "https://affairescorts.com";
-  const apiBase = "https://irisinformatics.net/dating/Wb";
+  const apiBase = "https://api.olyvva.com/Wb";
 
   /* ================= HELPER ================= */
   async function fetchData(endpoint, body = null) {

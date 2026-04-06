@@ -132,7 +132,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 <h1 className="text-lg md:text-3xl font-bold my-10">Information</h1>
 
                 {/* ===== LOCATION ===== */}
-                <div className="bg-slate-800 rounded border border-(--content-border-color) p-3">
+                <div className=" rounded border border-(--primary-color) p-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                         <div>
@@ -141,7 +141,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="cat_id"
                                 value={form.cat_id}
                                 onChange={handleChange}
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             >
                                 <option value="">Choose Category</option>
                                 {category.map((c) => (
@@ -156,7 +156,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="city"
                                 value={form.city}
                                 onChange={handleChange}
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full  rounded p-2 mt-2"
                             >
                                 <option value="">Choose City</option>
                                 {city.map((c) => (
@@ -171,7 +171,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="local_area"
                                 value={form.local_area}
                                 onChange={handleChange}
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             >
                                 <option value="">Choose Area</option>
                                 {local.map((c) => (
@@ -187,7 +187,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.address}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             />
                         </div>
 
@@ -195,7 +195,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 </div>
 
                 {/* ===== BASIC INFO ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
+                <div className=" mt-10 rounded border border-(--primary-color) p-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                         <div>
@@ -205,7 +205,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.age}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             />
                         </div>
 
@@ -216,7 +216,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 value={form.nick_name}
                                 onChange={handleChange}
                                 type="text"
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             />
                         </div>
 
@@ -228,7 +228,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 <label className="font-bold text-xl">* Title</label>
                                 <button
                                     onClick={generateTitle}
-                                    className="bg-orange-500/70 p-2 rounded text-white cursor-pointer hover:bg-orange-500"
+                                    className="bg-orange-500/70 p-2 rounded  cursor-pointer hover:bg-orange-500"
                                 >
                                     Generate the title
                                 </button>
@@ -237,7 +237,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="title"
                                 value={form.title}
                                 onChange={handleChange}
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full rounded p-2 mt-2"
                             />
                         </div>
 
@@ -247,14 +247,14 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="description"
                                 value={form.description}
                                 onChange={handleChange}
-                                className="border w-full bg-slate-900 rounded p-2 mt-2"
+                                className="border w-full  rounded p-2 mt-2"
                             />
                         </div>
                     </div>
                 </div>
 
                 {/* ===== PROFILE ATTRIBUTES ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
+                <div className=" mt-10 rounded border border-(--content-border-color) p-3">
                     <h2 className="text-2xl font-bold mb-6">Profile Attributes</h2>
 
                     <TagGroup
@@ -269,7 +269,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             Nationality
                         </label>
                         <select
-                            className="w-full p-2 bg-slate-900 border rounded"
+                            className="w-full p-2  border rounded"
                             name="nationality"
                             value={form.nationality}
                             onChange={handleChange}
@@ -303,7 +303,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 </div>
 
                 {/* ===== SERVICES ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-5">
+                <div className=" mt-10 rounded border border-(--content-border-color) p-5">
                     <h2 className="text-2xl font-bold mb-1">Services</h2>
 
                     {services.map(service => (
@@ -322,7 +322,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                             className={`px-5 py-2 rounded-full border text-sm font-medium transition
                                                 ${active
                                                     ? "border-red-500 text-red-600 bg-red-50"
-                                                    : "border-gray-300 bg-slate-900 hover:border-gray-400"
+                                                    : "border-gray-300  hover:border-gray-400"
                                                 }`}
                                         >
                                             {active && "✕ "}{sub.title}
@@ -338,7 +338,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 <ImageUploader images={images} setImages={setImages} />
 
                 {/* ===== CONTACTS ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-4">
+                <div className=" mt-10 rounded border border-(--second-color) p-4">
 
                     <div className="flex justify-between mb-4">
                         <h2 className="text-2xl font-bold">Your contacts</h2>
@@ -362,7 +362,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 className={`border rounded-lg py-3 font-semibold transition
                                     ${contactType === key
                                         ? "border-red-500 bg-red-50 text-red-600"
-                                        : "border-gray-300 bg-slate-900"
+                                        : "border-gray-300 "
                                     }`}
                             >
                                 {label}
@@ -376,13 +376,13 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             <label className="font-semibold text-(--second-color) block mb-2">
                                 Email address
                             </label>
-                            <div className="flex items-center border rounded-lg bg-slate-900 px-3">
+                            <div className="flex items-center border rounded-lg  px-3">
                                 <FaEnvelope className="text-(--second-color) mr-2" />
                                 <input
                                     type="email"
                                     value={email}
                                     readOnly
-                                    className="w-full bg-slate-900 py-3 outline-none"
+                                    className="w-full  py-3 outline-none"
                                     placeholder="Enter email"
                                 />
                             </div>
@@ -396,14 +396,14 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             <label className="font-semibold text-(--second-color) block mb-2">
                                 Mobile Contact <span className="text-red-500 text-xs">(enter without country code ex : +91)</span>
                             </label>
-                            <div className="flex items-center border border-gray-700 rounded-lg bg-slate-900 overflow-hidden">
+                            <div className="flex items-center border border-gray-700 rounded-lg  overflow-hidden">
 
                                 {/* ✅ Country code dropdown */}
                                 <select
                                     name="country_code"
                                     value={form.country_code}
                                     onChange={handleChange}
-                                    className="bg-slate-900 text-white px-3 py-3 outline-none border-r border-gray-700 appearance-none"
+                                    className="  px-3 py-3 outline-none border-r border-gray-700 appearance-none"
                                 >
                                     {countryCodes.map((country, index) => (
                                         <option key={index} value={country.code}>
@@ -419,7 +419,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                     onChange={handlePhoneChange}
                                     type="text"
                                     placeholder="Enter Mobile Number"
-                                    className="w-full bg-slate-900 text-white py-3 px-3 outline-none"
+                                    className="w-full   py-3 px-3 outline-none"
                                 />
                             </div>
                         </div>
@@ -436,7 +436,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             onChange={handleChange}
                             type="text"
                             placeholder="Enter Telegram User ID"
-                            className="w-full bg-slate-900 border border-gray-700 text-white py-3 px-3 rounded-lg outline-none"
+                            className="w-full  border border-gray-700  py-3 px-3 rounded-lg outline-none"
                         />
                     </div>
 
@@ -448,7 +448,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
                                 ${form.is_whatsapp
                                     ? "border-green-500 bg-green-50 text-green-600"
-                                    : "border-gray-300 bg-slate-900"
+                                    : "border-gray-300 "
                                 }`}
                         >
                             <FaWhatsapp /> WhatsApp
@@ -460,7 +460,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                             className={`flex items-center gap-2 border px-4 py-2 rounded-lg transition
                                 ${form.is_telegram
                                     ? "border-blue-500 bg-blue-50 text-blue-600"
-                                    : "border-gray-300 bg-slate-900"
+                                    : "border-gray-300 "
                                 }`}
                         >
                             <FaTelegram /> Telegram
@@ -482,7 +482,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
 function TagGroup({ title, options, value, setValue }) {
     return (
         <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">{title}</h3>
+            <h3 className="font-semibold text-lg mb-3 ">{title}</h3>
             <div className="flex flex-wrap gap-3">
                 {options.map((opt) => (
                     <button
@@ -492,7 +492,7 @@ function TagGroup({ title, options, value, setValue }) {
                         className={`px-5 py-2 rounded border text-sm font-medium transition
                             ${value === opt
                                 ? "border-red-500 text-red-600 bg-red-50"
-                                : "border-gray-300 text-(--website-text) hover:border-gray-400 bg-slate-900"
+                                : "border-gray-300 text-(--website-text) hover:border-gray-400 "
                             }`}
                     >
                         {value === opt && "✕ "}{opt}

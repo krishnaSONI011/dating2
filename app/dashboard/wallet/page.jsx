@@ -141,19 +141,19 @@ Please confirm payment details.`
   }
 
   return (
-    <div className="min-h-screen bg-gray-950 px-4 py-10 flex justify-center">
+    <div className="min-h-screen bg-(--website-background) px-4 py-10 flex justify-center">
       <div className="w-full max-w-5xl space-y-8">
 
         {/* ================= WALLET CARD ================= */}
-        <div className="bg-slate-900 border border-orange-600 rounded-2xl p-6 sm:p-8">
+        <div className="bg-(--website-background) border border-(--primary-color) rounded-2xl p-6 sm:p-8">
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-white text-center mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold  text-center mb-6">
             Wallet
           </h1>
 
-          <div className="bg-black border border-orange-600 rounded-xl p-6 text-center mb-8">
+          <div className=" border border-(--primary-color) rounded-xl p-6 text-center mb-8">
             <p className="text-gray-400 text-sm">Current Balance</p>
-            <h2 className="text-3xl font-bold text-orange-500 mt-2">
+            <h2 className="text-3xl font-bold text-(--second-color) mt-2">
               {balance} Coins
             </h2>
           </div>
@@ -164,18 +164,18 @@ Please confirm payment details.`
             <div className="space-y-4">
 
               <div>
-                <label className="text-sm text-gray-400">Enter Coins</label>
+                <label className="text-sm ">Enter Coins</label>
                 <input
                   type="number"
                   value={coins}
                   onChange={handleCoinsChange}
-                  className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-4 py-3 mt-1 focus:border-orange-500 outline-none"
+                  className="w-full  border border-(--primary-color)  rounded-lg px-4 py-3 mt-1 focus:border-(--primary-color) outline-none"
                 />
               </div>
 
               {/* ✅ Selected plan badge with Clear button */}
               {selectedPlan && (
-                <div className="bg-orange-950 border border-orange-600 rounded-lg px-4 py-2 text-sm text-orange-300 flex items-center justify-between">
+                <div className=" border border-(--primary-color) rounded-lg px-4 py-2 text-sm text-orange-300 flex items-center justify-between">
                   <span>Plan: <span className="font-semibold">{selectedPlan.title}</span></span>
                   <button
                     onClick={handleClearPlan}
@@ -186,11 +186,11 @@ Please confirm payment details.`
                 </div>
               )}
 
-              <div className="bg-gray-800 rounded-xl p-5 text-center">
-                <p className="text-gray-400 text-sm">
+              <div className=" rounded-xl p-5 text-center">
+                <p className=" text-sm">
                   {selectedPlan ? "Plan Price" : `1 Coin = ₹${pricePerCoin}`}
                 </p>
-                <p className="text-lg font-semibold mt-2 text-orange-400">
+                <p className="text-lg font-semibold mt-2 text-(--primary-color)">
                   Total: ₹{total}
                 </p>
               </div>
@@ -237,9 +237,9 @@ Please confirm payment details.`
 
             {/* RIGHT SIDE - PAYMENT INFO */}
             {payment && (
-              <div className="bg-gray-900 border border-gray-700 rounded-xl p-6 space-y-5">
+              <div className=" border border-gray-700 rounded-xl p-6 space-y-5">
 
-                <h2 className="text-xl font-semibold text-orange-500 mb-4">
+                <h2 className="text-xl font-semibold text-(--primary-color) mb-4">
                   Payment Information
                 </h2>
 
@@ -248,22 +248,22 @@ Please confirm payment details.`
                     <img
                       src={payment.qr}
                       alt="QR"
-                      className="w-40 h-40 object-contain rounded-lg border border-gray-700"
+                      className="w-40 h-40 object-contain rounded-lg border border-(--primary-color)"
                     />
                   </div>
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                  <div className="bg-gray-800 p-4 rounded-lg">
-                    <p className="text-gray-400">UPI ID</p>
+                  <div className=" p-4 rounded-lg border border-(--primary-color)">
+                    <p className="">UPI ID</p>
                     <p className="font-semibold break-all">{payment.upi}</p>
                   </div>
-                  <div className="bg-gray-800 p-4 rounded-lg">
-                    <p className="text-gray-400">IFSC</p>
+                  <div className="border border-(--primary-color) p-4 rounded-lg">
+                    <p className="">IFSC</p>
                     <p className="font-semibold">{payment.ifsc}</p>
                   </div>
-                  <div className="bg-gray-800 p-4 rounded-lg sm:col-span-2">
-                    <p className="text-gray-400">Account Number</p>
+                  <div className="border border-(--primary-color) p-4 rounded-lg sm:col-span-2">
+                    <p className="">Account Number</p>
                     <p className="font-semibold break-all">{payment.account_no}</p>
                   </div>
                 </div>
@@ -276,9 +276,9 @@ Please confirm payment details.`
 
         {/* ================= PRICING PLANS ================= */}
         {plans.length > 0 && (
-          <div className="bg-slate-900 border border-orange-600 rounded-2xl p-6 sm:p-8">
+          <div className=" border border-(--primary-color) rounded-2xl p-6 sm:p-8">
 
-            <h2 className="text-2xl font-bold text-white text-center mb-6">
+            <h2 className="text-2xl font-bold  text-center mb-6">
               Choose a Plan
             </h2>
 
@@ -289,12 +289,12 @@ Please confirm payment details.`
                   onClick={() => handleSelectPlan(plan)}
                   className={`cursor-pointer rounded-xl border p-5 space-y-3 transition hover:border-orange-500 hover:shadow-lg hover:shadow-orange-900/30
                     ${selectedPlan?.id === plan.id
-                      ? "border-orange-500 bg-orange-950"
-                      : "border-gray-700 bg-gray-900"
+                      ? "border-(--primary-color) "
+                      : "border-gray-700 "
                     }`}
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-white font-semibold text-lg">{plan.title}</h3>
+                    <h3 className=" font-semibold text-lg">{plan.title}</h3>
                     {selectedPlan?.id === plan.id && (
                       <span className="text-xs bg-orange-600 text-white px-2 py-0.5 rounded-full">
                         Selected

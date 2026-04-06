@@ -10,7 +10,7 @@ export async function generateMetadata({ params }) {
     const fd = new FormData()
     fd.append("slug", slug)
 
-    const res = await fetch(`https://irisinformatics.net/dating/Wb/blogs_detail`, {
+    const res = await fetch(`https://api.olyvva.com/Wb/blogs_detail`, {
       method: "POST",
       body: fd,
       cache: "no-store",

@@ -96,10 +96,10 @@ export default function Setting() {
       <div className="max-w-4xl mx-auto space-y-6">
 
         {/* ===== PROFILE INFO ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+        <div className=" rounded-2xl shadow p-5 md:p-6">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Profile Information</h2>
           {user ? (
-            <div className="space-y-3 text-white">
+            <div className="space-y-3 ">
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
                 <span className="font-semibold text-gray-400 sm:w-20">Name</span>
                 <span>{user.name}</span>
@@ -119,7 +119,7 @@ export default function Setting() {
         </div>
 
         {/* ===== CHANGE MOBILE ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+        <div className="rounded-2xl shadow p-5 md:p-6">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Change Mobile</h2>
 
           <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function Setting() {
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                className="bg-slate-800 text-white px-3 py-3 outline-none border border-gray-700 rounded-lg appearance-none w-full sm:w-48 flex-shrink-0"
+                className=" px-3 py-3 outline-none border border-(--primary-color) rounded-lg appearance-none w-full sm:w-48 flex-shrink-0"
               >
                 {countryCodes.map((country, index) => (
                   <option key={index} value={country.code}>
@@ -146,7 +146,7 @@ export default function Setting() {
                 onChange={(e) => setMobile(e.target.value)}
                 type="text"
                 placeholder="Enter Mobile Number"
-                className="flex-1 w-full bg-slate-800 border border-gray-700 text-white py-3 px-4 rounded-lg outline-none focus:border-orange-500"
+                className="flex-1 w-full  border border-(--primary-color)  py-3 px-4 rounded-lg outline-none focus:border-orange-500"
               />
 
             </div>
@@ -165,7 +165,7 @@ export default function Setting() {
         </div>
 
         {/* ===== CHANGE PASSWORD ===== */}
-        <div className="bg-slate-900 rounded-2xl shadow p-5 md:p-6">
+        <div className=" rounded-2xl shadow p-5 md:p-6">
           <h2 className="text-xl md:text-2xl font-bold mb-4">Change Password</h2>
 
           <div className="space-y-4">
@@ -195,10 +195,10 @@ export default function Setting() {
             ].map(({ label, value, setter, show, toggle }) => (
               <div key={label}>
                 <label className="text-sm font-medium text-gray-300">{label}</label>
-                <div className="flex items-center border border-gray-700 rounded-lg px-3 py-2 mt-1 bg-slate-800 focus-within:border-orange-500">
+                <div className="flex items-center border border-gray-700 rounded-lg px-3 py-2 mt-1  focus-within:border-orange-500">
                   <input
                     type={show ? "text" : "password"}
-                    className="w-full outline-none bg-transparent text-white"
+                    className="w-full outline-none bg-transparent "
                     value={value}
                     onChange={(e) => setter(e.target.value)}
                     placeholder={label}

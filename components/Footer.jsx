@@ -72,7 +72,7 @@ useEffect(() => {
   getLegalPages()
 }, [])
   return (
-    <footer className="w-full bg-(--footer-color) text-gray-300 pt-16 pb-10 border-t border-gray-800">
+    <footer className="w-full bg-(--nabvar-color)  pt-16 pb-10 border-t border-gray-800">
 
       <div className="max-w-7xl mx-auto px-6">
 
@@ -86,7 +86,7 @@ useEffect(() => {
 
             {/* adult badge */}
             <div className="mb-4">
-              <span className="inline-block border border-gray-700 bg-[#0b0c12] px-4 py-2 rounded-lg text-xs font-semibold text-gray-300">
+              <span className="inline-block border border-gray-700  px-4 py-2 rounded-lg text-xs font-semibold ">
                 RESTRICTED TO ADULTS
               </span>
             </div>
@@ -125,7 +125,7 @@ useEffect(() => {
           </div>
 
           {/* About (Dynamic Description) */}
-          <p className="text-gray-400 leading-relaxed max-w-xl">
+          <p className=" leading-relaxed max-w-xl">
             {footerData?.description ||
               "Premium advertising platform for verified independent listings. We connect service providers with clients in a secure and professional environment."
             }
@@ -142,13 +142,13 @@ useEffect(() => {
 
 {legalPages.map((cat) => (
   <div key={cat.category_id}>
-    <h3 className="text-white font-semibold mb-4">
+    <h3 className="text-(--second-color) font-semibold mb-4">
       {cat.category_name.toUpperCase()}
     </h3>
 
-    <ul className="space-y-2 text-gray-400">
+    <ul className="space-y-2 ">
       {cat.pages.map((page) => (
-        <li key={page.id} className="hover:text-orange-300 cursor-pointer">
+        <li key={page.id} className="hover:text-(--primary-color) cursor-pointer">
           <Link href={`/${page.slug}`}>
             {page.title}
           </Link>
@@ -161,10 +161,10 @@ useEffect(() => {
 </div>
 
         {/* ===== BOTTOM CARD ===== */}
-        <div className="mt-14 bg-gradient-to-r from-[#0c0d14] to-[#11121a] border border-gray-800 rounded-2xl p-6 grid md:grid-cols-2 gap-6 items-center">
+        <div className="mt-14  border border-gray-800 rounded-2xl p-6 grid md:grid-cols-2 gap-6 items-center">
 
           <div>
-            <h3 className="text-white font-semibold mb-3">GROW YOUR BUSINESS</h3>
+            <h3 className=" font-semibold mb-3">GROW YOUR BUSINESS</h3>
             <Button>POST YOUR ADS</Button>
           </div>
 
@@ -172,7 +172,7 @@ useEffect(() => {
             <h3 className="text-white font-semibold mb-3">QUICK LOCATION ACCESS</h3>
             <select
               onChange={(e)=>{router.push(`/escort/${e.target.value}`)}}
-              className="w-full bg-black border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-orange-300"
+              className="w-full  border border-gray-700 rounded-xl px-4 py-3 outline-none focus:border-(--primary-color)"
             >
               <option>Select city</option>
               {city.map((c)=>(

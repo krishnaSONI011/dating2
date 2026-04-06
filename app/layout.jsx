@@ -27,7 +27,7 @@ export async function generateMetadata() {
     const fd = new FormData();
     fd.append("meta_id", "1");
 
-    const res = await fetch("https://irisinformatics.net/dating/Wb/meta_detail", {
+    const res = await fetch("https://api.olyvva.com/Wb/meta_detail", {
       method: "POST",
       body: fd,
       cache: "no-store",
@@ -37,7 +37,7 @@ export async function generateMetadata() {
     const data = json?.data;
 
     return {
-      metadataBase: new URL("https://affairescorts.com"),
+      metadataBase: new URL("https://olyvva.com"),
       title: data?.title || "Affair Escorts",
       description: data?.description || "Best escort service",
       keywords: data?.keyword || "escorts, affair escorts",

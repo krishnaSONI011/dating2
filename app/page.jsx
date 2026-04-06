@@ -79,7 +79,7 @@ export default function Home() {
             <WebsiteLogo />
           </div>
     {/* title */}
-    <h2 className="text-3xl md:text-4xl font-extrabold text-(--webiste-text) mb-4">
+    <h2 className="text-3xl md:text-4xl font-extrabold  mb-4">
       Please read the following notice<br/>before you continue
     </h2>
 

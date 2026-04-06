@@ -182,7 +182,7 @@ export default function EscortCard({
           <div>
 
             {/* Title — max 2 lines then ellipsis */}
-            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-orange-300 leading-snug overflow-hidden"
+            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-(--second-color) leading-snug overflow-hidden"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
