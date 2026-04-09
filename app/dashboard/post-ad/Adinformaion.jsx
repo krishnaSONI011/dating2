@@ -141,7 +141,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 name="cat_id"
                                 value={form.cat_id}
                                 onChange={handleChange}
-                                className="border w-full rounded p-2 mt-2"
+                                className="border bg-(--website-background) text-(website-text) w-full rounded p-2 mt-2"
                             >
                                 <option value="">Choose Category</option>
                                 {category.map((c) => (
