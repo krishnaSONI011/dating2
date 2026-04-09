@@ -4,14 +4,40 @@
   --primary-color: #f97316;
   --website-background: #111827;
   --content-border-color: #ffb86a;
+  --button-color :#16a349 ;
+  --button-text: #fff;
+  --button-hover-color : #17803c;
+  --button-hover-text : #fff; 
+  --navbar-button-color: #374151;
+  --navbar-icon-color :#fff ;
+  --navbar-button-text-color : #fff ;
+  --navbar-button-text-color-hover :#fff ;
+  --navbar-button-color-hover: #374151;
+  --balance-box-text: #fff ; 
+  --balance-box-border : #fff ; 
+  --breadcrum-color : #ababab ;
+  --breadcrum-hover: #fff ;
+  --breadcrum-active : #fff ; 
+  --icons-color :#16a349 ; 
   --webiste-text: #fff ;
   --second-color: #ffb86a ;
-  --navbar-color : #111827 ;
-  --footer-color : #000000 ;
+  --navbar-color : #156534 ;
+  --footer-color : #156534 ;
   --text-color : #fff ;
   --listing-box-background : #0f172a  ;
+  --listing-box-heading : #95f7b9 ; 
   --listing-box-highlight :#f97316 ;
   --listing-box-superTop-color : #f97316 ;
+  --listing-box-superTop-text-color : #000 ; 
+  --listing-box-border : #16a349;
+  --pageig-border : #fff;
+  --pageig-active-color : #16a349 ;
+  --pageig-active-color-text : #fff ; 
+  --pageig-color : #0f172a ;
+  --pageig-text : #fff ;
+  --area-bg :  #16a349 ;
+  --area-text : #fff ;
+  --area-link : #16a349 ;
 }
 
 

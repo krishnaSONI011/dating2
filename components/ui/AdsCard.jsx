@@ -1,12 +1,10 @@
 'use client'
 
 import { 
-  FaPhoneAlt, 
-  FaWhatsapp, 
-  FaTelegramPlane, 
   FaMapMarkerAlt, 
   FaCheckCircle 
 } from "react-icons/fa"
+
 import { useEffect, useState, useContext } from "react"
 import { ThemeContext } from "@/context/ThemeContext"
 
@@ -55,7 +53,7 @@ export default function EscortCard({
   function handleWhatsapp(e){
     stopLink(e)
     if(!phone) return
-    const message = `Hi, I saw your profile on Affair Escorts - ${title}`
+    const message = `Hi, I saw your profile on Olyvva - ${title}`
     const encodedMessage = encodeURIComponent(message)
     window.open(`https://wa.me/${phone}?text=${encodedMessage}`, "_blank")
   }
@@ -71,29 +69,49 @@ export default function EscortCard({
       return (
         <div className="flex justify-end gap-2 mt-4">
 
-          <button
+          {/* <button
             onClick={handleCall}
-            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-green-600 hover:bg-green-700 text-white"
+            className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-() hover:bg-green-700 text-white"
           >
             <FaPhoneAlt size={12}/>
-          </button>
+          </button> */}
+           <img
+  src={'/CALL.png'}
+  alt="Call"
+  className="w-[56px] h-[56px] object-contain cursor-pointer"
+  onClick={handleCall}
+/>
 
           {is_whatsapp && (
-            <button
-              onClick={handleWhatsapp}
-              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white"
-            >
-              <FaWhatsapp size={12}/>
-            </button>
+            // <button
+            //   onClick={handleWhatsapp}
+            //   className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-600 text-white"
+            // >
+            //   {/* <FaWhatsapp size={12}/> */}
+
+            // </button>
+            <img
+            src={'/WHATSAPP.png'}
+            alt="WhatsApp"
+            className="w-[56px] h-[56px] object-contain cursor-pointer"
+            onClick={handleWhatsapp}
+          />
+
           )}
 
           {is_telegram && (
-            <button
-              onClick={handleTelegram}
-              className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-sky-500 hover:bg-sky-600 text-white"
-            >
-              <FaTelegramPlane size={12}/>
-            </button>
+            // <button
+            //   onClick={handleTelegram}
+            //   className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-sky-500 hover:bg-sky-600 text-white"
+            // >
+            //   <FaTelegramPlane size={12}/>
+            // </button>
+            <img
+            src={'/TELEGRAM.png'}
+            alt="Telegram"
+            className="w-[56px] h-[56px] object-contain cursor-pointer"
+            onClick={handleTelegram}
+          />
           )}
 
         </div>
@@ -104,16 +122,19 @@ export default function EscortCard({
   return (
     <div
       className={`
-      relative rounded-2xl border transition-all duration-300 
+      relative rounded-2xl border  transition-all duration-300 
       ${highlight 
-        ? "border-(--primary-color) bg-(--listing-box-highlight)/50 shadow-[0_0_20px_rgba(253,186,116,0.2)]" 
-        : "border-gray-700 bg-(--listing-box-background)"}
+        ? "border-(--listing-box-border) bg-(--listing-box-highlight)/20" 
+        : "border-(--listing-box-border) bg-(--listing-box-background)"}
       `}
+      style={{
+        borderWidth: ` 3px` 
+      }}
     >
 
       {/* SUPER TOP */}
       {is_superTop && (
-        <div className="absolute right-3 -top-2 bg-(--listing-box-superTop-color) text-white text-[10px] px-2 py-1 rounded-full font-semibold z-30">
+        <div className="absolute right-3 -top-2 bg-(--listing-box-superTop-color) text-(--listing-box-superTop-text-color) text-[10px] px-2 py-1 rounded-full font-semibold z-30">
           SUPER TOP
         </div>
       )}
@@ -182,7 +203,7 @@ export default function EscortCard({
           <div>
 
             {/* Title — max 2 lines then ellipsis */}
-            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-(--second-color) leading-snug overflow-hidden"
+            <h2 className="text-sm sm:text-base md:text-lg font-semibold text-(--listing-box-heading) leading-snug overflow-hidden"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
@@ -195,7 +216,7 @@ export default function EscortCard({
 
             {/* Description — max 2 lines then ellipsis */}
             <p
-              className="text-gray-400 text-xs sm:text-sm mt-2"
+              className=" text-xs sm:text-sm mt-2"
               style={{
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
@@ -206,18 +227,18 @@ export default function EscortCard({
               {desc}
             </p>
 
-            <div className="flex items-center gap-2 text-gray-400 text-xs mt-3">
-              <FaMapMarkerAlt className="text-orange-400 hidden sm:block text-xs flex-shrink-0"/>
+            <div className="flex items-center gap-2 text-(--listing-box-border) text-xs mt-3">
+              <FaMapMarkerAlt className="text-(--icons-color) hidden sm:block text-xs flex-shrink-0"/>
               <span className="truncate">{location}</span>
             </div>
 
             <div className="flex gap-2 mt-3 flex-wrap text-xs">
               
-              <span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
+              <span className="bg-white/5 border border-(--listing-box-border) px-2 py-1 rounded-md">
                 {age} years
               </span>
               {
-                country &&<span className="bg-white/5 border border-gray-600 px-2 py-1 rounded-md">
+                country &&<span className="bg-white/5 border border-(--listing-box-border) px-2 py-1 rounded-md">
                 {country}
               </span>
               }

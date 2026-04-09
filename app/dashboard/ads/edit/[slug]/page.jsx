@@ -287,7 +287,7 @@ export default function EditAdinformation() {
                 <h1 className="text-lg md:text-3xl font-bold my-10">Edit Information</h1>
 
                 {/* ===== LOCATION ===== */}
-                <div className="bg-slate-800 rounded border border-(--content-border-color) p-3">
+                <div className="bg-slate-800 rounded border border-(--primary-color) p-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                         <div>
@@ -347,7 +347,7 @@ export default function EditAdinformation() {
                 </div>
 
                 {/* ===== BASIC INFO ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
+                <div className="bg-slate-800 mt-10 rounded border border-(--primary-color) p-3">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
 
                         <div>
@@ -380,7 +380,7 @@ export default function EditAdinformation() {
                                 <label className="font-bold text-xl">* Title</label>
                                 <button
                                     onClick={generateTitle}
-                                    className="bg-orange-500/70 p-2 rounded text-white cursor-pointer hover:bg-orange-500"
+                                    className=" p-2 rounded  cursor-pointer bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)"
                                 >
                                     Generate the title
                                 </button>
@@ -406,7 +406,7 @@ export default function EditAdinformation() {
                 </div>
 
                 {/* ===== PROFILE ATTRIBUTES ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-3">
+                <div className="bg-slate-800 mt-10 rounded border border-(--primary-color) p-3">
                     <h2 className="text-2xl font-bold mb-6">Profile Attributes</h2>
 
                     <TagGroup
@@ -417,7 +417,7 @@ export default function EditAdinformation() {
                     />
 
                     <div className="mb-6">
-                        <label className="font-semibold text-lg text-(--content-border-color) block mb-2">
+                        <label className="font-semibold text-lg  block mb-2">
                             Nationality
                         </label>
                         <select
@@ -455,12 +455,12 @@ export default function EditAdinformation() {
                 </div>
 
                 {/* ===== SERVICES ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-5">
+                <div className="bg-slate-800 mt-10 rounded border border-(--primary-color) p-5">
                     <h2 className="text-2xl font-bold mb-1">Services</h2>
 
                     {services.map(service => (
                         <div key={service.id} className="mb-6">
-                            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">
+                            <h3 className="font-semibold text-lg mb-3 text-(--primary-color)">
                                 {service.title}
                             </h3>
                             <div className="flex flex-wrap gap-3">
@@ -490,7 +490,7 @@ export default function EditAdinformation() {
                 <ImageUploader images={images} setImages={setImages} />
 
                 {/* ===== CONTACTS ===== */}
-                <div className="bg-slate-800 mt-10 rounded border border-(--content-border-color) p-4">
+                <div className="bg-slate-800 mt-10 rounded border border-(--primary-color) p-4">
 
                     <div className="flex justify-between mb-4">
                         <h2 className="text-2xl font-bold">Your contacts</h2>
@@ -633,7 +633,7 @@ export default function EditAdinformation() {
 function TagGroup({ title, options, value, setValue }) {
     return (
         <div className="mb-6">
-            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">{title}</h3>
+            <h3 className="font-semibold text-lg mb-3 text-(--primary-color)">{title}</h3>
             <div className="flex flex-wrap gap-3">
                 {options.map((opt) => (
                     <button

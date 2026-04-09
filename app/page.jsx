@@ -84,7 +84,7 @@ export default function Home() {
     </h2>
 
     {/* desc */}
-    <p className="text-(--webiste-text) max-w-xl mb-4">
+    <p className=" max-w-xl mb-4">
       I confirm that I am 18 or above and acknowledge my consent to access
       mature content, including explicit texts and image.
     </p>
@@ -102,7 +102,7 @@ export default function Home() {
     {/* accept */}
     <button
       onClick={handleAccept}
-      className="bg-red-700 hover:bg-red-800 text-white px-12 py-4 rounded-xl text-lg font-semibold mb-4"
+      className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text) px-12 py-4 rounded-xl text-lg font-semibold mb-4"
     >
       ACCEPT
     </button>

@@ -69,7 +69,7 @@ export default function Wallet() {
 
   /* ================= MESSAGE ================= */
   const buildMessage = () => {
-    return `Hi Affair Escorts,
+    return `Hi Olyvva,
 
 User ID: ${user?.id}
 Email: ${user?.email}
@@ -175,11 +175,11 @@ Please confirm payment details.`
 
               {/* ✅ Selected plan badge with Clear button */}
               {selectedPlan && (
-                <div className=" border border-(--primary-color) rounded-lg px-4 py-2 text-sm text-orange-300 flex items-center justify-between">
+                <div className=" border border-(--primary-color) rounded-lg px-4 py-2 text-sm text-(--second-color) flex items-center justify-between">
                   <span>Plan: <span className="font-semibold">{selectedPlan.title}</span></span>
                   <button
                     onClick={handleClearPlan}
-                    className="text-orange-400 hover:text-white text-xs ml-3 underline"
+                    className="text-(--second-color) hover:text-white text-xs ml-3 underline"
                   >
                     Clear
                   </button>
@@ -190,14 +190,14 @@ Please confirm payment details.`
                 <p className=" text-sm">
                   {selectedPlan ? "Plan Price" : `1 Coin = ₹${pricePerCoin}`}
                 </p>
-                <p className="text-lg font-semibold mt-2 text-(--primary-color)">
+                <p className="text-lg font-semibold mt-2 text-(--second-color)">
                   Total: ₹{total}
                 </p>
               </div>
 
               <button
                 onClick={handleCopy}
-                className="w-full bg-orange-600 hover:bg-orange-700 text-white font-semibold py-3 rounded-xl transition"
+                className="w-full bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text) font-semibold py-3 rounded-xl transition"
               >
                 Copy Payment Details
               </button>
@@ -239,7 +239,7 @@ Please confirm payment details.`
             {payment && (
               <div className=" border border-gray-700 rounded-xl p-6 space-y-5">
 
-                <h2 className="text-xl font-semibold text-(--primary-color) mb-4">
+                <h2 className="text-xl font-semibold text-(--second-color) mb-4">
                   Payment Information
                 </h2>
 
@@ -287,7 +287,7 @@ Please confirm payment details.`
                 <div
                   key={plan.id}
                   onClick={() => handleSelectPlan(plan)}
-                  className={`cursor-pointer rounded-xl border p-5 space-y-3 transition hover:border-orange-500 hover:shadow-lg hover:shadow-orange-900/30
+                  className={`cursor-pointer rounded-xl border p-5 space-y-3 transition hover:border-(--second-color) 
                     ${selectedPlan?.id === plan.id
                       ? "border-(--primary-color) "
                       : "border-gray-700 "
@@ -296,14 +296,14 @@ Please confirm payment details.`
                   <div className="flex items-center justify-between">
                     <h3 className=" font-semibold text-lg">{plan.title}</h3>
                     {selectedPlan?.id === plan.id && (
-                      <span className="text-xs bg-orange-600 text-white px-2 py-0.5 rounded-full">
+                      <span className="text-xs bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text) px-2 py-0.5 rounded-full">
                         Selected
                       </span>
                     )}
                   </div>
 
                   <div className="flex items-end justify-between">
-                    <p className="text-orange-400 text-2xl font-bold">
+                    <p className="text-(--second-color) text-2xl font-bold">
                       {plan.coins}
                       <span className="text-sm text-gray-400 ml-1">Coins</span>
                     </p>
@@ -316,7 +316,7 @@ Please confirm payment details.`
                   <button className={`w-full text-sm font-semibold py-2 rounded-lg transition
                     ${selectedPlan?.id === plan.id
                       ? "bg-gray-600 hover:bg-gray-700 text-white"
-                      : "bg-orange-600 hover:bg-orange-700 text-white"
+                      : "bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)"
                     }`}>
                     {selectedPlan?.id === plan.id ? "Deselect" : "Select Plan"}
                   </button>

@@ -60,7 +60,7 @@ export default function TopSearches() {
 
                 router.push(`/${category}/${city}`)
               }}
-              className="rounded-xl hover:bg-(--primary-color) hover:scale-105 bg-(--primary-color)/80 px-5 py-2 text-sm text-white transition cursor-pointer"
+              className="rounded-xl hover:bg-(--button-hover-color) hover:scale-105 bg-(--button-color) px-5 py-2 text-sm text-(--button-text) hover:text-(--button-hover-text) transition cursor-pointer"
             >
               {item.title}
             </span>

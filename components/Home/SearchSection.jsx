@@ -29,10 +29,10 @@ export default function SearchSection({ title, banner, subtitle }) {
       return;
     }
     if(search.city != '' && search.area === ''){
-      router.push(`/escort/${search.city}`);
+      router.push(`/escorts/${search.city}`);
     }
     if(search.city != '' && search.area != ''){
-      router.push(`/escort/${search.city}/${search.area}`);
+      router.push(`/escorts/${search.city}/${search.area}`);
     }
     
   };
@@ -123,7 +123,7 @@ export default function SearchSection({ title, banner, subtitle }) {
     w-full md:w-1/3
     md:border-r md:border-gray-700
   ">
-    <FaSearch className="text-orange-500 text-sm" />
+    <FaSearch className="text-(--icons-color) text-sm" />
     <input
       type="text"
       placeholder="Search keywords..."
@@ -142,7 +142,7 @@ export default function SearchSection({ title, banner, subtitle }) {
     w-full md:w-1/4
     md:border-r md:border-gray-700
   ">
-    <FaMapMarkerAlt className="text-orange-500 text-sm" />
+    <FaMapMarkerAlt className="text-(--icons-color) text-sm" />
     <select
       value={search.city}
       onChange={(e) =>
@@ -175,7 +175,7 @@ export default function SearchSection({ title, banner, subtitle }) {
     px-4 py-3
     w-full md:w-1/4
   ">
-    <FaMapMarkerAlt className="text-orange-500 text-sm" />
+    <FaMapMarkerAlt className="text-(--icons-color) text-sm" />
     <select
       value={search.area}
       onChange={(e) =>
@@ -202,7 +202,7 @@ export default function SearchSection({ title, banner, subtitle }) {
   <div className="w-full md:w-auto md:px-3">
     <Button
       onClick={handleSearch}
-      className="w-full md:w-auto px-8 py-3 rounded-xl md:rounded-full"
+      className="w-full bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text-color) hover:text-(--button-hover-text) md:w-auto px-8 py-3 rounded-xl md:rounded-full"
     >
       Search
     </Button>

@@ -207,8 +207,9 @@ export default function MyAds(){
                   </Link>
 
                   <Button 
+
                     onClick={()=>deleteMyList(ad.id)} 
-                    className="px-4 py-2  rounded-lg">
+                    className="px-4 py-2 bg-red-600 rounded-lg">
                     Delete
                   </Button>
                 </div>
@@ -298,8 +299,8 @@ function TabBtn({label,active,onClick}){
 
 function StatCard({icon,title,value}){
   return(
-    <div className="bg-(--website-background)/40 p-6 rounded-xl border border-(--primary-color) flex items-center gap-4">
-      <div className="text-(--primary-color) text-2xl">{icon}</div>
+    <div className="bg-(--website-background)/40 p-6 rounded-xl border border-(--icons-color) flex items-center gap-4">
+      <div className="text-(--icons-color) text-2xl">{icon}</div>
       <div>
         <p className="text-(--second-color) text-sm">{title}</p>
         <h2 className="text-2xl font-bold ">{value}</h2>

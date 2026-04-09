@@ -131,9 +131,11 @@ export default function Dashboard() {
 
 function Card({ name, icon }) {
   return (
-    <div className="bg-(--website-background)/30 border border-(--primary-color) rounded-2xl h-[180px] flex flex-col justify-center items-center shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-1 cursor-pointer">
-      <div className="text-4xl text-(--primary-color) mb-3">{icon}</div>
-      <div className="text-xl font-semibold text-(--primary-color)">{name}</div>
+    <div className="bg-(--website-background)/30 border border-(--primary-color) rounded-2xl h-[180px] flex flex-col justify-center items-center shadow-sm hover:shadow-xl transition duration-300 hover:-translate-y-1 cursor-pointer" style={{
+      borderWidth : "3px"
+    }}>
+      <div className="text-4xl text-(--icons-color) mb-3">{icon}</div>
+      <div className="text-xl font-semibold ">{name}</div>
     </div>
   )
 }

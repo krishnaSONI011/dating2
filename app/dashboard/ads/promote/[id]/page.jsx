@@ -41,7 +41,7 @@ export default function Promote({ prevStep, form, images }) {
     boost6: 0,
     pricePerCoin: 49,
   })
-
+  
   // ✅ Fetch pricing
   useEffect(() => {
     async function loadPricing() {
@@ -96,7 +96,7 @@ export default function Promote({ prevStep, form, images }) {
 
   // ✅ Dynamic total
   let total = 0
-  if (timeSlot && days && boost) {
+  if (timeSlot && days ) {
     total = (slotPriceMap[timeSlot] || 0) + (dayPriceMap[days] || 0) + (boostPriceMap[boost] || 0)
   }
   if (allInOne) {
@@ -108,7 +108,7 @@ export default function Promote({ prevStep, form, images }) {
   }
 
   // ✅ Can publish check
-  const hasSlotSelection = timeSlot && days && boost
+  const hasSlotSelection = timeSlot && days 
   const hasStandoutSelection = superTop || highlight || tagNew || allInOne
   const canPublish = hasSlotSelection || hasStandoutSelection
 
@@ -128,7 +128,17 @@ export default function Promote({ prevStep, form, images }) {
   }
 
   async function publishWithMoney() {
-    if (timeSlot && (!days || !boost)) return toast.error("Please select days and boost")
+    const noBoost =
+  timeSlot &&
+  days &&
+  !boost &&
+  !superTop &&
+  !highlight &&
+  !tagNew &&
+  !allInOne
+    ? "1"
+    : "0"
+    if (timeSlot && (!days )) return toast.error("Please select days and boost")
     if (!canPublish) return toast.error("Please select at least one promotion option")
     if (balance < total) return toast.error("Insufficient balance")
 
@@ -143,7 +153,9 @@ export default function Promote({ prevStep, form, images }) {
       boostData.append("hight_light", highlight ? "1" : "0")
       boostData.append("new", tagNew ? "1" : "0")
       boostData.append("all_upgrade", allInOne ? "1" : "0")
+      boostData.append("noboost", noBoost)
       boostData.append("days", days ?? "0")
+      boostData.append("noboost", noBoost)
       boostData.append("boost_times", boost ?? "0")
       boostData.append("total", total)
 
@@ -186,7 +198,7 @@ export default function Promote({ prevStep, form, images }) {
     <div className="max-w-7xl mx-auto mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
       {/* ================= LEFT ================= */}
-      <div className="lg:col-span-2 bg-(--website-background) p-6 md:p-8 rounded-2xl border shadow-sm border-(--content-border-color)">
+      <div className="lg:col-span-2 bg-(--website-background) p-6 md:p-8 rounded-2xl border shadow-sm border-(--primary-color)">
 
         <h2 className="text-2xl md:text-3xl font-bold mb-6">Promote Your Ad</h2>
 
@@ -219,7 +231,7 @@ export default function Promote({ prevStep, form, images }) {
               <div>{slot.label}</div>
               <div className="text-sm text-gray-500">{slot.display}</div>
               {/* ✅ Dynamic price */}
-              <div className="text-xs mt-1 font-semibold text-orange-500">
+              <div className="text-xs mt-1 font-semibold text-(--second-color)">
                 {pricing[slot.priceKey]} Coins
               </div>
             </button>
@@ -245,7 +257,7 @@ export default function Promote({ prevStep, form, images }) {
                     : "border-gray-300 hover:border-gray-400"}`}
                 >
                   <div>{d} Day{d > 1 && "s"}</div>
-                  <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
+                  <div className="text-xs font-semibold text-(--second-color)">{pricing[priceKey]} Coins</div>
                 </button>
               ))}
             </div>
@@ -273,7 +285,7 @@ export default function Promote({ prevStep, form, images }) {
                     : "border-gray-300 hover:border-gray-400"}`}
                 >
                   <div>{b} Boosts</div>
-                  <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
+                  <div className="text-xs font-semibold text-(--second-color)">{pricing[priceKey]} Coins</div>
                 </button>
               ))}
             </div>
@@ -417,14 +429,14 @@ export default function Promote({ prevStep, form, images }) {
 
 function StandCard({ title, desc, price, active, setActive, highlightAll = false, locked = false }) {
   return (
-    <div className={`border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center
+    <div className={`border border-(--primary-color) rounded-2xl p-6 mb-6 flex justify-between items-center
       ${locked ? "opacity-60" : ""}`}
     >
       <div className="max-w-[70%]">
         <div className="flex items-center gap-2 mb-1">
           <h3 className="text-lg font-bold">{title}</h3>
           {locked && (
-            <span className="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-(--button-color) text-(--button-text) px-2 py-0.5 rounded-full">
               Included in boost
             </span>
           )}
@@ -432,9 +444,9 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
         <p className=" text-sm mb-2">{desc}</p>
         {highlightAll && (
           <div className="flex gap-2 mb-2">
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Super</span>
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Highlight</span>
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">New</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">Super</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">Highlight</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">New</span>
           </div>
         )}
         <p className="font-semibold text-(--second-color)">{price}</p>
@@ -444,14 +456,14 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
         onClick={() => !locked && setActive(!active)}
         className={`w-20 h-10 flex items-center rounded-full px-1 transition
           ${locked
-            ? "cursor-not-allowed bg-orange-500"
+            ? "cursor-not-allowed bg-(--button-color)"
             : "cursor-pointer " + (active ? "bg-red-600" : "bg-gray-300")
           }`}
       >
         <div
           className={`bg-white w-8 h-8 rounded-full shadow-md transform transition flex items-center justify-center text-xs font-bold
           ${locked
-            ? "translate-x-10 text-orange-500"
+            ? "translate-x-10 text-(--second-color)"
             : active ? "translate-x-10 text-red-600" : ""
           }`}
         >

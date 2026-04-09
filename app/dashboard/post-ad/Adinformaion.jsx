@@ -228,7 +228,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                                 <label className="font-bold text-xl">* Title</label>
                                 <button
                                     onClick={generateTitle}
-                                    className="bg-orange-500/70 p-2 rounded  cursor-pointer hover:bg-orange-500"
+                                    className=" p-2 rounded  cursor-pointer bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)"
                                 >
                                     Generate the title
                                 </button>
@@ -254,7 +254,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 </div>
 
                 {/* ===== PROFILE ATTRIBUTES ===== */}
-                <div className=" mt-10 rounded border border-(--content-border-color) p-3">
+                <div className=" mt-10 rounded border border-(--primary-color) p-3">
                     <h2 className="text-2xl font-bold mb-6">Profile Attributes</h2>
 
                     <TagGroup
@@ -265,7 +265,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                     />
 
                     <div className="mb-6">
-                        <label className="font-semibold text-lg text-(--content-border-color) block mb-2">
+                        <label className="font-semibold text-lg  block mb-2">
                             Nationality
                         </label>
                         <select
@@ -303,12 +303,12 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 </div>
 
                 {/* ===== SERVICES ===== */}
-                <div className=" mt-10 rounded border border-(--content-border-color) p-5">
+                <div className=" mt-10 rounded border border-(--primary-color) p-5">
                     <h2 className="text-2xl font-bold mb-1">Services</h2>
 
                     {services.map(service => (
                         <div key={service.id} className="mb-6">
-                            <h3 className="font-semibold text-lg mb-3 text-(--content-border-color)">
+                            <h3 className="font-semibold text-lg mb-3 text-(--primary-color)">
                                 {service.title}
                             </h3>
                             <div className="flex flex-wrap gap-3">
@@ -470,7 +470,7 @@ export default function Adinformation({ form, setForm, handleChange, nextStep, s
                 </div>
 
                 <div className="flex justify-end mt-8">
-                    <Button onClick={handleNext}>
+                    <Button className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" onClick={handleNext}>
                         Next → Promote Ad
                     </Button>
                 </div>

@@ -12,7 +12,7 @@ const style = {
   maxWidth: "95%",
   background: "var(--website-background)", // ✅ dynamic color
   color: "var(--text-color)", // optional
-  border: "2px solid var(--content-border-color)", // optional
+  border: "2px solid var(--primary-color)", // optional
   borderRadius: "22px",
   boxShadow: 24,
   padding: "60px 40px",

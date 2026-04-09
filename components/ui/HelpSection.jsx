@@ -36,7 +36,9 @@ export default function HelpSupport() {
 
   return (
     <div className="w-full bg-(--website-background) p-6">
-      <div className="max-w-5xl mx-auto  border border-(--content-border-color) rounded-2xl p-6 shadow-sm">
+      <div className="max-w-5xl mx-auto  border border-(--primary-color) rounded-2xl p-6 shadow-sm" style={{
+        borderWidth : "3px"
+      }}>
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">

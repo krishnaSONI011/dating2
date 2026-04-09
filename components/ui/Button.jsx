@@ -16,11 +16,11 @@ export default function Button({
       aria-busy={loading}
       aria-disabled={loading || disabled}
       className={`w-full cursor-pointer rounded-md py-3 text-sm font-semibold tracking-widest transition
-        flex items-center justify-center gap-2 text-white
+        flex items-center justify-center gap-2 
         ${
           loading || disabled
-            ? "bg-(primary-color)/70 cursor-not-allowed"
-            : "bg-(--primary-color) hover:bg-(--primary-color)/60"
+            ? " cursor-not-allowed"
+            : ""
         }
         ${className}
       `}

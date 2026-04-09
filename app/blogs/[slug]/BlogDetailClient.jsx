@@ -56,7 +56,7 @@ export default function BlogsDetailPage() {
     <>
       <Breadcrumb />
 
-      <div className="max-w-4xl mx-auto px-5 py-10 text-white">
+      <div className="max-w-4xl mx-auto px-5 py-10 ">
 
         {/* IMAGE */}
         {blog.img && (
@@ -70,12 +70,12 @@ export default function BlogsDetailPage() {
         )}
 
         {/* DATE */}
-        <p className="text-gray-400 text-sm mb-3">
+        <p className=" text-sm mb-3">
           {formateTheDate(blog.created_at)}
         </p>
 
         {/* TITLE */}
-        <h1 className="text-3xl md:text-4xl font-bold text-orange-400 mb-6">
+        <h1 className="text-3xl md:text-4xl font-bold text-(--second-color) mb-6">
           {blog.title}
         </h1>
 
@@ -85,7 +85,7 @@ export default function BlogsDetailPage() {
             {tags.map((tag, index) => (
               <span
                 key={index}
-                className="bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-medium px-3 py-1 rounded-full"
+                className=" border border-(--primary-color)/40 text-(--second-color) text-xs font-medium px-3 py-1 rounded-full"
               >
                 # {tag}
               </span>
@@ -95,7 +95,7 @@ export default function BlogsDetailPage() {
 
         {/* DESCRIPTION */}
         <div
-          className="text-gray-300 leading-8 text-lg prose prose-invert max-w-none"
+          className="text-justify leading-8 text-lg prose prose-invert max-w-none"
           dangerouslySetInnerHTML={{ __html: blog.description }}
         />
 

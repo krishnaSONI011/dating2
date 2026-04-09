@@ -54,9 +54,9 @@ export default function Navbar(){
 
           {/* Wallet */}
           {isAuthenticated && (
-            <div className="flex items-center gap-2 bg-(--primary-color)/10 px-4 py-2 rounded-full border border-(--primary-color)">
-              <FaCoins className="text-(--primary-color)" />
-              <span className="font-semibold text-(--primary-color) text-sm">
+            <div className="flex items-center gap-2  px-4 py-2 rounded-full border border-(--navbar-button-color)">
+              <FaCoins className="text-(--navbar-button-color)" />
+              <span className="font-semibold text-(--navbar-button-color) text-sm">
                 {balance}
               </span>
             </div>
@@ -66,7 +66,7 @@ export default function Navbar(){
           <div className="relative" ref={dropdownRef}>
             {!isAuthenticated ? (
               <Link href="/login">
-                <button className="p-2 border border-(--primary-color) rounded-full text-(--primary-color) hover:bg-(--primary-color)/70 hover:text-white">
+                <button className="p-2 border border-(--navbar-icon-color) rounded-full text-(--navbar-icon-color)  hover:text-(--navbar-icon-color)">
                   <FaUser />
                 </button>
               </Link>
@@ -74,7 +74,7 @@ export default function Navbar(){
               <>
                 <button
                   onClick={()=> setOpen(!open)}
-                  className="p-2 border border-(--primary-color) rounded-full text-(--primary-color) hover:bg-(--primary-color)/70 hover:text-white"
+                  className="p-2 border border-(--navbar-icon-color) rounded-full (--navbar-icon-color)  hover:text-(--navbar-icon-color)"
                 >
                   <FaUser />
                 </button>
@@ -82,11 +82,11 @@ export default function Navbar(){
                 {open && (
                   <div className="absolute overflow-hidden right-0 mt-3 w-44 bg-(--website-background) border border-(--primary-color) rounded-xl shadow-lg z-50">
                     <Link href="/dashboard">
-                      <div className="px-4 py-3 text-(--primary-color) hover:bg-(--primary-color)/10 text-sm">Dashboard</div>
+                      <div className="px-4 py-3 text-(--website-text) hover:bg-(--primary-color)/10 text-sm">Dashboard</div>
                     </Link>
 
                     <Link href="/dashboard/wallet">
-                      <div className="px-4 py-3 text-(--primary-color) hover:bg-(--primary-color)/10 text-sm">Wallet</div>
+                      <div className="px-4 py-3 text-(--website-text) hover:bg-(--primary-color)/10 text-sm">Wallet</div>
                     </Link>
 
                     <div className="border-t"></div>
@@ -105,7 +105,7 @@ export default function Navbar(){
 
           {/* CTA */}
           <Link href={isAuthenticated ? "/dashboard/post-ad" : "/login"}>
-            <Button className="px-6 py-2  text-white rounded-full">
+            <Button className="px-6 py-2 bg-(--navbar-button-color) text-(--navbar-button-text-color) hover:bg-(--navbar-button-color-hover) hover:text-(--navbar-button-text-color-hover) rounded-full">
               Post Your Ads
             </Button>
           </Link>
@@ -123,16 +123,16 @@ export default function Navbar(){
 
       {/* Mobile Menu */}
       {mobile && (
-        <div className="md:hidden bg-slate-900 border-t px-6 py-4 space-y-4">
+        <div className="md:hidden  border-t border-(--primary-color) px-6 py-4 space-y-4">
 
           {/* Wallet */}
           {isAuthenticated && (
-            <div className="flex items-center gap-2 bg-orange-50 px-4 py-2 rounded-full border border-orange-200 w-fit">
-              <FaCoins className="text-orange-500" />
-              <span className="font-semibold text-gray-800 text-sm">
-                {balance}
-              </span>
-            </div>
+            <div className="flex items-center gap-2  px-4 py-2 rounded-full border border-(--navbar-button-color)">
+            <FaCoins className="text-(--navbar-button-color)" />
+            <span className="font-semibold text-(--navbar-button-color) text-sm">
+              {balance}
+            </span>
+          </div>
           )}
 
           {/* Links */}
@@ -162,7 +162,7 @@ export default function Navbar(){
           )}
 
           <Link href={isAuthenticated ? "/dashboard/post-ad" : "/login"}>
-            <Button className="w-full bg-orange-600 text-white rounded-full">
+            <Button className="px-6 py-2 bg-(--navbar-button-color) text-(--navbar-button-text-color) hover:bg-(--navbar-button-color-hover) hover:text-(--navbar-button-text-color-hover) rounded-full">
               Post Your Ads
             </Button>
           </Link>

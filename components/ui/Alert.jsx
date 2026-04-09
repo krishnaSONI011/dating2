@@ -12,10 +12,14 @@ export default function Alert(){
   const [isExpanded, setIsExpanded] = useState(false);
 
   return(
-    <div className="rounded-xl border border-red-500 bg-[#ef4444]/30 p-4 sm:p-5 mb-6 shadow-sm">
+    <div className="rounded-xl border border-red-500 bg-[#ef4444]/30 p-4 sm:p-5 mb-6 shadow-sm"
+    style={{
+      borderWidth : "3px"
+    }}
+    >
 
       {/* top row */}
-      <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-4 md:items-center">
 
         <div className="flex items-start gap-3 flex-1">
 
@@ -26,16 +30,18 @@ export default function Alert(){
 
           {/* text */}
           <div>
-            <h3 className="text-white font-bold text-lg uppercase">
+            <h3 className=" font-bold text-lg uppercase">
               Scam Alert: Never Pay Advance
             </h3>
 
-            <p className="text-white text-sm mt-1">
+            <p className=" text-sm mt-1">
               Always meet first. Pay only after face-to-face meeting.
             </p>
           </div>
 
         </div>
+<div className="flex items-center">
+ 
 
         {/* toggle button */}
         <button
@@ -45,7 +51,7 @@ export default function Alert(){
           Safety Tips
           {isExpanded ? <FaChevronUp/> : <FaChevronDown/>}
         </button>
-
+        </div>
       </div>
 
       {/* expanded section */}
@@ -88,10 +94,10 @@ export default function Alert(){
 
           {/* footer */}
           <div className="mt-6 pt-4 border-t border-dashed border-gray-200 text-center">
-            <p className="text-sm text-white">
+            <p className="text-sm ">
               Got scammed? Report at{" "}
               <a href="mailto:support@affairescorts.com" className="text-red-500 font-semibold">
-                support@affairescorts.com
+                support@olyvva.com
               </a>
             </p>
           </div>

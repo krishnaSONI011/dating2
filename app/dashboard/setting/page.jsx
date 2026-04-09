@@ -158,7 +158,7 @@ export default function Setting() {
               </p>
             )}
 
-            <Button loading={mobileLoading} onClick={updateMobile}>
+            <Button className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" loading={mobileLoading} onClick={updateMobile}>
               Update Mobile
             </Button>
           </div>
@@ -210,7 +210,7 @@ export default function Setting() {
               </div>
             ))}
 
-            <Button loading={loading} onClick={changePassword}>
+            <Button className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" loading={loading} onClick={changePassword}>
               Update Password
             </Button>
 

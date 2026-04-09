@@ -23,7 +23,7 @@ export default function Breadcrumb() {
         <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 text-sm sm:text-base md:text-lg lg:text-xl overflow-x-auto whitespace-nowrap">
 
           {/* Home */}
-          <Link href="/" className="text-(--primary-color) hover:text-(--primary-color)/60 transition flex items-center">
+          <Link href="/" className="text-(--breadcrum-color) hover:text-(--breadcrum-hover) transition flex items-center">
             <FaHome className="text-base sm:text-lg md:text-xl lg:text-2xl" />
           </Link>
 
@@ -39,11 +39,11 @@ export default function Breadcrumb() {
                 <FaChevronRight className="text-gray-500 text-xs sm:text-sm md:text-base lg:text-lg" />
 
                 {isLast ? (
-                  <span className="text-white font-medium capitalize">
+                  <span className="text-(--breadcrum-active) font-medium capitalize">
                     {segment.replace(/-/g, " ")}
                   </span>
                 ) : (
-                  <Link href={redirectHref} className="text-(--primary-color) hover:text-(--primary-color)/60 transition capitalize">
+                  <Link href={redirectHref} className="text-(--breadcrum-color) hover:text-(--breadcrum-hover) transition capitalize">
                     {segment.replace(/-/g, " ")}
                   </Link>
                 )}

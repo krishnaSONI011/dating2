@@ -28,14 +28,14 @@ export default function ImageUploader({ images, setImages }) {
   }
 
   return (
-    <div className="bg-slate-900 mt-8 rounded border border-(--content-border-color) p-6">
+    <div className=" mt-8 rounded border border-(--primary-color) p-6">
 
       <h2 className="text-2xl font-bold mb-4">Upload Images</h2>
 
       {/* upload box */}
       <div
         onClick={() => inputRef.current.click()}
-        className="border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer bg-slate-800 hover:bg-slate-700 transition"
+        className="border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center cursor-pointer  transition"
       >
         <FaPlus className="text-2xl text-gray-400 mb-2"/>
         <p className=" font-medium">Click to upload images</p>

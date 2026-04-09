@@ -67,7 +67,7 @@ export default function Promote({ prevStep, form, images }) {
   }
 
   // ✅ Check if user selected any promotion option
-  const hasSlotSelection = timeSlot && days && boost
+  const hasSlotSelection = timeSlot && days 
   const hasStandoutSelection = superTop || highlight || tagNew || allInOne
 
   // ✅ total: slot section only counts if all 3 selected
@@ -214,8 +214,18 @@ Please share payment details.`
   }
 
   async function publishWithMoney() {
+    const noBoost =
+  timeSlot &&
+  days &&
+  !boost &&
+  !superTop &&
+  !highlight &&
+  !tagNew &&
+  !allInOne
+    ? "1"
+    : "0"
     //  Fixed: only require slot+days+boost if user chose a slot
-    if (timeSlot && (!days || !boost)) {
+    if (timeSlot && (!days )) {
       return toast.error("Please select days and boost count for the time slot")
     }
     if (!canPublish) return toast.error("Please select at least one promotion option")
@@ -260,6 +270,7 @@ Please share payment details.`
         boostData.append("super_top", superTop ? "1" : "0")
         boostData.append("hight_light", highlight ? "1" : "0")
         boostData.append("new", tagNew ? "1" : "0")
+        boostData.append("noboost", noBoost)
         boostData.append("all_upgrade", allInOne ? "1" : "0")
         boostData.append("days", days ?? "0")
         boostData.append("boost_times", boost ?? "0")
@@ -303,7 +314,7 @@ Please share payment details.`
     <div className="max-w-7xl mx-auto px-4 md:px-6 mt-6 md:mt-10 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
 
       {/* ================= LEFT ================= */}
-      <div className="lg:col-span-2 bg-(--website-background) p-4 md:p-6 lg:p-8 rounded-2xl border shadow-sm border-(--content-border-color)">
+      <div className="lg:col-span-2 bg-(--website-background) p-4 md:p-6 lg:p-8 rounded-2xl border shadow-sm border-(--primary-color)">
 
         <h2 className="text-2xl md:text-3xl font-bold mb-6">Promote Your Ad</h2>
 
@@ -353,7 +364,7 @@ Please share payment details.`
             >
               <div>{slot.label}</div>
               <div className="text-sm text-gray-500">{slot.display}</div>
-              <div className="text-xs mt-1 font-semibold text-orange-500">{pricing[slot.priceKey]} Coins</div>
+              <div className="text-xs mt-1 font-semibold text-(--second-color)">{pricing[slot.priceKey]} Coins</div>
             </button>
           ))}
         </div>
@@ -375,7 +386,7 @@ Please share payment details.`
                   ${days === d ? "border-red-500 bg-red-50 text-red-600" : "border-gray-300 hover:border-gray-400"}`}
                 >
                   <div>{d} Day{d > 1 && "s"}</div>
-                  <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
+                  <div className="text-xs font-semibold text-(--second-color)">{pricing[priceKey]} Coins</div>
                 </button>
               ))}
             </div>
@@ -403,7 +414,7 @@ Please share payment details.`
       ${boost === b ? "border-red-500 bg-red-50 text-red-600" : "border-gray-300 hover:border-gray-400"}`}
     >
       <div>{b} Boosts</div>
-      <div className="text-xs font-semibold text-orange-500">{pricing[priceKey]} Coins</div>
+      <div className="text-xs font-semibold text-(--second-color)">{pricing[priceKey]} Coins</div>
     </button>
   ))}
 </div>
@@ -425,10 +436,27 @@ Please share payment details.`
   desc="Get more visibility with top placement."
   price={`${pricing.superTop} Coins`}
   active={superTop}
-  locked={!!boost}  // ✅ only Super Top locks when boost selected
+  locked={false}
   setActive={(val) => {
-    if (boost) return
     setSuperTop(val)
+
+    if (val) {
+      // ✅ Super Top ON hua to auto 3 Boost select
+      setBoost(3)
+
+      // agar days select nahi hai to default 1 day kar do
+      if (!days) setDays(1)
+
+      // agar time slot select nahi hai to default morning kar do
+      if (!timeSlot) {
+        setTimeSlot("morning")
+        setFromtime("06:00:01")
+        setToTime("12:00:00")
+      }
+    } else {
+      // ❌ Super Top OFF hua to boost bhi hata do
+      setBoost(null)
+    }
   }}
 />
 <StandCard
@@ -455,7 +483,7 @@ Please share payment details.`
 />
 
         <div className="mt-10">
-          <Button onClick={prevStep}>← Back</Button>
+          <Button className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" onClick={prevStep}>← Back</Button>
         </div>
 
       </div>
@@ -579,7 +607,7 @@ Please share payment details.`
             <p className="font-semibold mb-4">
               Publish normally for <span className="text-red-600 ml-1">1 Coin</span>
             </p>
-            <Button loading={loading} onClick={postWithout} className="w-full">
+            <Button loading={loading} onClick={postWithout} className="w-full bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)">
               Publish Without Promotion
             </Button>
           </div>
@@ -594,15 +622,15 @@ Please share payment details.`
 // ✅ Added locked prop
 function StandCard({ title, desc, price, active, setActive, highlightAll = false, locked = false }) {
   return (
-    <div className={`border border-(--content-border-color) rounded-2xl p-6 mb-6 flex justify-between items-center
+    <div className={`border border-(--primary-color) rounded-2xl p-6 mb-6 flex justify-between items-center
       ${locked ? "opacity-60" : ""}`}
     >
       <div className="max-w-[70%]">
         <div className="flex items-center gap-2 mb-1">
           <h3 className="text-lg font-bold">{title}</h3>
-          {/* ✅ Show locked badge when boost is selected */}
+          {/*Show locked badge when boost is selected */}
           {locked && (
-            <span className="text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full">
+            <span className="text-[10px] bg-(--button-color) text-(--button-text) px-2 py-0.5 rounded-full">
               Included in boost
             </span>
           )}
@@ -610,9 +638,9 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
         <p className="text-sm mb-2">{desc}</p>
         {highlightAll && (
           <div className="flex gap-2 mb-2">
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Super</span>
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">Highlight</span>
-            <span className="bg-red-600 text-white text-xs px-2 py-1 rounded">New</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">Super</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">Highlight</span>
+            <span className="bg-(--button-color) text-white text-xs px-2 py-1 rounded">New</span>
           </div>
         )}
         <p className="font-semibold text-(--second-color)">{price}</p>
@@ -621,11 +649,11 @@ function StandCard({ title, desc, price, active, setActive, highlightAll = false
       <div
         onClick={() => !locked && setActive(!active)}
         className={`w-20 h-10 flex items-center rounded-full px-1 transition
-          ${locked ? "cursor-not-allowed bg-orange-500" : "cursor-pointer " + (active ? "bg-red-600" : "bg-gray-300")}`}
+          ${locked ? "cursor-not-allowed bg-(--button-color)" : "cursor-pointer " + (active ? "bg-(--button-color)" : "bg-gray-300")}`}
       >
         <div
           className={`bg-white w-8 h-8 rounded-full shadow-md transform transition flex items-center justify-center text-xs font-bold
-          ${locked ? "translate-x-10 text-orange-500" : active ? "translate-x-10 text-red-600" : "text-gray-500"}`}
+          ${locked ? "translate-x-10 " : active ? "translate-x-10 text-(--second-color)" : "text-gray-500"}`}
         >
           {locked ? "ON" : active ? "YES" : "NO"}
         </div>

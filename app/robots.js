@@ -7,6 +7,6 @@ export default function robots() {
           disallow: ["/dashboard"],
         },
       ],
-      sitemap: "https://affairescorts.com/sitemap.xml",
+      sitemap: "https://olyvva.com/sitemap.xml",
     };
   }

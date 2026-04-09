@@ -27,7 +27,7 @@ export async function generateMetadata() {
     const fd = new FormData();
     fd.append("meta_id", "1");
 
-    const res = await fetch("https://api.olyvva.com/Wb/meta_detail", {
+    const res = await fetch("https://irisinformatics.net/dating/Wb/meta_detail", {
       method: "POST",
       body: fd,
       cache: "no-store",
@@ -38,7 +38,7 @@ export async function generateMetadata() {
 
     return {
       metadataBase: new URL("https://olyvva.com"),
-      title: data?.title || "Affair Escorts",
+      title: data?.title || "Olyvva",
       description: data?.description || "Best escort service",
       keywords: data?.keyword || "escorts, affair escorts",
       icons: {
@@ -62,10 +62,10 @@ export async function generateMetadata() {
         },
       },
       openGraph: {
-        title: data?.title || "Affair Escorts",
+        title: data?.title || "Olyvva",
         description: data?.description || "Best escort service",
         url: "https://affairescorts.com",
-        siteName: data?.title || "Affair Escorts",
+        siteName: data?.title || "Olyvva",
         type: "website",
       },
     };
@@ -73,7 +73,7 @@ export async function generateMetadata() {
     console.log("Metadata API failed:", error);
     return {
       metadataBase: new URL("https://affairescorts.com"),
-      title: "Affair Escorts",
+      title: "Olyvva",
       description: "Best escort service",
       icons: {
         icon: [{ url: "/favicon.ico" }],
@@ -91,10 +91,10 @@ export async function generateMetadata() {
         },
       },
       openGraph: {
-        title: "Affair Escorts",
+        title: "Olyvva",
         description: "Best escort service",
         url: "https://affairescorts.com",
-        siteName: "Affair Escorts",
+        siteName: "Olyvva",
         type: "website",
       },
     };
@@ -105,7 +105,7 @@ export default function RootLayout({ children }) {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Affair Escorts",
+    name: "Olyvva",
     url: "https://affairescorts.com",
     logo: "https://affairescorts.com/logo.png",
     sameAs: [

@@ -29,13 +29,13 @@ export default function CityWise({title}){
     return( 
 
         <>
-        <div className="mx-5 md:container md:mx-auto py-8 md:py-12 md:px-4 px-0 popular-locations-section ">
+        <div className="mx-5 md:max-w-7xl  md:mx-auto py-8 md:py-12  px-0 popular-locations-section ">
         <h1 className={`mb-8 sm:mb-12 md:mb-14 text-center font-serif text-2xl sm:text-3xl md:text-4xl lg:text-3xl text-(--second-color) font-bold px-2 ${poppins.className} font-bold`}>{title}</h1>
 
         <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3 md:px-10 px-0">
             {
                 topCity.map((city)=>(
-                    <Link  key={city.id} href={`/escort/${city.slug}`}>
+                    <Link  key={city.id} href={`/escorts/${city.slug}`}>
                     <ImageCard count={city.ads_count} image={city.image} city={city.name} state={city.state_name}/></Link>
                 ))
             }

@@ -43,7 +43,9 @@ export default function Blogs() {
       <Breadcrumb />
 
       {/* HERO SECTION */}
-      <div className="bg-gradient-to-r from-black via-gray-900 to-black text-white py-20 text-center">
+      <div className=" border border-(--primary-color) py-20 text-center" style={{
+        borderBottomWidth: "3px"
+      }}>
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Latest Updates
         </h1>

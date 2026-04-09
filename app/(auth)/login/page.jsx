@@ -50,7 +50,9 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center px-4">
 
       {/* Card */}
-      <div className="w-full max-w-md border border-(--content-border-color) rounded-3xl shadow-2xl p-8">
+      <div className="w-full max-w-md border border-(--primary-color) rounded-3xl shadow-2xl p-8" style={{
+        borderWidth : "3px"
+      }}>
 
         <div className="flex justify-center">
           <WebsiteLogo />
@@ -65,7 +67,7 @@ export default function Login() {
           {/* Email */}
           <div>
             <label className="text-sm font-medium">Email</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-orange-600">
+            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-(--primary-color)">
               <FaEnvelope className="text-gray-400 mr-2" />
               <input
                 type="email"
@@ -81,7 +83,7 @@ export default function Login() {
           {/* Password with eye */}
           <div>
             <label className="text-sm font-medium">Password</label>
-            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-orange-600">
+            <div className="flex items-center border rounded-lg mt-1 px-3 py-2 focus-within:border-(--primary-color)">
               <FaLock className="text-gray-400 mr-2" />
               <input
                 type={show ? "text" : "password"}
@@ -106,7 +108,7 @@ export default function Login() {
           </div>
 
           {/* Button */}
-          <Button loading={loading} onClick={doLogin}>Login</Button>
+          <Button className=" bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" loading={loading} onClick={doLogin}>Login</Button>
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-3">

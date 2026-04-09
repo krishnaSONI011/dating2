@@ -1,6 +1,6 @@
 export default async function sitemap() {
 
-  const baseUrl = "https://affairescorts.com";
+  const baseUrl = "https://olyvva.com";
   const apiBase = "https://api.olyvva.com/Wb";
 
   /* ================= HELPER ================= */

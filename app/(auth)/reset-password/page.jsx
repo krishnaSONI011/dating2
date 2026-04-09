@@ -82,7 +82,9 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen bg-(--website-background) flex items-center justify-center px-4">
 
-      <div className="w-full max-w-md  border border-(--primary-color) rounded-3xl shadow-2xl p-6 sm:p-8">
+      <div className="w-full max-w-md  border border-(--primary-color) rounded-3xl shadow-2xl p-6 sm:p-8" style={{
+        borderWidth: "3px"
+      }}>
 
         {/* Heading */}
         {/* <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-center text-white">
@@ -157,7 +159,7 @@ export default function ResetPassword() {
           <Button
             loading={loading}
             onClick={doLogin}
-            className="w-full   py-3 rounded-xl"
+            className="w-full bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)  py-3 rounded-xl"
           >
             Reset Password
           </Button>

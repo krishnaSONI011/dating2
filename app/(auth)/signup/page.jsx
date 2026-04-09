@@ -51,8 +51,12 @@ export default function Signup() {
     }
   }
   return (
-    <div className="min-h-screen bg-(--website-background) flex justify-center py-14 px-4">
-      <div className="w-full max-w-lg border border-(--content-border-color) p-5 rounded-xl" >
+    <div className="min-h-screen bg-(--website-background) flex justify-center py-14 px-4" style={{
+      borderWidth : "3px"
+    }}>
+      <div className="w-full max-w-lg border border-(--primary-color) p-5 rounded-xl" style={{
+        borderWidth: "3px"
+      }}>
 
         {/* Heading */}
         {/* <h1 className="text-4xl font-bold mb-2">
@@ -109,7 +113,7 @@ export default function Signup() {
         </div>
 
         {/* Password rules */}
-        <div className="bg-slate-900 rounded-xl p-5 mt-6 text-sm">
+        <div className=" rounded-xl p-5 mt-6 text-sm">
           <p className="font-semibold mb-2">Your password must include:</p>
           <ul className="space-y-1">
             <li className={hasLower ? "text-green-600" : "text-gray-400"}>
@@ -132,7 +136,7 @@ export default function Signup() {
           <div
             onClick={() => setAgree(!agree)}
             className={`w-12 h-6 rounded-full cursor-pointer transition ${
-              agree ? "bg-orange-600" : "bg-gray-300"
+              agree ? "bg-(--button-color)" : "bg-gray-300"
             }`}
           >
             <div
@@ -153,7 +157,7 @@ export default function Signup() {
           <div
             onClick={() => setMarketing(!marketing)}
             className={`w-12 h-6 rounded-full cursor-pointer transition ${
-              marketing ? "bg-orange-600" : "bg-gray-300"
+              marketing ? "bg-(--button-color)" : "bg-gray-300"
             }`}
           >
             <div
@@ -182,7 +186,7 @@ export default function Signup() {
         </button> */}
         <Button loading={loading} onClick={handelSignup} disabled={!isValid} className={` mt-6 ${
             isValid
-              ? "bg-orange-600 hover:bg-[#e63a00] text-white"
+              ? "bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)"
               : "bg-gray-300   text-gray-500 "
           }`}>
  SIGN UP

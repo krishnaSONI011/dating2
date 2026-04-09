@@ -50,7 +50,7 @@ export default function SingleAdPage() {
     const timer = setTimeout(() => {
       const ad = data.ads;
   
-      const title = `${ad.title} Escorts in ${ad.city_name} | Affair Escorts`;
+      const title = `${ad.title} Escorts in ${ad.city_name} | Olyvva`;
       const description =
         ad.description?.replace(/<[^>]*>/g, "").slice(0, 160) ||
         `Book ${ad.title} escort service in ${ad.city_name}.`;
@@ -227,7 +227,7 @@ export default function SingleAdPage() {
 
             <a
   href={`https://wa.me/${ad.mobile}?text=${encodeURIComponent(
-    `Hi, I saw your profile on Affair Escorts ${ad.title}`
+    `Hi, I saw your profile on Olyvva ${ad.title}`
   )}`} 
   target="_blank"
   rel="noopener noreferrer"
@@ -261,9 +261,9 @@ export default function SingleAdPage() {
               <option value={'Wrong Category / Spam'}>Wrong Category / Spam</option>
             </select>
             <textarea onChange={(e)=> setDescription(e.target.value)} value={description} name="" id=" " className="mt-5 w-full border border-white border-rounded text-white p-2" placeholder="Description"></textarea>
-            <div className="flex gap-2">
-              <Button onClick={handelReport}>Submit</Button>
-              <Button onClick={()=> setOpen(false)} className="bg-red-600 hover:bg-red-700">Cancle</Button>
+            <div className="flex gap-2 mt-5">
+              <Button className="bg-(--button-color) hover:bg-(--button-hover-color) text-(--button-text) hover:text-(--button-hover-text)" onClick={handelReport}>Submit</Button>
+              <Button onClick={()=> setOpen(false)} className="bg-red-600 hover:bg-red-700">Cancel</Button>
             </div>
       </ReusableModal>
 
@@ -278,7 +278,7 @@ export default function SingleAdPage() {
           </a>
 
           <a href={`https://wa.me/${ad.mobile}?text=${encodeURIComponent(
-    `Hi, I saw your profile on Affair Escorts ${ad.title}`
+    `Hi, I saw your profile on Olyvva ${ad.title}`
   )}`} target="_blank" className="flex-1">
             <button className="w-full bg-[#25D366] text-white py-3 rounded-xl text-sm font-semibold">
               <FaWhatsapp className="inline mr-2"/> WhatsApp

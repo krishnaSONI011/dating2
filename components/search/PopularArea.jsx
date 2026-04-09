@@ -8,16 +8,18 @@ export default function PopularArea({ areas, slug, is_category, is_category_page
     } else if (is_category_page_area) {
       return `/escorts/${area.slug}`
     } else {
-      return `/escort/${slug}/${area.slug}`
+      return `/escorts/${slug}/${area.slug}`
     }
   }
 
   return (
-    <div className="rounded-2xl shadow-sm border border-(--primary-color) w-full">
+    <div className="rounded-3xl shadow-sm border border-(--area-bg) w-full border-t-0" style={{
+      borderWidth: '3px '
+    }}>
 
       {/* Title */}
-      <div className="flex items-center bg-(--primary-color) justify-between p-2 py-4 rounded-t-2xl mb-5">
-        <h2 className="text-xl text-center font-bold text-white tracking-wide">
+      <div className="flex justify-center items-center bg-(--area-bg) justify-between p-2 py-4 rounded-t-2xl mb-5">
+        <h2 className="text-xl text-center flex justify-center font-bold text-(--area-text) tracking-wide">
           Popular {is_category ? "Category" : "Area"}
         </h2>
         <div className="h-2 w-2 bg-(--primary-color) rounded-full"></div>
@@ -37,10 +39,10 @@ export default function PopularArea({ areas, slug, is_category, is_category_page
           areas.map((area, index) => (
             <Link key={index} href={linkForArea(area)}>
               <div className="flex justify-between items-center px-3 py-3 rounded-lg hover:bg-(--primary-color)/10 text-(--primary-color) cursor-pointer transition group">
-                <span className="text-(--primary-color) font-medium group-hover:text-text-(--primary-color)/60 transition">
+                <span className="text-(--area-link) font-medium group-hover:text-text-(--area-link)/60 transition">
                   {area.name}
                 </span>
-                <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full font-semibold group-hover:bg-(--primary-color)/30 group-hover:text-text-(--primary-color)">
+                <span className="bg-(--button-color)  text-(--button-text) text-sm px-3 py-1 rounded-full font-semibold group-hover:bg-(--button-hover-color) group-hover:text-(--button-hover-text)">
                   {area.ads_count}
                 </span>
               </div>

@@ -70,8 +70,8 @@ console.log(items)
               onClick={() => setCurrentPage(index + 1)}
               className={`px-4 py-2 rounded-lg border ${
                 currentPage === index + 1
-                  ? "bg-orange-300 text-white"
-                  : "bg-blue-950"
+                  ? "bg-(--pageig-active-color) text-(--pageig-active-color-text )"
+                  : "bg-(--pageig-color) text-(--pageig-text)"
               }`}
             >
               {index + 1}
@@ -81,7 +81,7 @@ console.log(items)
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(prev => prev + 1)}
-            className="px-4 py-2 border rounded-lg disabled:opacity-50"
+            className="px-4 bg-(--pageig-color) text-(--pageig-text) py-2 border rounded-lg disabled:opacity-50"
           >
             Next
           </button>

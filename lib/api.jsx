@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL:  "https://api.olyvva.com/",
+  baseURL:
+    "https://irisinformatics.net/dating/",
+    // "https://api.olyvva.com/",
   timeout: 15000,
 });
 
